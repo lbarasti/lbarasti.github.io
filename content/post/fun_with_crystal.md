@@ -3,6 +3,7 @@ date = "2017-04-12T10:12:33+01:00"
 draft = false
 title = "Going faster with Crystal"
 image = "crystal-symbol.png"
+tags = ["crystal", "ruby", "algorithms"]
 +++
 
 Recently I have been entertaining myself with some algorithmic challenges. The language I like using for this kind of things is ruby.
