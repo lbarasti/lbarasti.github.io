@@ -1,0 +1,6 @@
+baseURL = "https://lbarasti.github.io/"
+languageCode = "en-gb"
+title = "a polyglot's hacks"
+[Params]
+  Author = "Lorenzo Barasti"
+  disqusShortname = "lbarasti"
