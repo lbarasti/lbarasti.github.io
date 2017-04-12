@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>a polyglot&#39;s hacks </title>
+    <link>https://lbarasti.github.io/tags/crystal/</link>
+    <language>en-us</language>
+    <author>Lorenzo Barasti</author>
+    <rights>(C) 2017</rights>
+    <updated>2017-04-12 10:12:33 &#43;0100 BST</updated>
+
+    
+      
+        <item>
+          <title>Going faster with Crystal</title>
+          <link>https://lbarasti.github.io/post/fun_with_crystal/</link>
+          <pubDate>Wed, 12 Apr 2017 10:12:33 BST</pubDate>
+          <author>Lorenzo Barasti</author>
+          <guid>https://lbarasti.github.io/post/fun_with_crystal/</guid>
+          <description>&lt;p&gt;Recently I have been entertaining myself with some algorithmic challenges. The language I like using for this kind of things is ruby.&lt;/p&gt;
+
+&lt;p&gt;When designing an algorithm it&amp;rsquo;s important to me to understand why brute force doesn&amp;rsquo;t work. I like to &lt;em&gt;count&lt;/em&gt; the reasons why that approach is not feasible.&lt;/p&gt;
+</description>
+        </item>
+      
+    
+
+  </channel>
+</rss>
