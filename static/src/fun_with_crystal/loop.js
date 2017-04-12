@@ -6,7 +6,7 @@ const dist = (u,v) =>
   Math.abs(u[0] - v[0]) + Math.abs(u[1] - v[1])
 
 a.forEach((u,i) => {
-  i % 100 == 0 ? console.log(`\r${i}`) : null;
+  i % 100 == 0 ? console.log(`${i}`) : null;
   a.slice(i + 1, size).forEach((v,i) => {
     dist(u,v) < 3
   })

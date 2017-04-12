@@ -6,22 +6,35 @@ image = "crystal-symbol.png"
 tags = ["crystal", "ruby", "algorithms"]
 +++
 
-Recently, I have been having some fun with some algorithmic challenges from one of the Algorithms courses on Coursera. The language I like to use for this kind of things is ruby.
+Recently, I have been having some fun with the algorithmic challenges from one of the Algorithms courses on [Coursera](https://www.coursera.org/learn/algorithms-greedy). The programming language I like to use for this kind of things is ruby.
 
-When designing an algorithm it's important for me to understand why brute force doesn't work. I like to _count_ the reasons why that approach is not feasible. One way of doing that is to write a naive implementation and make considerations about its run time.
+When designing an algorithm it's important for me to understand why _brute force_ doesn't work. I like to _count_ the reasons why that approach is not feasible. One way of doing that is to write a naïve implementation of the algorithm under study and make considerations about its running time. Let me give you an example.
 
-Consider the following problem.
+## A sample problem
 
-We are given a set of 2D points with integer coordinates. So one such point could be the tuple `[3,8]`.
-We define the distance between two points `u,v` as
-```
-dist(u,v) = |x_u - x_v| + |y_u - y_v|
-```
-where `|x|` is the absolute value of `x`.
+We are given a set of 2D points with integer coordinates.
+We define the distance between two points u,v as the [Manhattan distance](https://xlinux.nist.gov/dads/HTML/manhattanDistance.html)
 
-So, for instance, `dist([1,3], [4,2]) = 4`. Our task is to group the given points so that the minimum distance between any two groups - let's call them _clusters_ - is at least 3.
+> dist(u,v) = |x_u - x_v| + |y_u - y_v|
 
-The pseudo-code for my brute-force implementation of this problem might look like
+where |n| is the absolute value of n.
+
+<figure>
+<img src="/src/fun_with_crystal/point_dist.png" alt="We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3">
+<figcaption><small>Figure 1. We give a visual representation of the distance between two points as defined above and work out the computation for points A(1,1), B(3,1) and D(3,4), E(5,5)</small></figcaption>
+</figure>
+<br/>
+
+Our task is to group the given points so that the minimum distance between any two groups - let's call them _clusters_ - is at least 3.
+In other words, if two points have distance less than 3, then we want them to be in the same cluster.
+
+<figure>
+<img src="/src/fun_with_crystal/cluster_dist.png" alt="We compute the distance between two clusters as the minimum distance between two points belonging to different clusters">
+<figcaption><small>Figure 2. The figure shows a grouping of the points into clusters such that the distance between each cluster is at least 3. We define the distance between two clusters S_i, S_j as the minimum distance between u and v where u ∊ S_i and v ∊ S_j.</small></figcaption>
+</figure>
+<br/>
+The first approach that comes to my mind is the following: we compute the distance between all the possible pairs of points, and put points that are close enough in the same cluster.
+The following pseudo-code seems to do the job.
 ```
 for i in 1..n
   for j in i+1..n
@@ -31,9 +44,12 @@ for i in 1..n
 
 Now, it's not clear how exactly we are going to keep track of which cluster a point is in at any given time, but even assuming we can do that efficiently with respect to the size of the problem - i.e. the number of points - we have a more urgent issue to deal with.
 
-Try running the following ruby code for different values of `size`
+## The more urgent issue
+The total number of pairs in a set of `n` points happens to be `n(n-1)/2`, which means that the number of pairs we need to go through grows quadratically with respect to the number of points. This implies that the computational cost of our brute force implementation is _at least_ O(n²). Let's get a feel for that.
+
+Try running the following ruby script for increasing values of `size` up to 10^5 - name the file `loop.rb` for future reference.
 ```ruby
-size = 10 ** 5
+size = <your value here>
 a = (1..size).map{ [rand(1000), rand(1000)] }
 
 def dist(u,v)
@@ -48,33 +64,58 @@ a.each_with_index {|u,i|
 }
 ```
 
-On my machine the run time factor between `size = 10^4` and `size = 10^5` is about <b>100</b>. In particular, going through the nested for-loop with 100_000 elements takes over 20 minutes. And we are not even computing the clusters yet!
+On my machine the running time factor between `size = 10^4` and `size = 10^5` is about <b>100</b>. In particular, going through the nested for-loop with 100000 elements takes over 20 minutes. And we are not even computing the clusters yet!
 
 So I'm thinking, maybe there's a better way of dealing with this, maybe we don't need to go through the array twice. On the other hand, maybe an interpreted language like ruby is just not the right tool for the job.
 
-A friend recently told me about the Crystal language. He was so excited about it that I thought "Maybe this is the right time to give it a go". To make things even easier, Crystal syntax is so similar to ruby, that you might be lucky enough and not even have to change a thing in your code to try it!
+If only we could test this assumption without too much effort...
 
-so after installing Crystal, I tried
-`crystal loop.rb`
+## Meet Crystal!
+A friend recently told me about the Crystal language. He was so excited about it that I thought "I should really check that out". Let me tell you why this looks like a good moment to do that.
 
-The runtime for size = 100_000 is still over 12 minutes.
+Crystal is a compiled language designed to achieve **high performance** with **low memory footprint**. (One of) The killer feature(s) is the syntax. Crystal **syntax** is so similar to ruby that you might be able to convert your favourite ruby scripts with very little effort - especially if they are self-contained.
 
-Is that it? Not really, the "getting started" guide to Crystal recommends you compile your source code once you're happy with it.
+Now, that sounds a lot like what we want here: we have a self-contained ruby script, and we want it to run faster!
+
+So after installing Crystal, I tried
+`crystal loop.rb` - yes, just like that.
+
+Our script happens to be fully compatible with Crystal's specification, so the `crystal` binary is happy to compile it and run it at once. Sadly, the runtime for size = 100000 is still over 12 minutes...
+
+Is that it? Not really, the [getting started](https://crystal-lang.org/docs/using_the_compiler/) guide to Crystal recommends you compile your source code with the `--release` flag once you're happy with it.
 
 ```
 crystal build loop.rb --release
 ```
 
-this spits out a blazing fast `loop` executable that runs in just 70 seconds. We just cut the run time by a factor of <b>10</b> and all we had to do was to compile and run our code with Crystal! To summarize
+This produces a blazing fast `loop` executable that runs in under 70 seconds. We just cut the running time by a factor of <b>20</b> and all we had to do was to compile and run our code with Crystal. Awesome!
 
-Language <br/>    | Runtime
+## Considerations
+I hope you got to appreciate how Crystal can enhance the performance of our code without affecting our productivity.
+
+And we've only scratched the surface! The language has way more to offer. Among other things, Crystal comes with a smart, non-obtrusive type system that prevents a wide range of little bugs from appearing in our code.
+
+So next time you're faced with a computational challenge, why don't you give Crystal a try!
+
+## But we're not done yet
+If you're still reading, then you probably noticed I cheated a bit. I gave the outline of a sub-optimal brute force solution, and didn't even bother providing the full implementation of the clustering algorithm. I leave that to you for now, but I hope I'll be able to follow up on that soon.
+
+And in case you're wondering "Can we do any better than the brute force implementation?" the answer is yes, we can indeed! In fact, we should be able to squeeze the running time to O(n) times the cost of merging two clusters.
+
+## Benchmark
+For the record, here is a table summarizing the running time of three different implementations.
+
+Language <br/>    | Running time
 ----------|------
 Ruby      | ~23 minutes
 Node      | 3.5 minutes
-Crystal   | 1.2 minutes
-
+Crystal   | 1.1 minutes
 <br/>
-So next time you're facing a computational challenge, why don't you give Crystal a try!
+And here is the source code used to generate the bechmark data above.
 
-## Source code
-You can find the source code used to generate the bechmark data above [here](/src/fun_with_crystal/)
+- [js](/src/fun_with_crystal/loop.js)
+- [ruby/Crystal](/src/fun_with_crystal/loop.rb)
+
+## References
+- [Crystal lang](https://crystal-lang.org/) official home page
+- A nice [introduction to clustering](https://home.deib.polimi.it/matteucc/Clustering/tutorial_html/)
