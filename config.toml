@@ -1,7 +1,18 @@
-baseURL = "https://lbarasti.github.io/"
+baseURL = "https://lbarasti.com"
 languageCode = "en-gb"
-title = "a polyglot's hacks"
+title = "A Polyglot's Hacks"
+theme = "hugo_theme_robust"
+disqusShortname = "lbarasti-github-io"
+GoogleAnalyticsUserID = "UA-97340845-1"
+
 [Params]
-  Author = "Lorenzo Barasti"
-  disqusShortname = "lbarasti-github-io"
-  GoogleAnalyticsUserID = "UA-97340845-1"
+  SyntaxHighlightTheme = "monokai.min.css"
+
+[Params.author]
+  name = "Lorenzo Barasti"
+  thumbnail = "images/profile-picture.jpg"
+  description = "Exploring concurrency in Crystal, live coding on occasions."
+  twitter = "https://twitter.com/lbarasti"
+  youtube = "https://www.youtube.com/channel/UCaydNuV-VSO0gFSrvS9WgXg"
+  github = "https://github.com/lbarasti"
+  twitch = "https://twitch.tv/lbarasti"
