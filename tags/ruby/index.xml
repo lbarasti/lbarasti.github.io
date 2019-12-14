@@ -1,172 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>a polyglot&#39;s hacks </title>
-    <link>https://lbarasti.github.io/tags/ruby/</link>
-    <language>en-us</language>
-    <author>Lorenzo Barasti</author>
-    <rights>(C) 2017</rights>
-    <updated>2017-04-12 10:12:33 &#43;0100 BST</updated>
-
+    <title>ruby on A Polyglot&#39;s Hacks</title>
+    <link>https://lbarasti.com/tags/ruby/</link>
+    <description>Recent content in ruby on A Polyglot&#39;s Hacks</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 12 Apr 2017 10:12:33 +0100</lastBuildDate>
     
-      
-        <item>
-          <title>Going faster with Crystal</title>
-          <link>https://lbarasti.github.io/post/fun_with_crystal/</link>
-          <pubDate>Wed, 12 Apr 2017 10:12:33 BST</pubDate>
-          <author>Lorenzo Barasti</author>
-          <guid>https://lbarasti.github.io/post/fun_with_crystal/</guid>
-          <description>
-
-&lt;p&gt;Recently, I have been having some fun with the algorithmic challenges from one of the Algorithms courses on &lt;a href=&#34;https://www.coursera.org/learn/algorithms-greedy&#34;&gt;Coursera&lt;/a&gt;. The programming language I like to use for this kind of things is ruby.&lt;/p&gt;
-
-&lt;p&gt;When designing an algorithm it&amp;rsquo;s important for me to understand why &lt;em&gt;brute force&lt;/em&gt; doesn&amp;rsquo;t work. I like to &lt;em&gt;count&lt;/em&gt; the reasons why that approach is not feasible. One way of doing that is to write a naïve implementation of the algorithm under study and make considerations about its running time. Let me give you an example.&lt;/p&gt;
-
-&lt;h2 id=&#34;a-sample-problem&#34;&gt;A sample problem&lt;/h2&gt;
-
-&lt;p&gt;We are given a set of 2D points with integer coordinates.
-We define the distance between two points u,v as the &lt;a href=&#34;https://xlinux.nist.gov/dads/HTML/manhattanDistance.html&#34;&gt;Manhattan distance&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;dist(u,v) = |x_u - x_v| + |y_u - y_v|&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;where |n| is the absolute value of n.&lt;/p&gt;
-
-&lt;p&gt;&lt;figure&gt;
-&lt;img src=&#34;https://lbarasti.github.io/src/fun_with_crystal/point_dist.png&#34; alt=&#34;We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3&#34;&gt;
-&lt;figcaption&gt;&lt;small&gt;Figure 1. We give a visual representation of the distance between two points as defined above and work out the computation for points A(1,1), B(3,1) and D(3,4), E(5,5)&lt;/small&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;br/&gt;&lt;/p&gt;
-
-&lt;p&gt;Our task is to group the given points so that the minimum distance between any two groups - let&amp;rsquo;s call them &lt;em&gt;clusters&lt;/em&gt; - is at least 3.
-In other words, if two points have distance less than 3, then we want them to be in the same cluster.&lt;/p&gt;
-
-&lt;p&gt;&lt;figure&gt;
-&lt;img src=&#34;https://lbarasti.github.io/src/fun_with_crystal/cluster_dist.png&#34; alt=&#34;We compute the distance between two clusters as the minimum distance between two points belonging to different clusters&#34;&gt;
-&lt;figcaption&gt;&lt;small&gt;Figure 2. The figure shows a grouping of the points into clusters such that the distance between each cluster is at least 3. We define the distance between two clusters S_i, S_j as the minimum distance between u and v where u ∊ S_i and v ∊ S_j.&lt;/small&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;br/&gt;
-The first approach that comes to my mind is the following: we compute the distance between all the possible pairs of points, and put points that are close enough in the same cluster.
-The following pseudo-code seems to do the job.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;for i in 1..n
-  for j in i+1..n
-    if dist(i,j) &amp;lt; 3
-      merge_clusters(i, j)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now, it&amp;rsquo;s not clear how exactly we are going to keep track of which cluster a point is in at any given time, but even assuming we can do that efficiently with respect to the size of the problem - i.e. the number of points - we have a more urgent issue to deal with.&lt;/p&gt;
-
-&lt;h2 id=&#34;the-more-urgent-issue&#34;&gt;The more urgent issue&lt;/h2&gt;
-
-&lt;p&gt;The total number of pairs in a set of &lt;code&gt;n&lt;/code&gt; points happens to be &lt;code&gt;n(n-1)/2&lt;/code&gt;, which means that the number of pairs we need to go through grows quadratically with respect to the number of points. This implies that the computational cost of our brute force implementation is &lt;em&gt;at least&lt;/em&gt; O(n²). Let&amp;rsquo;s get a feel for that.&lt;/p&gt;
-
-&lt;p&gt;Try running the following ruby script for increasing values of &lt;code&gt;size&lt;/code&gt; up to 10^5 - name the file &lt;code&gt;loop.rb&lt;/code&gt; for future reference.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;size = &amp;lt;your value here&amp;gt;
-a = (1..size).map{ [rand(1000), rand(1000)] }
-
-def dist(u,v)
-  (u[0] - v[0]).abs + (u[1] - v[1]).abs
-end
-
-a.each_with_index {|u,i|
-  print &amp;quot;\r#{i}&amp;quot; if i % 100 == 0
-  a[i + 1..-1].each_with_index {|v,j|
-    dist(u,v) &amp;lt; 3
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;On my machine the running time factor between &lt;code&gt;size = 10^4&lt;/code&gt; and &lt;code&gt;size = 10^5&lt;/code&gt; is about &lt;b&gt;100&lt;/b&gt;. In particular, going through the nested for-loop with 100000 elements takes over 20 minutes. And we are not even computing the clusters yet!&lt;/p&gt;
-
-&lt;p&gt;So I&amp;rsquo;m thinking, maybe there&amp;rsquo;s a better way of dealing with this, maybe we don&amp;rsquo;t need to go through the array twice. On the other hand, maybe an interpreted language like ruby is just not the right tool for the job.&lt;/p&gt;
-
-&lt;p&gt;If only we could test this assumption without too much effort&amp;hellip;&lt;/p&gt;
-
-&lt;h2 id=&#34;meet-crystal&#34;&gt;Meet Crystal!&lt;/h2&gt;
-
-&lt;p&gt;A friend recently told me about the Crystal language. He was so excited about it that I thought &amp;ldquo;I should really check that out&amp;rdquo;. Let me tell you why this looks like a good moment to do that.&lt;/p&gt;
-
-&lt;p&gt;Crystal is a compiled language designed to achieve &lt;strong&gt;high performance&lt;/strong&gt; with &lt;strong&gt;low memory footprint&lt;/strong&gt;. (One of) The killer feature(s) is the syntax. Crystal &lt;strong&gt;syntax&lt;/strong&gt; is so similar to ruby that you might be able to convert your favourite ruby scripts with very little effort - especially if they are self-contained.&lt;/p&gt;
-
-&lt;p&gt;Now, that sounds a lot like what we want here: we have a self-contained ruby script, and we want it to run faster!&lt;/p&gt;
-
-&lt;p&gt;So after installing Crystal, I tried
-&lt;code&gt;crystal loop.rb&lt;/code&gt; - yes, just like that.&lt;/p&gt;
-
-&lt;p&gt;Our script happens to be fully compatible with Crystal&amp;rsquo;s specification, so the &lt;code&gt;crystal&lt;/code&gt; binary is happy to compile it and run it at once. Sadly, the runtime for size = 100000 is still over 12 minutes&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;Is that it? Not really, the &lt;a href=&#34;https://crystal-lang.org/docs/using_the_compiler/&#34;&gt;getting started&lt;/a&gt; guide to Crystal recommends you compile your source code with the &lt;code&gt;--release&lt;/code&gt; flag once you&amp;rsquo;re happy with it.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;crystal build loop.rb --release
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This produces a blazing fast &lt;code&gt;loop&lt;/code&gt; executable that runs in under 70 seconds. We just cut the running time by a factor of &lt;b&gt;20&lt;/b&gt; and all we had to do was to compile and run our code with Crystal. Awesome!&lt;/p&gt;
-
-&lt;h2 id=&#34;considerations&#34;&gt;Considerations&lt;/h2&gt;
-
-&lt;p&gt;I hope you got to appreciate how Crystal can enhance the performance of our code without affecting our productivity.&lt;/p&gt;
-
-&lt;p&gt;And we&amp;rsquo;ve only scratched the surface! The language has way more to offer. Among other things, Crystal comes with a smart, non-obtrusive type system that prevents a wide range of little bugs from appearing in our code.&lt;/p&gt;
-
-&lt;p&gt;So next time you&amp;rsquo;re faced with a computational challenge, why don&amp;rsquo;t you give Crystal a try!&lt;/p&gt;
-
-&lt;h2 id=&#34;but-we-re-not-done-yet&#34;&gt;But we&amp;rsquo;re not done yet&lt;/h2&gt;
-
-&lt;p&gt;If you&amp;rsquo;re still reading, then you probably noticed I cheated a bit. I gave the outline of a sub-optimal brute force solution, and didn&amp;rsquo;t even bother providing the full implementation of the clustering algorithm. I leave that to you for now, but I hope I&amp;rsquo;ll be able to follow up on that soon.&lt;/p&gt;
-
-&lt;p&gt;And in case you&amp;rsquo;re wondering &amp;ldquo;Can we do any better than the brute force implementation?&amp;rdquo; the answer is yes, we can indeed! In fact, we should be able to squeeze the running time to O(n) times the cost of merging two clusters.&lt;/p&gt;
-
-&lt;h2 id=&#34;benchmark&#34;&gt;Benchmark&lt;/h2&gt;
-
-&lt;p&gt;For the record, here is a table summarizing the running time of three different implementations.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Language &lt;br/&gt;&lt;/th&gt;
-&lt;th&gt;Running time&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Ruby&lt;/td&gt;
-&lt;td&gt;~23 minutes&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;Node&lt;/td&gt;
-&lt;td&gt;3.5 minutes&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;Crystal&lt;/td&gt;
-&lt;td&gt;1.1 minutes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br/&gt;
-And here is the source code used to generate the bechmark data above.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://lbarasti.github.io/src/fun_with_crystal/loop.js&#34;&gt;js&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://lbarasti.github.io/src/fun_with_crystal/loop.rb&#34;&gt;ruby/Crystal&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://crystal-lang.org/&#34;&gt;Crystal lang&lt;/a&gt; official home page&lt;/li&gt;
-&lt;li&gt;A nice &lt;a href=&#34;https://home.deib.polimi.it/matteucc/Clustering/tutorial_html/&#34;&gt;introduction to clustering&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-      
+	<atom:link href="https://lbarasti.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
     
-
+    
+    <item>
+      <title>Going faster with Crystal</title>
+      <link>https://lbarasti.com/post/fun_with_crystal/</link>
+      <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/post/fun_with_crystal/</guid>
+      <description>Recently, I have been having some fun with the algorithmic challenges from one of the Algorithms courses on Coursera. The programming language I like to use for this kind of things is ruby.
+When designing an algorithm it&#39;s important for me to understand why brute force doesn&#39;t work. I like to count the reasons why that approach is not feasible. One way of doing that is to write a naïve implementation of the algorithm under study and make considerations about its running time.</description>
+    </item>
+    
   </channel>
 </rss>

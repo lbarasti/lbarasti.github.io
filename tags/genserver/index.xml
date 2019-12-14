@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GenServer on A Polyglot&#39;s Hacks</title>
+    <link>https://lbarasti.com/tags/genserver/</link>
+    <description>Recent content in GenServer on A Polyglot&#39;s Hacks</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate>
+    
+	<atom:link href="https://lbarasti.com/tags/genserver/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2-way communication between Fibers</title>
+      <link>https://lbarasti.com/post/two_way_comm_between_fibers/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/post/two_way_comm_between_fibers/</guid>
+      <description>Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
+In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</description>
+    </item>
+    
+  </channel>
+</rss>

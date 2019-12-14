@@ -1,20 +1,96 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>a polyglot&#39;s hacks </title>
-    <link>https://lbarasti.github.io/tags/</link>
-    <language>en-us</language>
-    <author>Lorenzo Barasti</author>
-    <rights>(C) 2017</rights>
-    <updated>2017-04-12 10:12:33 &#43;0100 BST</updated>
-
+    <title>Tags on A Polyglot&#39;s Hacks</title>
+    <link>https://lbarasti.com/tags/</link>
+    <description>Recent content in Tags on A Polyglot&#39;s Hacks</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate>
     
+	<atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Actor</title>
+      <link>https://lbarasti.com/tags/actor/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
       
+      <guid>https://lbarasti.com/tags/actor/</guid>
+      <description></description>
+    </item>
     
+    <item>
+      <title>Channel</title>
+      <link>https://lbarasti.com/tags/channel/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
       
+      <guid>https://lbarasti.com/tags/channel/</guid>
+      <description></description>
+    </item>
     
+    <item>
+      <title>concurrency</title>
+      <link>https://lbarasti.com/tags/concurrency/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
       
+      <guid>https://lbarasti.com/tags/concurrency/</guid>
+      <description></description>
+    </item>
     
-
+    <item>
+      <title>crystal</title>
+      <link>https://lbarasti.com/tags/crystal/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/crystal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fiber</title>
+      <link>https://lbarasti.com/tags/fiber/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/fiber/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GenServer</title>
+      <link>https://lbarasti.com/tags/genserver/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/genserver/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Server</title>
+      <link>https://lbarasti.com/tags/server/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>algorithms</title>
+      <link>https://lbarasti.com/tags/algorithms/</link>
+      <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/algorithms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby</title>
+      <link>https://lbarasti.com/tags/ruby/</link>
+      <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/ruby/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

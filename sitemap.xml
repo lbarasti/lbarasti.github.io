@@ -1,50 +1,79 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://lbarasti.github.io/post/fun_with_crystal/</loc>
+    <loc>https://lbarasti.com/post/two_way_comm_between_fibers/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/actor/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/channel/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/concurrency/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/crystal/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/fiber/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/genserver/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/server/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/algorithms/</loc>
     <lastmod>2017-04-12T10:12:33+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://lbarasti.github.io/tags/algorithms/</loc>
+    <loc>https://lbarasti.com/post/fun_with_crystal/</loc>
     <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lbarasti.github.io/categories/</loc>
-    <priority>0</priority>
+    <loc>https://lbarasti.com/tags/ruby/</loc>
+    <lastmod>2017-04-12T10:12:33+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://lbarasti.github.io/tags/crystal/</loc>
-    <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.github.io/post/</loc>
-    <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.github.io/tags/ruby/</loc>
-    <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.github.io/tags/</loc>
-    <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.github.io/</loc>
-    <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-    <priority>0</priority>
+    <loc>https://lbarasti.com/categories/</loc>
   </url>
   
 </urlset>

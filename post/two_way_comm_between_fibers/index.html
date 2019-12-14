@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="theme-color" content="#263238">
+
+<meta name="generator" content="Hugo 0.60.1" />
+
+<link rel="apple-touch-icon" href="https://lbarasti.comimages/logo.png">
+
+
+
+
+    <link rel="canonical" href="https://lbarasti.com/post/two_way_comm_between_fibers/">
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>2-way communication between Fibers - A Polyglot&#39;s Hacks</title>
+    
+<meta name="description" content="Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
+In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
+
+<meta property="og:title" content="2-way communication between Fibers - A Polyglot&#39;s Hacks">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lbarasti.com/post/two_way_comm_between_fibers/">
+<meta property="og:image" content="https://lbarasti.com/src/two_way_communication/00_header_3.png">
+<meta property="og:site_name" content="A Polyglot&#39;s Hacks">
+<meta property="og:description" content="Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
+In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="A Polyglot&#39;s Hacks">
+<meta name="twitter:url" content="https://lbarasti.com/post/two_way_comm_between_fibers/">
+<meta name="twitter:title" content="2-way communication between Fibers - A Polyglot&#39;s Hacks">
+<meta name="twitter:description" content="Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
+In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
+<meta name="twitter:image" content="https://lbarasti.com/src/two_way_communication/00_header_3.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/lbarasti.com"
+    },
+    "headline": "2-way communication between Fibers-A Polyglot's Hacks",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/lbarasti.com\/src\/two_way_communication\/00_header_3.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-11-25T22:12:33JST",
+    "dateModified": "2019-11-25T22:12:33JST",
+    "author": {
+      "@type": "Person",
+      "name": "A Polyglot's Hacks"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "A Polyglot's Hacks",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/lbarasti.comimages/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Introduction If you\x27re writing concurrent code in Crystal, chances are you\x27re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.\nIn this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly."
+  }
+</script>
+
+
+    <style>
+html {
+  font-size: 18px;
+  background-color: rgba(236,239,241,.5);
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+body {
+  color: #333;
+  font-family: 'Roboto Slab','ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif;
+  font-feature-settings : "palt";
+  font-size: inherit;
+  line-height: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 ,h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1rem;
+  margin: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dashed #cfd8dc;
+  margin: 1rem 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1rem;
+}
+
+a {
+  color: #2196f3;
+  text-decoration: none;
+  transition-duration: .3s;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  font-size: .8rem;
+  padding: .5rem;
+}
+
+tr {
+  border-bottom: 1px dashed #ddd;
+}
+
+/* Layouts */
+main,
+aside {
+  display: block;
+}
+
+main { padding: 1rem 0 3rem 0; }
+aside.h { padding: 3rem 0; }
+
+main.f,
+aside.f {
+  background-color: #333;
+  border-top: 2px dashed #fff;
+  border-bottom: 2px dashed #fff;
+}
+
+.l-container {
+  position: relative;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.l-container.thin {
+  max-width: 44rem;
+}
+
+.l-header {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.l-header .description {
+  margin-top: .5rem;
+  font-size: .8rem;
+}
+
+.l-footer {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  font-size: .6rem;
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .l-sidebar {
+    margin-top: 4rem;
+  }
+}
+
+.mrow {
+  margin: 0 -1rem;
+  overflow: hidden;
+}
+
+.mcol {
+  box-sizing: border-box;
+  float: left;
+  padding: 0 1rem;
+}
+
+.c6 { width: 50%; }
+.c4 { width: 33.26323833%; }
+.c8 { width: 66.66666%; }
+
+@media (max-width: 768px) {
+  .mcol {
+    width: 100%;
+    float: none;
+  }
+}
+
+.logo a {
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.articles {
+  margin: -1rem 0;
+  margin-bottom: 1rem;
+}
+
+.articles.sm {
+  margin: -.5rem 0;
+  margin-bottom: 0;
+}
+
+article {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+article.li {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  height: 20rem;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+article.li > a {
+  display: block;
+  color: #333;
+}
+
+article.li .inner {
+  padding: 1rem;
+}
+
+article.li .thumb {
+  height: 8rem;
+}
+
+article.li .title {
+  color: #333;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+article.li .summary {
+  font-size: .8rem;
+  height: 6rem;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+article.li .summary::after {
+  content: '...';
+}
+
+article.lism {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  margin: .5rem 0;
+}
+
+article.lism::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+article.lism > a {
+  display: block;
+  color: #333;
+}
+
+article.lism .inner {
+  display: table-cell;
+  vertical-align: middle;
+  height: 5rem;
+  padding: 0 .75rem;
+}
+
+article.lism .thumb {
+  width: 5rem;
+  height: 5rem;
+  float: left;
+}
+
+article.lism .title {
+  font-weight: 700;
+  font-size: .8rem;
+  margin-bottom: .25rem;
+}
+
+article.sn {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  margin-bottom: 1rem;
+}
+
+article.sn .thumb {
+  height: 20rem;
+}
+
+@media (max-width: 768px) {
+  article.sn .thumb {
+    height: 10rem;
+  }
+}
+
+article.sn > .article-header,
+article.sn > .article-body,
+article.sn .article-footer {
+  padding: 2rem;
+}
+
+article.sn > .article-body {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-header,
+  article.sn > .article-body,
+  article.sn .article-footer {
+    padding: 1rem;
+  }
+
+  article.sn > .article-body {
+    padding: 0 1rem;
+  }
+}
+
+article.sn > .article-header .title {
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-bottom: .5rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-header .title {
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+  }
+}
+
+article.sn > .article-header .facts {
+  margin-bottom: 1rem;
+}
+
+article.sn > .article-body {
+  margin-bottom: 1.5rem;
+}
+
+article.sn > .article-body h2 {
+  border-bottom: .25rem solid #333;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  padding: .5rem 0;
+}
+
+article.sn > .article-body h3 {
+  border-left: .5rem solid #333;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  padding: .125rem .5rem;
+}
+
+article.sn > .article-body ul,
+article.sn > .article-body ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+article.sn > .article-body li {
+  padding-bottom: .5rem;
+  line-height: 1.5rem;
+}
+
+article.sn > .article-body li:last-child {
+  padding-bottom: 0;
+}
+article.sn > .article-body p {
+  margin: 1rem 0;
+  line-height: 1.5rem;
+}
+
+article.sn > .article-body strong,
+article.sn > .article-body em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+article.sn > .article-body strong {
+  box-shadow: 0 -.5rem 0 0 #ffc107 inset;
+}
+
+article.sn > .article-body em {
+  color: #8bc34a;
+}
+
+article.sn > .article-body code,
+article.sn > .article-body pre {
+  font-family: Menlo, Consolas, monospace;
+  font-size: .7rem;
+}
+
+article.sn > .article-body pre {
+  background-color: #333;
+  color: #fff;
+  line-height: 1rem;
+  margin: 1.5rem -2rem;
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body pre {
+    margin: 1.5rem -1rem;
+  }
+}
+
+article.sn > .article-body pre > code {
+  display: block;
+  padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body pre > code {
+    padding: 1rem;
+  }
+}
+
+article.sn > .article-body p code {
+  background-color: #eceff1;
+  color: #333;
+  border-radius: 4px;
+  margin: 0 .25rem;
+  padding: .375rem;
+  white-space: nowrap;
+}
+
+article.sn > .article-body blockquote {
+  position: relative;
+  border-left: .25rem solid #333;
+  font-size: .8rem;
+  padding: .125rem 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body blockquote {
+    font-size: 1rem;
+  }
+}
+
+article.sn > .article-body blockquote p {
+  margin: .5rem 0;
+  line-height: 1rem;
+}
+
+article.sn > .article-body figure {
+  margin: 1.5rem 0;
+}
+
+article.sn > .article-body img,
+article.sn > .article-body figure img,
+article.sn > .article-body figure amp-img {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  max-width: 100%;
+}
+
+article.sn > .article-body figcaption {
+  color: #cfd8dc;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
+
+.facts li {
+  display: inline;
+  font-size: .8rem;
+  margin-right: 1rem;
+}
+
+.facts i {
+  color: #cfd8dc;
+  margin-right: .5em;
+}
+
+.facts.sm li {
+  font-size: .7rem;
+}
+
+.sections.sidebar {
+  margin: -1rem 0;
+}
+
+.sections.footer {
+  margin: -1rem 0;
+}
+
+section.sidebar {
+  margin: 2rem 0;
+}
+
+section.sidebar > header {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+section.footer {
+  margin: 1rem 0;
+}
+
+section.footer > header {
+  font-size: .8rem;
+  margin: .5rem 0;
+}
+
+section.footer > header::before {
+  content: "- ";
+}
+
+section.footer > header a {
+  font-weight: 700;
+  color: #333;
+  text-decoration: underline;
+}
+
+.terms {
+  margin: -.25rem;
+}
+
+.terms li {
+  display: inline-block;
+}
+
+.terms a {
+  display: block;
+  float: left;
+  background-color: #333;
+  border-radius: 4px;
+  color: #fff;
+  font-size: .7rem;
+  margin: .25rem;
+  padding: 0 .75rem;
+  line-height: 1.75rem;
+}
+
+.paging {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.paging a {
+  display: inline-block;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  border-radius: 4px;
+  color: #333;
+  padding: 0 1rem;
+  line-height: 3rem;
+}
+
+.page-title {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  border-bottom: .25rem solid #333;
+  width: 3rem;
+  margin: 1.5rem auto;
+}
+
+.page-title > .title {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+/* Parts:breadcrumb */
+.crumb ol {
+  text-overflow: ellipsis;
+  color: #cfd8dc;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.crumb li {
+  display: inline;
+  font-size: .8rem;
+}
+
+.crumb li::after {
+  content: '›';
+  margin: 0 .25rem 0 .5rem;
+}
+
+.crumb li:last-child::after {
+  content: '';
+}
+
+.crumb a {
+  color: #cfd8dc;
+}
+
+.crumb i {
+  margin-right: .5em;
+}
+
+.share {
+  padding: 0;
+}
+
+.share a {
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  min-width: 1rem;
+  height: 2rem;
+  border-radius: 4px;
+  color: #333;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 2rem;
+  text-align: center;
+  padding: 0 .5rem;
+}
+
+.adj article.lism {
+  margin-bottom: 1rem;
+}
+
+.adj header {
+  font-weight: 700;
+  font-size: .8rem;
+}
+
+.toc {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .toc {
+    padding: 0 1rem;
+  }
+}
+
+.toc {
+  margin: 1rem 0;
+}
+
+.toc nav>ul {
+  background-color: #eceff1;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: .8rem;
+  padding: .5rem 1rem;
+  word-break: break-all;
+  list-style: none;
+}
+
+.toc ul {
+  padding: 0;
+}
+
+.toc ul ul {
+  padding-left: 1rem;
+}
+
+.toc ul ul ul {
+  padding-left: 1rem;
+}
+
+.toc li {
+  color: #90a4ae;
+}
+
+.toc ul ul>li {
+  font-weight: 700;
+  margin: .5rem 0;
+  list-style-type: decimal;
+}
+
+.toc ul ul ul>li {
+  list-style-type: disc;
+  font-weight: 500;
+}
+
+.author {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.author .author-thumb {
+  margin: 0 auto 1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background-color: #eceff1;
+  background-size: cover;
+  background-position: center;
+}
+
+.author .author-name {
+  margin-bottom: .5rem;
+  font-weight: 700;
+}
+
+.author .author-facts {
+  margin-bottom: 1rem;
+}
+
+.author .author-facts li {
+  display: inline;
+}
+
+.author .author-facts li a {
+  display: inline-block;
+  background-color: #eceff1;
+  width: 1.75rem;
+  height: 1.75rem;
+  line-height: 1.75rem;
+  text-align: center;
+  color: #333;
+  font-size: .8rem;
+  border-radius: 2px;
+}
+
+.author .author-facts li a:hover {
+  color: #fff;
+  background-color: #333;
+}
+
+.author .author-description {
+  text-align: left;
+  font-size: .8rem;
+}
+
+.author .author-description p {
+  margin: .5rem 0;
+}
+
+.thumb {
+  background-image: url(https://lbarasti.comimages/default.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+.thumb-2f8501660be1b202f0622f4169e68f2a {
+  background-image: url(https://lbarasti.com/src/two_way_communication/00_header_3.png);
+}
+
+
+
+.thumb-a79bcaa63d57a1252d925acc5f4a4d76 {
+  background-image: url(https://lbarasti.com/images/crystal-symbol.png);
+}
+
+
+
+
+
+
+
+    </style>
+
+  </head>
+  <body>
+    <header class="l-header">
+      <div class="l-container">
+        <div class="logo">
+          <a href="https://lbarasti.com">A Polyglot&#39;s Hacks</a>
+        </div>
+        
+
+      </div>
+    </header>
+
+    <main>
+      <div class="l-container">
+        
+<div class="mrow">
+  <div class="mcol c8">
+
+    <article class="sn">
+
+  <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
+
+  <header class="article-header">
+    <h1 class="title">2-way communication between Fibers</h1>
+
+    <ul class="facts">
+      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2019-11-25T22:12:33JST">Nov 25, 2019</time></li>
+      
+      <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.compost/">POST</a></li>
+      
+    </ul>
+
+    <aside class="share">
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&title=2-way%20communication%20between%20Fibers" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&text=2-way%20communication%20between%20Fibers&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&t=2-way%20communication%20between%20Fibers" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&title=2-way%20communication%20between%20Fibers" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+</aside>
+
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="introduction">Introduction</h2>
+<p>If you're writing concurrent code in Crystal, chances are you're relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.</p>
+<p>In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</p>
+<h2 id="core-idea">Core idea</h2>
+<p>Let <code>A</code> and <code>B</code> be two fibers, where <code>A</code> holds information that <code>B</code> wants.
+<code>B</code> sends a request to <code>A</code> over a channel <code>requests</code>. <code>A</code> then sends a response back via a temporary channel <code>tmp</code>.</p>
+<figure>
+    <img src="/src/two_way_communication/00_idea.png"/> 
+</figure>
+
+<p>Now, you might be wondering: &ldquo;where does the <code>tmp</code> channel come from?&rdquo;</p>
+<p>Here is the trick, it's <code>B</code> that creates <code>tmp</code> and wraps it in the <code>Request</code> object.
+The following code illustrates the exchange.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record Request, tmp : Channel(Response)
+record Response, value : Int32
+
+requests <span style="color:#f92672">=</span> Channel(Request)<span style="color:#f92672">.</span>new
+
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+  loop <span style="color:#66d9ef">do</span>
+    request <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
+    tmp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>tmp
+    tmp<span style="color:#f92672">.</span>send Response<span style="color:#f92672">.</span>new(rand(<span style="color:#ae81ff">10</span><span style="color:#f92672"></span>))
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+  tmp <span style="color:#f92672">=</span> Channel(Response)<span style="color:#f92672">.</span>new
+  request <span style="color:#f92672">=</span> Request<span style="color:#f92672">.</span>new(tmp)
+  requests<span style="color:#f92672">.</span>send request
+  puts tmp<span style="color:#f92672">.</span>receive <span style="color:#75715e"># =&gt; Response(@value=3)</span>
+<span style="color:#66d9ef">end</span>
+
+sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Notice how fiber <code>B</code></p>
+<ol>
+<li>encapsulates the <code>tmp</code> channel inside a <code>Request</code> object (line 16)</li>
+<li>sends the request to fiber <code>A</code> over the <code>requests</code> channel (line 17)</li>
+<li>then calls <code>receive</code> on <code>tmp</code> (line 18)</li>
+</ol>
+<p>Meanwhile, fiber <code>A</code></p>
+<ol>
+<li>loops through all the requests (line 8)</li>
+<li>extracts the return channel <code>tmp</code> from the <code>Request</code> (line 9)</li>
+<li>sends the <code>Response</code> over <code>tmp</code> (line 10)</li>
+</ol>
+<h2 id="runtime-considerations">Runtime considerations</h2>
+<p>In the above, <code>A</code> and <code>B</code> synchronise twice, with reversed receiver/sender roles, once on <code>requests</code>, and once on <code>tmp</code> - where, likely, <code>B</code> will be waiting for <code>A</code> to return a <code>Response</code>.</p>
+<p>A good approximation for the total runtime of fiber <code>B</code> is going to be</p>
+<ul>
+<li>the time spent waiting for <code>A</code> to receive from <code>requests</code></li>
+<li><em>+</em> the time spent by <code>A</code> to compute the <code>Response</code></li>
+</ul>
+<h2 id="case-study-iot-weather-station">Case study: IoT weather station</h2>
+<p>Let's apply this abstract idea to a sample problem. Imagine we have a collection of temperature sensors sending data to a weather station.</p>
+<figure>
+    <img src="/src/two_way_communication/01_weather_station.png"/> 
+</figure>
+
+<p>In the following code, we model the weather station as a fiber, and simulate 5 sensors sending data concurrently, every few milliseconds.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
+record SetTemperature, id : Int32, temperature : Float64
+
+requests <span style="color:#f92672">=</span> Channel(SetTemperature)<span style="color:#f92672">.</span>new
+
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+  current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
+  loop <span style="color:#66d9ef">do</span>
+    reading <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
+    puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">received </span><span style="color:#e6db74">#{</span>reading<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+    current_temperatures<span style="color:#f92672">[</span>reading<span style="color:#f92672">.</span>id<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> reading<span style="color:#f92672">.</span>temperature
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># simulate sensors</span>
+<span style="color:#ae81ff">5</span><span style="color:#f92672"></span><span style="color:#f92672">.</span>times { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
+  spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">sensor_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+    loop <span style="color:#66d9ef">do</span>
+      reading <span style="color:#f92672">=</span> SetTemperature<span style="color:#f92672">.</span>new(i, rand)
+      requests<span style="color:#f92672">.</span>send reading
+      sleep rand
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+}
+
+sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></div>
+<p>You can run this code yourself. The output should be similar to the following.</p>
+<pre><code>received SetTemperature(@id=4, @temperature=0.261551478436086)
+received SetTemperature(@id=1, @temperature=0.5216787094023495)
+received SetTemperature(@id=2, @temperature=0.07117116427891625)
+...
+</code></pre><p>We now want to give an <em>operator</em> the ability to retrieve the latest temperature readings at any point in time. Let's apply the pattern we've seen above.</p>
+<figure>
+    <img src="/src/two_way_communication/00_header.png"/> 
+</figure>
+
+<p>First, we need to define a new request message (or <em>command</em>) wrapping a channel for the weather station to return its state.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record GetTemperatures, return_channel : Channel(StationState)</code></pre></div></p>
+<p>Then, we have to update the weather station's request channel and processing loop to support both <code>SetTemperature</code> and <code>GetTemperatures</code> commands.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
+
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+  current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
+  loop <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">case</span> command <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
+    <span style="color:#66d9ef">when</span> SetTemperature
+      current_temperatures<span style="color:#f92672">[</span>command<span style="color:#f92672">.</span>id<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> command<span style="color:#f92672">.</span>temperature
+    <span style="color:#66d9ef">when</span> GetTemperatures
+      command<span style="color:#f92672">.</span>return_channel<span style="color:#f92672">.</span>send current_temperatures
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span></code></pre></div>
+<p>We can now retrieve the current temperatures following the pattern we saw earlier:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">tmp <span style="color:#f92672">=</span> Channel(StationState)<span style="color:#f92672">.</span>new
+requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(tmp)
+temperatures <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>receive</code></pre></div>
+<p>Let's put this all together, simulating an operator querying the weather station every now and then</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
+record SetTemperature, id : Int32, temperature : Float64
+record GetTemperatures, return_channel : Channel(StationState)
+
+requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
+
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+  current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
+  loop <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">case</span> command <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
+    <span style="color:#66d9ef">when</span> SetTemperature
+      current_temperatures<span style="color:#f92672">[</span>command<span style="color:#f92672">.</span>id<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> command<span style="color:#f92672">.</span>temperature
+    <span style="color:#66d9ef">when</span> GetTemperatures
+      command<span style="color:#f92672">.</span>return_channel<span style="color:#f92672">.</span>send current_temperatures
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># simulate sensors</span>
+<span style="color:#ae81ff">5</span><span style="color:#f92672"></span><span style="color:#f92672">.</span>times { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
+  spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">sensor_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+    loop <span style="color:#66d9ef">do</span>
+      reading <span style="color:#f92672">=</span> SetTemperature<span style="color:#f92672">.</span>new(i, rand)
+      requests<span style="color:#f92672">.</span>send reading
+      sleep rand
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+}
+
+<span style="color:#75715e"># simulate operator</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">operator</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+  loop <span style="color:#66d9ef">do</span>
+    tmp <span style="color:#f92672">=</span> Channel(StationState)<span style="color:#f92672">.</span>new
+    requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(tmp)
+    temperatures <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>receive
+    puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">received </span><span style="color:#e6db74">#{</span>temperatures<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+    sleep <span style="color:#ae81ff">2</span> <span style="color:#f92672"></span><span style="color:#f92672">*</span> rand
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></div>
+<p>If you run this yourself, the output should look something like</p>
+<pre><code>received {0 =&gt; 0.8755427230041936, 1 =&gt; 0.9284330205519311, 2 =&gt; 0.5796278817786711, 3 =&gt; 0.7269647270575272, 4 =&gt; 0.005449870508358435}
+received {0 =&gt; 0.6971840652241449, 1 =&gt; 0.563615359462064, 2 =&gt;0.1376840269887423, 3 =&gt; 0.8042644922805047, 4 =&gt; 0.11204561419785454}
+...
+</code></pre><p>We have achieved what we wanted, a thread-safe, two-way communication between fibers, but we have added quite a lot of accidental complexity to our code, in the process.
+Wouldn't it be great if <code>weather_station</code> users didn't have to know about commands and channels to interact with it?</p>
+<p>Now that we have a better grasp on the underlying idea, can we make the pattern a bit more bit more user-friendly?</p>
+<h2 id="threadsafe-fiberpowered-classes">Thread-safe, fiber-powered classes</h2>
+<p>In the series <em>Live coding a URL checker in Crystal</em>, we took the idea above a step further, and defined a thread-safe statistics aggregator class that keeps track of successful and failed HTTP requests, and also exposes a method to retrieve the statistics on demand. The class exposes a clean API, and hides the implementation details that make write and read operations thread-safe. You can watch the recording of the session here:
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/-cXmAZTEjy4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<p>Let's apply the same pattern to our weather station fiber. We'll hide the implementation details of this thread-safe, stateful fiber, and turn it into a thread-safe class in three steps.</p>
+<ol>
+<li>
+<p>We encapsulate records, aliases and requests channel in a <code>WeatherStation</code> class.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
+  <span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
+  <span style="color:#66d9ef">private</span> record SetTemperature, id : Int32, temperature : Float64
+  <span style="color:#66d9ef">private</span> record GetTemperatures, return_channel : Channel(StationState)
+
+  @requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
+  <span style="color:#75715e"># ...</span>
+<span style="color:#66d9ef">end</span></code></pre></div></p>
+</li>
+<li>
+<p>We spawn the weather station fiber inside the initialize method. Notice how <code>current_temperatures</code> is now an instance variable initialized at creation time.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">initialize</span>
+    @current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
+    spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+      loop <span style="color:#66d9ef">do</span>
+        <span style="color:#66d9ef">case</span> command <span style="color:#f92672">=</span> @requests<span style="color:#f92672">.</span>receive
+        <span style="color:#66d9ef">when</span> SetTemperature
+          @current_temperatures<span style="color:#f92672">[</span>command<span style="color:#f92672">.</span>id<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> command<span style="color:#f92672">.</span>temperature
+        <span style="color:#66d9ef">when</span> GetTemperatures
+          command<span style="color:#f92672">.</span>return_channel<span style="color:#f92672">.</span>send @current_temperatures
+        <span style="color:#66d9ef">end</span>
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+  <span style="color:#75715e"># ...</span>
+<span style="color:#66d9ef">end</span></code></pre></div></p>
+</li>
+<li>
+<p>Finally, we provide convenience methods to set and retrieve temperatures. This is the <em>public API</em> of our <code>WeatherStation</code> instances.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
+  <span style="color:#75715e"># continued</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">set_temp</span>(sensor_id : Int32, temperature : Float64)
+    @requests<span style="color:#f92672">.</span>send SetTemperature<span style="color:#f92672">.</span>new(sensor_id, temperature)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">get_temps</span> : StationState
+    Channel(StationState)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>return_channel<span style="color:#f92672">|</span>
+      @requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(return_channel)
+    }<span style="color:#f92672">.</span>receive
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span></code></pre></div></p>
+</li>
+</ol>
+<p>This is it! Now we can <em>safely</em> read from and write to a weather station concurrently, without having to care for the implementation details. Furthermore, from the point of view of the caller, each method call is synchronous, which should make reasoning about the code simpler.</p>
+<p>You can find a working example of the weather station simulation <a href="https://gist.github.com/lbarasti/c5be451c9c493863bf83bbc59ea82533">here</a>.</p>
+<p>Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below!</p>
+</div>
+
+  <footer class="article-footer">
+
+    <aside class="share">
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&title=2-way%20communication%20between%20Fibers" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&text=2-way%20communication%20between%20Fibers&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&t=2-way%20communication%20between%20Fibers" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f&title=2-way%20communication%20between%20Fibers" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2ftwo_way_comm_between_fibers%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+</aside>
+
+
+    <section class="footer">
+      <div>
+        <nav class="crumb">
+          <ol>
+            <li><a href="https://lbarasti.com"><i class="fas fa-home" aria-hidden="true"></i>TOP</a></li>
+            
+            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.compost/" itemprop="url"><span itemprop="title">POST</span></a></li>
+            
+            <li class="active">2-way communication between Fibers</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    
+    
+    
+    
+    
+    <section class="footer">
+      <header>
+        <a href="https://lbarasti.comtags/">TAGS</a>
+      </header>
+      <div>
+        <ul class="terms">
+          
+          <li><a href="https://lbarasti.comtags/crystal/">crystal</a></li>
+          
+          <li><a href="https://lbarasti.comtags/fiber/">Fiber</a></li>
+          
+          <li><a href="https://lbarasti.comtags/channel/">Channel</a></li>
+          
+          <li><a href="https://lbarasti.comtags/server/">Server</a></li>
+          
+          <li><a href="https://lbarasti.comtags/genserver/">GenServer</a></li>
+          
+          <li><a href="https://lbarasti.comtags/actor/">Actor</a></li>
+          
+          <li><a href="https://lbarasti.comtags/concurrency/">concurrency</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    <div class="adj">
+      <div class="mrow">
+        
+        <div class="mcol c6">
+          <header>Previous Article</header>
+          <article class="lism">
+  <a href="https://lbarasti.com/post/fun_with_crystal/">
+    <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
+
+    <div class="inner">
+      <div class="title">Going faster with Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-04-12T10:12:33JST">Apr 12, 2017</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+        </div>
+        
+        
+      </div>
+    </div>
+
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "lbarasti-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+  <div class="mcol c4">
+    <aside class="l-sidebar">
+
+  <div class="sections sidebar">
+    
+<section class="sidebar">
+  <header>AUTHOR</header>
+  <div>
+    <div class="author">
+      
+      <div class="author-thumb" style="background-image: url(https://lbarasti.com/images/profile-picture.jpg);"></div>
+      
+      <div class="author-name">Lorenzo Barasti</div>
+      <ul class="author-facts">
+        
+        <li><a href="https://twitter.com/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="https://github.com/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+        <li><a href="https://www.youtube.com/channel/UCaydNuV-VSO0gFSrvS9WgXg" rel="nofollow" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+        <li><a href="https://twitch.tv/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitch" aria-hidden="true"></i></a></li>
+      </ul>
+      <div class="author-description">Exploring concurrency in Crystal, live coding on occasions.</div>
+    </div>
+  </div>
+</section>
+
+
+    <section class="sidebar">
+  <header>LATESTS</header>
+  <div>
+    <div class="articles sm">
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/two_way_comm_between_fibers/">
+    <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
+
+    <div class="inner">
+      <div class="title">2-way communication between Fibers</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-11-25T22:12:33JST">Nov 25, 2019</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/fun_with_crystal/">
+    <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
+
+    <div class="inner">
+      <div class="title">Going faster with Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-04-12T10:12:33JST">Apr 12, 2017</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+    </div>
+  </div>
+</section>
+
+    
+
+    
+<section class="sidebar">
+  <header>TAGS</header>
+  <div>
+    <ul class="terms">
+      <li><a href="https://lbarasti.comtags/crystal">crystal <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/channel">channel <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/concurrency">concurrency <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/fiber">fiber <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/genserver">genserver <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/ruby">ruby <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/server">server <span class="count">(1)</span></a></li>
+    </ul>
+  </div>
+</section>
+
+
+
+  </div>
+
+</aside>
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="l-container">
+        <p><span class="h-logo">&copy; A Polyglot&#39;s Hacks</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
