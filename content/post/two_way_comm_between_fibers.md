@@ -4,6 +4,7 @@ draft = false
 title = "2-way communication between Fibers"
 thumbnail = "src/two_way_communication/00_header_3.png"
 tags = ["crystal", "Fiber", "Channel", "Server", "GenServer", "Actor", "concurrency"]
+summary = "In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly."
 +++
 
 ## Introduction
@@ -113,7 +114,7 @@ received {0 => 0.6971840652241449, 1 => 0.563615359462064, 2 =>0.137684026988742
 We have achieved what we wanted, a thread-safe, two-way communication between fibers, but we have added quite a lot of accidental complexity to our code, in the process.
 Wouldn't it be great if `weather_station` users didn't have to know about commands and channels to interact with it? 
 
-Now that we have a better grasp on the underlying idea, can we make the pattern a bit more bit more user-friendly?
+Now that we have a better grasp on the underlying idea, can we make the pattern a bit more user-friendly?
 
 ## Thread-safe, fiber-powered classes
 
@@ -175,4 +176,10 @@ This is it! Now we can _safely_ read from and write to a weather station concurr
 
 You can find a working example of the weather station simulation [here](https://gist.github.com/lbarasti/c5be451c9c493863bf83bbc59ea82533).
 
-Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below!
+## 
+
+Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below.
+
+If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
+
+{{< subscribe >}}

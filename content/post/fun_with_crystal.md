@@ -4,6 +4,7 @@ draft = false
 title = "Going faster with Crystal"
 thumbnail = "images/crystal-symbol.png"
 tags = ["crystal", "ruby", "algorithms"]
+summary = "When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?"
 +++
 
 Recently, I have been having some fun with the algorithmic challenges from one of the Algorithms courses on [Coursera](https://www.coursera.org/learn/algorithms-greedy). The programming language I like to use for this kind of things is ruby.
@@ -116,3 +117,10 @@ And here is the source code used to generate the bechmark data above.
 ## References
 - [Crystal lang](https://crystal-lang.org/) official home page
 - A nice [introduction to clustering](https://home.deib.polimi.it/matteucc/Clustering/tutorial_html/)
+
+## 
+
+I hope you enjoyed the read! You can share _your_ experiences with Crystal scripting in the comments section below.
+
+If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
+{{< subscribe >}}
