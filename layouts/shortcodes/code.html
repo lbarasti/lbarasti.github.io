@@ -1,0 +1,2 @@
+{{ $file :=  (delimit (slice "/static/src/" (.Get "file")) "") | readFile | safeHTML }}
+{{ $file }}

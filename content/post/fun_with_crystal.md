@@ -2,7 +2,7 @@
 date = "2017-04-12T10:12:33+01:00"
 draft = false
 title = "Going faster with Crystal"
-image = "crystal-symbol.png"
+thumbnail = "images/crystal-symbol.png"
 tags = ["crystal", "ruby", "algorithms"]
 +++
 
@@ -19,23 +19,20 @@ We define the distance between two points u,v as the [Manhattan distance](https:
 
 where |n| is the absolute value of n.
 
-<figure>
-<img src="/src/fun_with_crystal/point_dist.png" alt="We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3">
-<figcaption><small>Figure 1. We give a visual representation of the distance between two points as defined above and work out the computation for points A(1,1), B(3,1) and D(3,4), E(5,5)</small></figcaption>
-</figure>
+{{< figure src="/src/fun_with_crystal/point_dist.png" alt="We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3"
+caption="Figure 1. We give a visual representation of the distance between two points as defined above and work out the computation for points A(1,1), B(3,1) and D(3,4), E(5,5)"
+>}}
 <br/>
 
 Our task is to group the given points so that the minimum distance between any two groups - let's call them _clusters_ - is at least 3.
 In other words, if two points have distance less than 3, then we want them to be in the same cluster.
 
-<figure>
-<img src="/src/fun_with_crystal/cluster_dist.png" alt="We compute the distance between two clusters as the minimum distance between two points belonging to different clusters">
-<figcaption><small>Figure 2. The figure shows a grouping of the points into clusters such that the distance between each cluster is at least 3. We define the distance between two clusters S_i, S_j as the minimum distance between u and v where u ∊ S_i and v ∊ S_j.</small></figcaption>
-</figure>
+{{< figure src="/src/fun_with_crystal/cluster_dist.png" alt="We compute the distance between two clusters as the minimum distance between two points belonging to different clusters" caption="Figure 2. The figure shows a grouping of the points into clusters such that the distance between each cluster is at least 3. We define the distance between two clusters S_i, S_j as the minimum distance between u and v where u ∊ S_i and v ∊ S_j."
+>}}
 <br/>
 The first approach that comes to my mind is the following: we compute the distance between all the possible pairs of points, and put points that are close enough in the same cluster.
 The following pseudo-code seems to do the job.
-```
+```ruby
 for i in 1..n
   for j in i+1..n
     if dist(i,j) < 3
@@ -105,12 +102,12 @@ And in case you're wondering "Can we do any better than the brute force implemen
 ## Benchmark
 For the record, here is a table summarizing the running time of three different implementations.
 
-Language <br/>    | Running time
+Language  | Running time
 ----------|------
 Ruby      | ~23 minutes
 Node      | 3.5 minutes
 Crystal   | 1.1 minutes
-<br/>
+
 And here is the source code used to generate the bechmark data above.
 
 - [js](/src/fun_with_crystal/loop.js)
