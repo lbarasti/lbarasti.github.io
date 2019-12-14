@@ -19,26 +19,23 @@
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>2-way communication between Fibers - A Polyglot&#39;s Hacks</title>
+    <title>2-way communication between Fibers - lbarasti&#39;s blog</title>
     
-<meta name="description" content="Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
-In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
+<meta name="description" content="In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
 
-<meta property="og:title" content="2-way communication between Fibers - A Polyglot&#39;s Hacks">
+<meta property="og:title" content="2-way communication between Fibers - lbarasti&#39;s blog">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://lbarasti.com/post/two_way_comm_between_fibers/">
 <meta property="og:image" content="https://lbarasti.com/src/two_way_communication/00_header_3.png">
-<meta property="og:site_name" content="A Polyglot&#39;s Hacks">
-<meta property="og:description" content="Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
-In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
+<meta property="og:site_name" content="lbarasti&#39;s blog">
+<meta property="og:description" content="In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="A Polyglot&#39;s Hacks">
+<meta name="twitter:site" content="lbarasti&#39;s blog">
 <meta name="twitter:url" content="https://lbarasti.com/post/two_way_comm_between_fibers/">
-<meta name="twitter:title" content="2-way communication between Fibers - A Polyglot&#39;s Hacks">
-<meta name="twitter:description" content="Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
-In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
+<meta name="twitter:title" content="2-way communication between Fibers - lbarasti&#39;s blog">
+<meta name="twitter:description" content="In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.">
 <meta name="twitter:image" content="https://lbarasti.com/src/two_way_communication/00_header_3.png">
 
 
@@ -50,7 +47,7 @@ In this article, we show a simple pattern to achieve two-way communication betwe
       "@type": "WebPage",
       "@id":"https:\/\/lbarasti.com"
     },
-    "headline": "2-way communication between Fibers-A Polyglot's Hacks",
+    "headline": "2-way communication between Fibers-lbarasti's blog",
     "image": {
       "@type": "ImageObject",
       "url": "https:\/\/lbarasti.com\/src\/two_way_communication\/00_header_3.png",
@@ -61,11 +58,11 @@ In this article, we show a simple pattern to achieve two-way communication betwe
     "dateModified": "2019-11-25T22:12:33JST",
     "author": {
       "@type": "Person",
-      "name": "A Polyglot's Hacks"
+      "name": "lbarasti's blog"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "A Polyglot's Hacks",
+      "name": "lbarasti's blog",
       "logo": {
         "@type": "ImageObject",
         "url": "https:\/\/lbarasti.comimages/logo.png",
@@ -73,7 +70,7 @@ In this article, we show a simple pattern to achieve two-way communication betwe
         "height": 60
       }
     },
-    "description": "Introduction If you\x27re writing concurrent code in Crystal, chances are you\x27re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.\nIn this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly."
+    "description": "In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly."
   }
 </script>
 
@@ -801,7 +798,7 @@ section.footer > header a {
     <header class="l-header">
       <div class="l-container">
         <div class="logo">
-          <a href="https://lbarasti.com">A Polyglot&#39;s Hacks</a>
+          <a href="https://lbarasti.com">lbarasti&#39;s blog</a>
         </div>
         
 
@@ -1031,7 +1028,7 @@ received {0 =&gt; 0.6971840652241449, 1 =&gt; 0.563615359462064, 2 =&gt;0.137684
 ...
 </code></pre><p>We have achieved what we wanted, a thread-safe, two-way communication between fibers, but we have added quite a lot of accidental complexity to our code, in the process.
 Wouldn't it be great if <code>weather_station</code> users didn't have to know about commands and channels to interact with it?</p>
-<p>Now that we have a better grasp on the underlying idea, can we make the pattern a bit more bit more user-friendly?</p>
+<p>Now that we have a better grasp on the underlying idea, can we make the pattern a bit more user-friendly?</p>
 <h2 id="threadsafe-fiberpowered-classes">Thread-safe, fiber-powered classes</h2>
 <p>In the series <em>Live coding a URL checker in Crystal</em>, we took the idea above a step further, and defined a thread-safe statistics aggregator class that keeps track of successful and failed HTTP requests, and also exposes a method to retrieve the statistics on demand. The class exposes a clean API, and hides the implementation details that make write and read operations thread-safe. You can watch the recording of the session here:
 
@@ -1090,7 +1087,28 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
 </ol>
 <p>This is it! Now we can <em>safely</em> read from and write to a weather station concurrently, without having to care for the implementation details. Furthermore, from the point of view of the caller, each method call is synchronous, which should make reasoning about the code simpler.</p>
 <p>You can find a working example of the weather station simulation <a href="https://gist.github.com/lbarasti/c5be451c9c493863bf83bbc59ea82533">here</a>.</p>
-<p>Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below!</p>
+<h2 id="heading"></h2>
+<p>Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below.</p>
+<p>If you'd like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
+
+<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+	 
+</style>
+<div id="mc_embed_signup">
+<form action="https://lbarasti.us4.list-manage.com/subscribe/post?u=2ae02926c5ced578d57958587&amp;id=e952a286b4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<label for="mce-EMAIL"></label>
+	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2ae02926c5ced578d57958587_e952a286b4" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+
 </div>
 
   <footer class="article-footer">
@@ -1223,7 +1241,7 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
         <li><a href="https://www.youtube.com/channel/UCaydNuV-VSO0gFSrvS9WgXg" rel="nofollow" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
         <li><a href="https://twitch.tv/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitch" aria-hidden="true"></i></a></li>
       </ul>
-      <div class="author-description">Exploring concurrency in Crystal, live coding on occasions.</div>
+      <div class="author-description">Exploring concurrency in Crystal, live coding on occasion.</div>
     </div>
   </div>
 </section>
@@ -1300,7 +1318,7 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
 
     <footer class="l-footer">
       <div class="l-container">
-        <p><span class="h-logo">&copy; A Polyglot&#39;s Hacks</span></p>
+        <p><span class="h-logo">&copy; lbarasti&#39;s blog</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
           <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on A Polyglot&#39;s Hacks</title>
+    <title>Posts on lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/post/</link>
-    <description>Recent content in Posts on A Polyglot&#39;s Hacks</description>
+    <description>Recent content in Posts on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate>
@@ -17,8 +17,7 @@
       <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/post/two_way_comm_between_fibers/</guid>
-      <description>Introduction If you&#39;re writing concurrent code in Crystal, chances are you&#39;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.
-In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</description>
+      <description>In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</description>
     </item>
     
     <item>
@@ -27,8 +26,7 @@ In this article, we show a simple pattern to achieve two-way communication betwe
       <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/post/fun_with_crystal/</guid>
-      <description>Recently, I have been having some fun with the algorithmic challenges from one of the Algorithms courses on Coursera. The programming language I like to use for this kind of things is ruby.
-When designing an algorithm it&#39;s important for me to understand why brute force doesn&#39;t work. I like to count the reasons why that approach is not feasible. One way of doing that is to write a naïve implementation of the algorithm under study and make considerations about its running time.</description>
+      <description>When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?</description>
     </item>
     
   </channel>
