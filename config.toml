@@ -3,7 +3,7 @@ languageCode = "en-gb"
 title = "lbarasti's blog"
 theme = "hugo_theme_robust"
 disqusShortname = "lbarasti-github-io"
-GoogleAnalyticsUserID = "UA-97340845-1"
+googleAnalytics = "UA-97340845-1"
 
 [Params]
   SyntaxHighlightTheme = "monokai.min.css"
