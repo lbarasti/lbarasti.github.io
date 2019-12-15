@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.60.1" />
+<meta name="generator" content="Hugo 0.61.0" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.comimages/logo.png">
 
@@ -793,6 +793,13 @@ section.footer > header a {
 
     </style>
 
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', "UA-97340845-1", 'auto', {'useAmpClientId': true});
+ga('send', 'pageview');
+</script>
+
   </head>
   <body>
     <header class="l-header">
@@ -1029,7 +1036,7 @@ received {0 =&gt; 0.6971840652241449, 1 =&gt; 0.563615359462064, 2 =&gt;0.137684
 </code></pre><p>We have achieved what we wanted, a thread-safe, two-way communication between fibers, but we have added quite a lot of accidental complexity to our code, in the process.
 Wouldn't it be great if <code>weather_station</code> users didn't have to know about commands and channels to interact with it?</p>
 <p>Now that we have a better grasp on the underlying idea, can we make the pattern a bit more user-friendly?</p>
-<h2 id="threadsafe-fiberpowered-classes">Thread-safe, fiber-powered classes</h2>
+<h2 id="thread-safe-fiber-powered-classes">Thread-safe, fiber-powered classes</h2>
 <p>In the series <em>Live coding a URL checker in Crystal</em>, we took the idea above a step further, and defined a thread-safe statistics aggregator class that keeps track of successful and failed HTTP requests, and also exposes a method to retrieve the statistics on demand. The class exposes a clean API, and hides the implementation details that make write and read operations thread-safe. You can watch the recording of the session here:
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
