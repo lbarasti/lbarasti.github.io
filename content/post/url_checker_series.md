@@ -62,8 +62,8 @@ The video quality is not great :disappointed:, but I recommend you squeeze every
 
 1. [Fibers owning Channels](https://www.youtube.com/watch?v=On5tkzJx1Gs)
 2. [Terminating groups of Fibers](https://www.youtube.com/watch?v=i_yfrOP3BJc)
-3. [Propagating Channel closure throughout a pipeline](https://www.youtube.com/watch?v=OPWLvPsYo5g)
-4. [Waiting for a pipeline to be *done*](https://www.youtube.com/watch?v=d6JaNC35R20)
+3. [Propagating Channel closure](https://www.youtube.com/watch?v=OPWLvPsYo5g) throughout a pipeline
+4. [Waiting](https://www.youtube.com/watch?v=d6JaNC35R20) for a pipeline to be *done*
 
 ## Session 5 - two-way communication between Fibers
 In this session, we talk about two-way communication between Fibers, taking inspiration from Elixir's `GenServer` and Akka's `Actor`. If the topic interests you, then you should also check this [deep-dive](/post/two_way_comm_between_fibers/) out.
