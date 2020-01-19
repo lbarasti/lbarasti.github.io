@@ -4,6 +4,7 @@ title = "lbarasti's blog"
 theme = "hugo_theme_robust"
 disqusShortname = "lbarasti-github-io"
 googleAnalytics = "UA-97340845-1"
+enableEmoji = true
 
 [Params]
   SyntaxHighlightTheme = "monokai.min.css"
