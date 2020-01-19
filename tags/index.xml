@@ -6,24 +6,15 @@
     <description>Recent content in Tags on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jan 2020 22:12:33 +0100</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Actor</title>
-      <link>https://lbarasti.com/tags/actor/</link>
-      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
-      
-      <guid>https://lbarasti.com/tags/actor/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Channel</title>
       <link>https://lbarasti.com/tags/channel/</link>
-      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/channel/</guid>
       <description></description>
@@ -32,7 +23,7 @@
     <item>
       <title>concurrency</title>
       <link>https://lbarasti.com/tags/concurrency/</link>
-      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/concurrency/</guid>
       <description></description>
@@ -41,7 +32,7 @@
     <item>
       <title>crystal</title>
       <link>https://lbarasti.com/tags/crystal/</link>
-      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/crystal/</guid>
       <description></description>
@@ -50,9 +41,36 @@
     <item>
       <title>Fiber</title>
       <link>https://lbarasti.com/tags/fiber/</link>
-      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/fiber/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>live coding</title>
+      <link>https://lbarasti.com/tags/live-coding/</link>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/live-coding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>series</title>
+      <link>https://lbarasti.com/tags/series/</link>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/series/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Actor</title>
+      <link>https://lbarasti.com/tags/actor/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/actor/</guid>
       <description></description>
     </item>
     

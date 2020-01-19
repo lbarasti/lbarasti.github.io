@@ -3,6 +3,56 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://lbarasti.com/tags/channel/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/concurrency/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/crystal/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/fiber/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/live-coding/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/url_checker_series/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/series/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/</loc>
+    <lastmod>2020-01-12T22:12:33+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://lbarasti.com/post/two_way_comm_between_fibers/</loc>
     <lastmod>2019-11-25T22:12:33+01:00</lastmod>
   </url>
@@ -13,47 +63,12 @@
   </url>
   
   <url>
-    <loc>https://lbarasti.com/tags/channel/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/concurrency/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/crystal/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/fiber/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://lbarasti.com/tags/genserver/</loc>
     <lastmod>2019-11-25T22:12:33+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://lbarasti.com/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/post/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://lbarasti.com/tags/server/</loc>
-    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/</loc>
     <lastmod>2019-11-25T22:12:33+01:00</lastmod>
   </url>
   

@@ -13,30 +13,30 @@
 
 
 
-    <link rel="canonical" href="https://lbarasti.com/post/fun_with_crystal/">
+    <link rel="canonical" href="https://lbarasti.com/post/url_checker_series/">
     
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Going faster with Crystal - lbarasti&#39;s blog</title>
+    <title>Live coding a URL checker in Crystal - lbarasti&#39;s blog</title>
     
-<meta name="description" content="When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?">
+<meta name="description" content="A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app.">
 
-<meta property="og:title" content="Going faster with Crystal - lbarasti&#39;s blog">
+<meta property="og:title" content="Live coding a URL checker in Crystal - lbarasti&#39;s blog">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://lbarasti.com/post/fun_with_crystal/">
-<meta property="og:image" content="https://lbarasti.com/images/crystal-symbol.png">
+<meta property="og:url" content="https://lbarasti.com/post/url_checker_series/">
+<meta property="og:image" content="https://lbarasti.com/src/url_checker_series/header.jpeg">
 <meta property="og:site_name" content="lbarasti&#39;s blog">
-<meta property="og:description" content="When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?">
+<meta property="og:description" content="A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="lbarasti&#39;s blog">
-<meta name="twitter:url" content="https://lbarasti.com/post/fun_with_crystal/">
-<meta name="twitter:title" content="Going faster with Crystal - lbarasti&#39;s blog">
-<meta name="twitter:description" content="When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?">
-<meta name="twitter:image" content="https://lbarasti.com/images/crystal-symbol.png">
+<meta name="twitter:url" content="https://lbarasti.com/post/url_checker_series/">
+<meta name="twitter:title" content="Live coding a URL checker in Crystal - lbarasti&#39;s blog">
+<meta name="twitter:description" content="A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app.">
+<meta name="twitter:image" content="https://lbarasti.com/src/url_checker_series/header.jpeg">
 
 
 <script type="application/ld+json">
@@ -47,15 +47,15 @@
       "@type": "WebPage",
       "@id":"https:\/\/lbarasti.com"
     },
-    "headline": "Going faster with Crystal-lbarasti's blog",
+    "headline": "Live coding a URL checker in Crystal-lbarasti's blog",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/lbarasti.com\/images\/crystal-symbol.png",
+      "url": "https:\/\/lbarasti.com\/src\/url_checker_series\/header.jpeg",
       "height": 800,
       "width": 800
     },
-    "datePublished": "2017-04-12T10:12:33JST",
-    "dateModified": "2017-04-12T10:12:33JST",
+    "datePublished": "2020-01-12T22:12:33JST",
+    "dateModified": "2020-01-12T22:12:33JST",
     "author": {
       "@type": "Person",
       "name": "lbarasti's blog"
@@ -70,7 +70,7 @@
         "height": 60
       }
     },
-    "description": "When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?"
+    "description": "A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app."
   }
 </script>
 
@@ -826,137 +826,128 @@ ga('send', 'pageview');
 
     <article class="sn">
 
-  <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
+  <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
 
   <header class="article-header">
-    <h1 class="title">Going faster with Crystal</h1>
+    <h1 class="title">Live coding a URL checker in Crystal</h1>
 
     <ul class="facts">
-      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2017-04-12T10:12:33JST">Apr 12, 2017</time></li>
+      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2020-01-12T22:12:33JST">Jan 12, 2020</time></li>
       
       <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.compost/">POST</a></li>
       
     </ul>
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&title=Going%20faster%20with%20Crystal" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&text=Going%20faster%20with%20Crystal&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&t=Going%20faster%20with%20Crystal" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&title=Going%20faster%20with%20Crystal" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&title=Live%20coding%20a%20URL%20checker%20in%20Crystal" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&text=Live%20coding%20a%20URL%20checker%20in%20Crystal&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&t=Live%20coding%20a%20URL%20checker%20in%20Crystal" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&title=Live%20coding%20a%20URL%20checker%20in%20Crystal" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
   </header>
 
   
 
-  <div class="article-body"><p>Recently, I have been having some fun with the algorithmic challenges from one of the Algorithms courses on <a href="https://www.coursera.org/learn/algorithms-greedy">Coursera</a>. The programming language I like to use for this kind of things is ruby.</p>
-<p>When designing an algorithm it's important for me to understand why <em>brute force</em> doesn't work. I like to <em>count</em> the reasons why that approach is not feasible. One way of doing that is to write a naïve implementation of the algorithm under study and make considerations about its running time. Let me give you an example.</p>
-<h2 id="a-sample-problem">A sample problem</h2>
-<p>We are given a set of 2D points with integer coordinates.
-We define the distance between two points u,v as the <a href="https://xlinux.nist.gov/dads/HTML/manhattanDistance.html">Manhattan distance</a></p>
-<blockquote>
-<p>dist(u,v) = |x_u - x_v| + |y_u - y_v|</p>
-</blockquote>
-<p>where |n| is the absolute value of n.</p>
-<p><figure>
-    <img src="/src/fun_with_crystal/point_dist.png"
-         alt="We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3"/> <figcaption>
-            <p>Figure 1. We give a visual representation of the distance between two points as defined above and work out the computation for points A(1,1), B(3,1) and D(3,4), E(5,5)</p>
-        </figcaption>
-</figure>
+  <div class="article-body"><h2 id="introduction">Introduction</h2>
+<p>Over the past couple of months, I've been recording a series of live-coding sessions exploring Crystal’s concurrency by means of building a simple terminal-based app.</p>
+<p>I decided to collect them all here with some comments and errata.
+You can find the source code on <a href="https://github.com/lbarasti/twitch-url-checker">github</a>, in case you feel like following along.</p>
+<h2 id="what-are-we-building">What are we building?</h2>
+<p>In this series, we'll build a URL checker: a tool to fetch a user-defined set of URLs periodically, reporting on their health.</p>
+<p>Along the journey, we'll implement basic tracking and alerting functionality, as well as a polished terminal UI to display information. While doing so, we'll introduce and explore concurrency concepts and patterns from a paradigm called Communicating Sequential Processes (<a href="https://en.wikipedia.org/wiki/Communicating_sequential_processes">CSP</a>).</p>
+<h2 id="session-1---getting-started">Session 1 - Getting started</h2>
+<p>In this session, we lay the foundations for our terminal-based, concurrent application written in Crystal.</p>
 
-<!-- raw HTML omitted --></p>
-<p>Our task is to group the given points so that the minimum distance between any two groups - let's call them <em>clusters</em> - is at least 3.
-In other words, if two points have distance less than 3, then we want them to be in the same cluster.</p>
-<p><figure>
-    <img src="/src/fun_with_crystal/cluster_dist.png"
-         alt="We compute the distance between two clusters as the minimum distance between two points belonging to different clusters"/> <figcaption>
-            <p>Figure 2. The figure shows a grouping of the points into clusters such that the distance between each cluster is at least 3. We define the distance between two clusters S_i, S_j as the minimum distance between u and v where u ∊ S_i and v ∊ S_j.</p>
-        </figcaption>
-</figure>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/Q1wOFmt3yng" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
 
-<!-- raw HTML omitted -->
-The first approach that comes to my mind is the following: we compute the distance between all the possible pairs of points, and put points that are close enough in the same cluster.
-The following pseudo-code seems to do the job.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span>n
-  <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span>n
-    <span style="color:#66d9ef">if</span> dist(i,j) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>
-      <span style="color:#f92672"></span>merge_clusters(i, j)
-</code></pre></div><p>Now, it's not clear how exactly we are going to keep track of which cluster a point is in at any given time, but even assuming we can do that efficiently with respect to the size of the problem - i.e. the number of points - we have a more urgent issue to deal with.</p>
-<h2 id="the-more-urgent-issue">The more urgent issue</h2>
-<p>The total number of pairs in a set of <code>n</code> points happens to be <code>n(n-1)/2</code>, which means that the number of pairs we need to go through grows quadratically with respect to the number of points. This implies that the computational cost of our brute force implementation is <em>at least</em> O(n²). Let's get a feel for that.</p>
-<p>Try running the following ruby script for increasing values of <code>size</code> up to 10^5 - name the file <code>loop.rb</code> for future reference.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">size <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>your value here<span style="color:#f92672">&gt;</span>
-a <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span>size)<span style="color:#f92672">.</span>map{ <span style="color:#f92672">[</span>rand(<span style="color:#ae81ff">1000</span><span style="color:#f92672"></span>), rand(<span style="color:#ae81ff">1000</span><span style="color:#f92672"></span>)<span style="color:#f92672">]</span> }
+<p>The video is quite long, but you can use the items in the list below as bookmarks.
+Remember you can speed up the playback, if things get a bit too slow for you 🏃</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=Q1wOFmt3yng">Initialising</a> a Crystal app</li>
+<li>Making <a href="https://youtu.be/Q1wOFmt3yng?t=343">HTTP calls</a></li>
+<li>Reading from <a href="https://youtu.be/Q1wOFmt3yng?t=500">config files</a></li>
+<li><a href="https://youtu.be/Q1wOFmt3yng?t=1258">Concurrently checking URLs</a> with Channels and Fibers</li>
+<li><a href="https://youtu.be/Q1wOFmt3yng?t=2591">Printing tables</a> on the terminal with <a href="https://github.com/hutou/tablo">Tablo</a></li>
+</ol>
+<h2 id="session-2---classes-modules-tasks">Session 2 - Classes, modules, tasks</h2>
+<p>In this session, we start organising our code by splitting concerns and encapsulating logic into modules and classes.</p>
+<p>If you're new to Crystal and are not familiar with Ruby, then I think you'll find these valuable 💰</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=e9nBJTFCohg">Classes and aliases</a></li>
+<li><a href="https://www.youtube.com/watch?v=F2ju3VOOosA">Extracting tasks into modules</a></li>
+<li><a href="https://www.youtube.com/watch?v=uQaHz2g_39c">Scheduling periodic tasks</a></li>
+</ol>
+<h2 id="session-3---around-the-clock">Session 3 - Around the clock</h2>
+<p>In this session, we expand on configuration handling and logging. We also introduce some new concurrency constructs: timers ⏰ and the <em>select</em> statement.</p>
+<p>Macros are mentioned briefly. If you want to know more, then the <a href="https://crystal-lang.org/reference/syntax_and_semantics/macros.html">reference manual</a> is a good place to start.</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=-IAkeAFW7xQ">Type-safe config</a> handling</li>
+<li>Sensible <a href="https://www.youtube.com/watch?v=bx3C73EKqIw">monkey patching</a></li>
+<li><a href="https://www.youtube.com/watch?v=BjgYHxZ7ztI">Logging</a> across Fibers</li>
+<li><a href="https://www.youtube.com/watch?v=x_9y7Z8MvHE">Signals, timers and select statement</a></li>
+</ol>
+<h2 id="session-4---fibers-terminated">Session 4 - Fibers: terminated</h2>
+<p>When sharing a channel between fibers, it's important that we are clear on each fiber's responsibility. Some will write to the channel, some will read from it, and some will mark the end of the communication by closing it.</p>
+<p>In this session, we talk about <em>channel ownership</em> and discuss some fairly advanced <em>termination strategies</em>.</p>
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">dist</span>(u,v)
-  (u<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672"></span><span style="color:#f92672">]</span> <span style="color:#f92672">-</span> v<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672"></span><span style="color:#f92672">]</span>)<span style="color:#f92672">.</span>abs <span style="color:#f92672">+</span> (u<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span> <span style="color:#f92672">-</span> v<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span>)<span style="color:#f92672">.</span>abs
-<span style="color:#66d9ef">end</span>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/On5tkzJx1Gs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
 
-a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672">|</span>u,i<span style="color:#f92672">|</span>
-  print <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672"></span><span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
-  <span style="color:#f92672"></span>a<span style="color:#f92672">[</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">..</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672"></span><span style="color:#f92672">]</span><span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672">|</span>v,j<span style="color:#f92672">|</span>
-    dist(u,v) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>
-  <span style="color:#f92672"></span>}
-}
-</code></pre></div><p>On my machine the running time factor between <code>size = 10^4</code> and <code>size = 10^5</code> is about <!-- raw HTML omitted -->100<!-- raw HTML omitted -->. In particular, going through the nested for-loop with 100000 elements takes over 20 minutes. And we are not even computing the clusters yet!</p>
-<p>So I'm thinking, maybe there's a better way of dealing with this, maybe we don't need to go through the array twice. On the other hand, maybe an interpreted language like ruby is just not the right tool for the job.</p>
-<p>If only we could test this assumption without too much effort&hellip;</p>
-<h2 id="meet-crystal">Meet Crystal!</h2>
-<p>A friend recently told me about the Crystal language. He was so excited about it that I thought &ldquo;I should really check that out&rdquo;. Let me tell you why this looks like a good moment to do that.</p>
-<p>Crystal is a compiled language designed to achieve <strong>high performance</strong> with <strong>low memory footprint</strong>. (One of) The killer feature(s) is the syntax. Crystal <strong>syntax</strong> is so similar to ruby that you might be able to convert your favourite ruby scripts with very little effort - especially if they are self-contained.</p>
-<p>Now, that sounds a lot like what we want here: we have a self-contained ruby script, and we want it to run faster!</p>
-<p>So after installing Crystal, I tried
-<code>crystal loop.rb</code> - yes, just like that.</p>
-<p>Our script happens to be fully compatible with Crystal's specification, so the <code>crystal</code> binary is happy to compile it and run it at once. Sadly, the runtime for size = 100000 is still over 12 minutes&hellip;</p>
-<p>Is that it? Not really, the <a href="https://crystal-lang.org/docs/using_the_compiler/">getting started</a> guide to Crystal recommends you compile your source code with the <code>--release</code> flag once you're happy with it.</p>
-<pre><code>crystal build loop.rb --release
-</code></pre><p>This produces a blazing fast <code>loop</code> executable that runs in under 70 seconds. We just cut the running time by a factor of <!-- raw HTML omitted -->20<!-- raw HTML omitted --> and all we had to do was to compile and run our code with Crystal. Awesome!</p>
-<h2 id="considerations">Considerations</h2>
-<p>I hope you got to appreciate how Crystal can enhance the performance of our code without affecting our productivity.</p>
-<p>And we've only scratched the surface! The language has way more to offer. Among other things, Crystal comes with a smart, non-obtrusive type system that prevents a wide range of little bugs from appearing in our code.</p>
-<p>So next time you're faced with a computational challenge, why don't you give Crystal a try!</p>
-<h2 id="but-were-not-done-yet">But we're not done yet</h2>
-<p>If you're still reading, then you probably noticed I cheated a bit. I gave the outline of a sub-optimal brute force solution, and didn't even bother providing the full implementation of the clustering algorithm. I leave that to you for now, but I hope I'll be able to follow up on that soon.</p>
-<p>And in case you're wondering &ldquo;Can we do any better than the brute force implementation?&rdquo; the answer is yes, we can indeed! In fact, we should be able to squeeze the running time to O(n) times the cost of merging two clusters.</p>
-<h2 id="benchmark">Benchmark</h2>
-<p>For the record, here is a table summarizing the running time of three different implementations.</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Running time</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ruby</td>
-<td>~23 minutes</td>
-</tr>
-<tr>
-<td>Node</td>
-<td>3.5 minutes</td>
-</tr>
-<tr>
-<td>Crystal</td>
-<td>1.1 minutes</td>
-</tr>
-</tbody>
-</table>
-<p>And here is the source code used to generate the bechmark data above.</p>
-<ul>
-<li><a href="/src/fun_with_crystal/loop.js">js</a></li>
-<li><a href="/src/fun_with_crystal/loop.rb">ruby/Crystal</a></li>
-</ul>
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://crystal-lang.org/">Crystal lang</a> official home page</li>
-<li>A nice <a href="https://home.deib.polimi.it/matteucc/Clustering/tutorial_html/">introduction to clustering</a></li>
-</ul>
+<p>The video quality is not great 😞, but I recommend you squeeze every pixel out of this one, as the concepts exposed here are fundamental to work effectively with channels and fibers.</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=On5tkzJx1Gs">Fibers owning Channels</a></li>
+<li><a href="https://www.youtube.com/watch?v=i_yfrOP3BJc">Terminating groups of Fibers</a></li>
+<li><a href="https://www.youtube.com/watch?v=OPWLvPsYo5g">Propagating Channel closure</a> throughout a pipeline</li>
+<li><a href="https://www.youtube.com/watch?v=d6JaNC35R20">Waiting</a> for a pipeline to be <em>done</em></li>
+</ol>
+<h2 id="session-5---two-way-communication-between-fibers">Session 5 - two-way communication between Fibers</h2>
+<p>In this session, we talk about two-way communication between Fibers, taking inspiration from Elixir's <code>GenServer</code> and Akka's <code>Actor</code>. If the topic interests you, then you should also check this <a href="/post/two_way_comm_between_fibers/">deep-dive</a> out.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/-cXmAZTEjy4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<h2 id="session-6---operations-on-channels">Session 6 - Operations on channels</h2>
+<p>Partitioning is a powerful abstraction that lets us process streams of data differently based on some rule.</p>
+<p>In this session, we show how to partition (and then merge) the data sent to a Channel based on a predicate.</p>
+<p>We also define a stateful fiber to compute a moving average.</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=xcHcqdm1Q84">Partitioning</a> and <a href="https://www.youtube.com/w/atch?v=v5P6scaJHV0">merging</a> channels</li>
+<li>Processing data on a <a href="https://www.youtube.com/watch?v=u55XmYgU-B8">sliding window</a>.</li>
+</ol>
+<h4 id="errata">Errata</h4>
+<p>The module <code>AvgResponseTime</code> is affected by the following bugs:</p>
+<ol>
+<li><code>most_recent.reduce(&amp;.+)</code> is equivalent to <code>most_recent.reduce {|a| a.+}</code>, which is definitely not what I was going for. You can use <code>most_recent.reduce {|a,b| a + b}</code> instead, or opt for the more compact <code>most_recent.sum</code></li>
+<li>On the same line, we should be dividing the sum of the response times by the size of <code>most_recent</code>, rather than by <code>width</code>. Dividing by <code>width</code> produces the wrong result until <code>most_recent</code> is full.</li>
+<li>If you look carefully, you'll notice that we're computing the average response time <em>over all</em>, rather than computing the average response time <em>by URL</em>. We define a suitable data structure to store aggregated data by URL in video <a href="https://www.youtube.com/watch?v=egmKFrqwfh0">8.2</a>.</li>
+</ol>
+<h2 id="session-7---testing-concurrent-code">Session 7 - Testing concurrent code</h2>
+<p>When testing concurrent code, things get a lot easier when we split concurrency and business logic, so that we can test the two in isolation.</p>
+<p>In this session, we look into practices to make our concurrent code testable and simple strategies to test it.</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=1SumwtRv2tI">Writing robust tests</a> for our channel partitioning method 🏋️‍♀️</li>
+<li>Refactoring to <a href="https://www.youtube.com/watch?v=FkBEaltQE1k">decouple concurrency and business logic</a> 🧜‍♂️</li>
+<li><a href="https://www.youtube.com/watch?v=HN5Mx0Vrc8Y">Testing non-deterministic output</a> 🤷‍♀️</li>
+<li>Writing <a href="https://www.youtube.com/watch?v=MKtDeYDHm3g">time-dependent tests</a> ⏲</li>
+</ol>
+<h2 id="session-8---wrapping-up">Session 8 - Wrapping up</h2>
+<p>We close the season with a reprise on termination strategies, more stateful fibers and a shiny new UI 🚀</p>
+<ol>
+<li>Bringing rogue fibers to order with a more robust <a href="https://www.youtube.com/watch?v=tz732LThVGo">termination strategy</a></li>
+<li>Adding an <a href="https://www.youtube.com/watch?v=egmKFrqwfh0">alerting stage</a> to our pipeline 🚨</li>
+<li>Polishing the terminal UI with <a href="https://www.youtube.com/watch?v=hpNFVdnRric">ncurses</a></li>
+</ol>
+<h4 id="notes">Notes</h4>
+<p>Once you add the dependency on <a href="https://github.com/maiha/crt.cr">crt</a>, you might see the error <code>cannot find -lgpm</code> when compiling the app. Installing <code>libncursesw5-dev</code> should solve the issue.</p>
 <h2 id="heading"></h2>
-<p>I hope you enjoyed the read! You can share <em>your</em> experiences with Crystal scripting in the comments section below.</p>
-<p>If you'd like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.
+<p>This is it! I hope you had some fun and learned something while watching these videos. As for myself, I am currently looking for new, concurrency-releated topics to dig into, so I'd love to hear your suggestions on new topics or apps I could live-code - just leave a comment below to have your say 👇</p>
+<p>If you'd like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
 
 <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
 <style type="text/css">
@@ -975,17 +966,17 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
 </form>
 </div>
 
-</p>
+
 </div>
 
   <footer class="article-footer">
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&title=Going%20faster%20with%20Crystal" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&text=Going%20faster%20with%20Crystal&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&t=Going%20faster%20with%20Crystal" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f&title=Going%20faster%20with%20Crystal" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2ffun_with_crystal%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&title=Live%20coding%20a%20URL%20checker%20in%20Crystal" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&text=Live%20coding%20a%20URL%20checker%20in%20Crystal&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&t=Live%20coding%20a%20URL%20checker%20in%20Crystal" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f&title=Live%20coding%20a%20URL%20checker%20in%20Crystal" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2furl_checker_series%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
 
@@ -997,7 +988,7 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
             
             <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.compost/" itemprop="url"><span itemprop="title">POST</span></a></li>
             
-            <li class="active">Going faster with Crystal</li>
+            <li class="active">Live coding a URL checker in Crystal</li>
           </ol>
         </nav>
       </div>
@@ -1017,9 +1008,15 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
           
           <li><a href="https://lbarasti.comtags/crystal/">crystal</a></li>
           
-          <li><a href="https://lbarasti.comtags/ruby/">ruby</a></li>
+          <li><a href="https://lbarasti.comtags/fiber/">Fiber</a></li>
           
-          <li><a href="https://lbarasti.comtags/algorithms/">algorithms</a></li>
+          <li><a href="https://lbarasti.comtags/channel/">Channel</a></li>
+          
+          <li><a href="https://lbarasti.comtags/concurrency/">concurrency</a></li>
+          
+          <li><a href="https://lbarasti.comtags/live-coding/">live coding</a></li>
+          
+          <li><a href="https://lbarasti.comtags/series/">series</a></li>
           
         </ul>
       </div>
@@ -1034,9 +1031,8 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
     <div class="adj">
       <div class="mrow">
         
-        
         <div class="mcol c6">
-          <header>Next Article</header>
+          <header>Previous Article</header>
           <article class="lism">
   <a href="https://lbarasti.com/post/two_way_comm_between_fibers/">
     <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
@@ -1055,6 +1051,7 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
 </article>
 
         </div>
+        
         
       </div>
     </div>

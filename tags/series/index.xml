@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fiber on lbarasti&#39;s blog</title>
-    <link>https://lbarasti.com/tags/fiber/</link>
-    <description>Recent content in Fiber on lbarasti&#39;s blog</description>
+    <title>series on lbarasti&#39;s blog</title>
+    <link>https://lbarasti.com/tags/series/</link>
+    <description>Recent content in series on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Sun, 12 Jan 2020 22:12:33 +0100</lastBuildDate>
     
-	<atom:link href="https://lbarasti.com/tags/fiber/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://lbarasti.com/tags/series/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://lbarasti.com/post/url_checker_series/</guid>
       <description>A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app.</description>
-    </item>
-    
-    <item>
-      <title>2-way communication between Fibers</title>
-      <link>https://lbarasti.com/post/two_way_comm_between_fibers/</link>
-      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
-      
-      <guid>https://lbarasti.com/post/two_way_comm_between_fibers/</guid>
-      <description>In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</description>
     </item>
     
   </channel>

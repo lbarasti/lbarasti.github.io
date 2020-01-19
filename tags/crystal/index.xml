@@ -6,10 +6,19 @@
     <description>Recent content in crystal on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jan 2020 22:12:33 +0100</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/tags/crystal/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Live coding a URL checker in Crystal</title>
+      <link>https://lbarasti.com/post/url_checker_series/</link>
+      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/post/url_checker_series/</guid>
+      <description>A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app.</description>
+    </item>
     
     <item>
       <title>2-way communication between Fibers</title>
