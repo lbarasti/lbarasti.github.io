@@ -1,0 +1,22 @@
+name: statistics-showcase
+version: 0.1.0
+
+authors:
+  - lbarasti <lbarasti@users.noreply.github.com>
+
+dependencies:
+  aquaplot:
+    github: crystal-data/aquaplot
+  ishi:
+    github: lbarasti/ishi
+    branch: fillstyle
+  statistics:
+    github: lbarasti/statistics
+    branch: master
+  tablo:
+    github: hutou/tablo
+    version: 0.9.3
+
+crystal: 0.34.0
+
+license: MIT

@@ -1,0 +1,6 @@
+article.sn > .article-body figcaption {
+  color: #1c9fda;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
