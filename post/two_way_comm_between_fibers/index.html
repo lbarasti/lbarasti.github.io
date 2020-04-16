@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.62.2" />
+<meta name="generator" content="Hugo 0.66.0" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.comimages/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-224ddb75e51dd0d04b1e71827aad96f9 {
+  background-image: url(https://lbarasti.com/src/intro_to_statistics/00_header.png);
+}
+
+
+
 .thumb-408d2f8615f913914e565d9a2093a3a4 {
   background-image: url(https://lbarasti.com/src/url_checker_series/header.jpeg);
 }
@@ -794,6 +800,12 @@ section.footer > header a {
 
 
 
+article.sn > .article-body figcaption {
+  color: #1c9fda;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
 
 
 
@@ -851,7 +863,7 @@ ga('send', 'pageview');
   
 
   <div class="article-body"><h2 id="introduction">Introduction</h2>
-<p>If you're writing concurrent code in Crystal, chances are you're relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.</p>
+<p>If you&rsquo;re writing concurrent code in Crystal, chances are you&rsquo;re relying on Channels to pass information between Fibers. This works very well when dealing with one-way communication - i.e. when the information flows in one direction only - but probably leaves you wondering how to pass information back and forth between fibers.</p>
 <p>In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</p>
 <h2 id="core-idea">Core idea</h2>
 <p>Let <code>A</code> and <code>B</code> be two fibers, where <code>A</code> holds information that <code>B</code> wants.
@@ -861,7 +873,7 @@ ga('send', 'pageview');
 </figure>
 
 <p>Now, you might be wondering: &ldquo;where does the <code>tmp</code> channel come from?&rdquo;</p>
-<p>Here is the trick, it's <code>B</code> that creates <code>tmp</code> and wraps it in the <code>Request</code> object.
+<p>Here is the trick, it&rsquo;s <code>B</code> that creates <code>tmp</code> and wraps it in the <code>Request</code> object.
 The following code illustrates the exchange.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -893,15 +905,15 @@ record Response, value : Int32
 
 requests <span style="color:#f92672">=</span> Channel(Request)<span style="color:#f92672">.</span>new
 
-spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;A&#34;</span>) <span style="color:#66d9ef">do</span>
   loop <span style="color:#66d9ef">do</span>
     request <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
     tmp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>tmp
-    tmp<span style="color:#f92672">.</span>send Response<span style="color:#f92672">.</span>new(rand(<span style="color:#ae81ff">10</span><span style="color:#f92672"></span>))
+    tmp<span style="color:#f92672">.</span>send Response<span style="color:#f92672">.</span>new(rand(<span style="color:#ae81ff">10</span>))
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 
-spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;B&#34;</span>) <span style="color:#66d9ef">do</span>
   tmp <span style="color:#f92672">=</span> Channel(Response)<span style="color:#f92672">.</span>new
   request <span style="color:#f92672">=</span> Request<span style="color:#f92672">.</span>new(tmp)
   requests<span style="color:#f92672">.</span>send request
@@ -931,7 +943,7 @@ sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></td><
 <li><em>+</em> the time spent by <code>A</code> to compute the <code>Response</code></li>
 </ul>
 <h2 id="case-study-iot-weather-station">Case study: IoT weather station</h2>
-<p>Let's apply this abstract idea to a sample problem. Imagine we have a collection of temperature sensors sending data to a weather station.</p>
+<p>Let&rsquo;s apply this abstract idea to a sample problem. Imagine we have a collection of temperature sensors sending data to a weather station.</p>
 <figure>
     <img src="/src/two_way_communication/01_weather_station.png"/> 
 </figure>
@@ -942,18 +954,18 @@ record SetTemperature, id : Int32, temperature : Float64
 
 requests <span style="color:#f92672">=</span> Channel(SetTemperature)<span style="color:#f92672">.</span>new
 
-spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;weather_station&#34;</span>) <span style="color:#66d9ef">do</span>
   current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
   loop <span style="color:#66d9ef">do</span>
     reading <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
-    puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">received </span><span style="color:#e6db74">#{</span>reading<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+    puts <span style="color:#e6db74">&#34;received </span><span style="color:#e6db74">#{</span>reading<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
     current_temperatures<span style="color:#f92672">[</span>reading<span style="color:#f92672">.</span>id<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> reading<span style="color:#f92672">.</span>temperature
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 
 <span style="color:#75715e"># simulate sensors</span>
-<span style="color:#ae81ff">5</span><span style="color:#f92672"></span><span style="color:#f92672">.</span>times { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
-  spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">sensor_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+<span style="color:#ae81ff">5</span><span style="color:#f92672">.</span>times { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
+  spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;sensor_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
     loop <span style="color:#66d9ef">do</span>
       reading <span style="color:#f92672">=</span> SetTemperature<span style="color:#f92672">.</span>new(i, rand)
       requests<span style="color:#f92672">.</span>send reading
@@ -968,17 +980,17 @@ sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></div>
 received SetTemperature(@id=1, @temperature=0.5216787094023495)
 received SetTemperature(@id=2, @temperature=0.07117116427891625)
 ...
-</code></pre><p>We now want to give an <em>operator</em> the ability to retrieve the latest temperature readings at any point in time. Let's apply the pattern we've seen above.</p>
+</code></pre><p>We now want to give an <em>operator</em> the ability to retrieve the latest temperature readings at any point in time. Let&rsquo;s apply the pattern we&rsquo;ve seen above.</p>
 <figure>
     <img src="/src/two_way_communication/00_header.png"/> 
 </figure>
 
 <p>First, we need to define a new request message (or <em>command</em>) wrapping a channel for the weather station to return its state.
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record GetTemperatures, return_channel : Channel(StationState)</code></pre></div></p>
-<p>Then, we have to update the weather station's request channel and processing loop to support both <code>SetTemperature</code> and <code>GetTemperatures</code> commands.</p>
+<p>Then, we have to update the weather station&rsquo;s request channel and processing loop to support both <code>SetTemperature</code> and <code>GetTemperatures</code> commands.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
 
-spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;weather_station&#34;</span>) <span style="color:#66d9ef">do</span>
   current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
   loop <span style="color:#66d9ef">do</span>
     <span style="color:#66d9ef">case</span> command <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
@@ -993,14 +1005,14 @@ spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">tmp <span style="color:#f92672">=</span> Channel(StationState)<span style="color:#f92672">.</span>new
 requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(tmp)
 temperatures <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>receive</code></pre></div>
-<p>Let's put this all together, simulating an operator querying the weather station every now and then</p>
+<p>Let&rsquo;s put this all together, simulating an operator querying the weather station every now and then</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
 record SetTemperature, id : Int32, temperature : Float64
 record GetTemperatures, return_channel : Channel(StationState)
 
 requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
 
-spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;weather_station&#34;</span>) <span style="color:#66d9ef">do</span>
   current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
   loop <span style="color:#66d9ef">do</span>
     <span style="color:#66d9ef">case</span> command <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>receive
@@ -1013,8 +1025,8 @@ spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;
 <span style="color:#66d9ef">end</span>
 
 <span style="color:#75715e"># simulate sensors</span>
-<span style="color:#ae81ff">5</span><span style="color:#f92672"></span><span style="color:#f92672">.</span>times { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
-  spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">sensor_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+<span style="color:#ae81ff">5</span><span style="color:#f92672">.</span>times { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
+  spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;sensor_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
     loop <span style="color:#66d9ef">do</span>
       reading <span style="color:#f92672">=</span> SetTemperature<span style="color:#f92672">.</span>new(i, rand)
       requests<span style="color:#f92672">.</span>send reading
@@ -1024,13 +1036,13 @@ spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;
 }
 
 <span style="color:#75715e"># simulate operator</span>
-spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">operator</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;operator&#34;</span>) <span style="color:#66d9ef">do</span>
   loop <span style="color:#66d9ef">do</span>
     tmp <span style="color:#f92672">=</span> Channel(StationState)<span style="color:#f92672">.</span>new
     requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(tmp)
     temperatures <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>receive
-    puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">received </span><span style="color:#e6db74">#{</span>temperatures<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-    sleep <span style="color:#ae81ff">2</span> <span style="color:#f92672"></span><span style="color:#f92672">*</span> rand
+    puts <span style="color:#e6db74">&#34;received </span><span style="color:#e6db74">#{</span>temperatures<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+    sleep <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> rand
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 
@@ -1040,7 +1052,7 @@ sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></div>
 received {0 =&gt; 0.6971840652241449, 1 =&gt; 0.563615359462064, 2 =&gt;0.1376840269887423, 3 =&gt; 0.8042644922805047, 4 =&gt; 0.11204561419785454}
 ...
 </code></pre><p>We have achieved what we wanted, a thread-safe, two-way communication between fibers, but we have added quite a lot of accidental complexity to our code, in the process.
-Wouldn't it be great if <code>weather_station</code> users didn't have to know about commands and channels to interact with it?</p>
+Wouldn&rsquo;t it be great if <code>weather_station</code> users didn&rsquo;t have to know about commands and channels to interact with it?</p>
 <p>Now that we have a better grasp on the underlying idea, can we make the pattern a bit more user-friendly?</p>
 <h2 id="thread-safe-fiber-powered-classes">Thread-safe, fiber-powered classes</h2>
 <p>In the series <em>Live coding a URL checker in Crystal</em>, we took the idea above a step further, and defined a thread-safe statistics aggregator class that keeps track of successful and failed HTTP requests, and also exposes a method to retrieve the statistics on demand. The class exposes a clean API, and hides the implementation details that make write and read operations thread-safe. You can watch the recording of the session here:
@@ -1049,7 +1061,7 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
   <iframe src="https://www.youtube.com/embed/-cXmAZTEjy4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 </p>
-<p>Let's apply the same pattern to our weather station fiber. We'll hide the implementation details of this thread-safe, stateful fiber, and turn it into a thread-safe class in three steps.</p>
+<p>Let&rsquo;s apply the same pattern to our weather station fiber. We&rsquo;ll hide the implementation details of this thread-safe, stateful fiber, and turn it into a thread-safe class in three steps.</p>
 <ol>
 <li>
 <p>We encapsulate records, aliases and requests channel in a <code>WeatherStation</code> class.
@@ -1066,9 +1078,9 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
 <p>We spawn the weather station fiber inside the initialize method. Notice how <code>current_temperatures</code> is now an instance variable initialized at creation time.
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
   <span style="color:#75715e"># ...</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">initialize</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
     @current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
-    spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">weather_station</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">do</span>
+    spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;weather_station&#34;</span>) <span style="color:#66d9ef">do</span>
       loop <span style="color:#66d9ef">do</span>
         <span style="color:#66d9ef">case</span> command <span style="color:#f92672">=</span> @requests<span style="color:#f92672">.</span>receive
         <span style="color:#66d9ef">when</span> SetTemperature
@@ -1086,11 +1098,11 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
 <p>Finally, we provide convenience methods to set and retrieve temperatures. This is the <em>public API</em> of our <code>WeatherStation</code> instances.
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
   <span style="color:#75715e"># continued</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">set_temp</span>(sensor_id : Int32, temperature : Float64)
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_temp</span>(sensor_id : Int32, temperature : Float64)
     @requests<span style="color:#f92672">.</span>send SetTemperature<span style="color:#f92672">.</span>new(sensor_id, temperature)
   <span style="color:#66d9ef">end</span>
 
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">get_temps</span> : StationState
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_temps</span> : StationState
     Channel(StationState)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>return_channel<span style="color:#f92672">|</span>
       @requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(return_channel)
     }<span style="color:#f92672">.</span>receive
@@ -1102,7 +1114,7 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
 <p>You can find a working example of the weather station simulation <a href="https://gist.github.com/lbarasti/c5be451c9c493863bf83bbc59ea82533">here</a>.</p>
 <h2 id="heading"></h2>
 <p>Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below.</p>
-<p>If you'd like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
+<p>If you&rsquo;d like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
 
 <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
 <style type="text/css">
@@ -1287,6 +1299,24 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/intro_to_statistics/">
+    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
+
+    <div class="inner">
+      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/url_checker_series/">
     <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
 
@@ -1351,7 +1381,7 @@ Wouldn't it be great if <code>weather_station</code> users didn't have to know a
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.comtags/crystal">crystal <span class="count">(3)</span></a></li><li><a href="https://lbarasti.comtags/channel">channel <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/concurrency">concurrency <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/fiber">fiber <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/genserver">genserver <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/live-coding">live-coding <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/ruby">ruby <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/series">series <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.comtags/crystal">crystal <span class="count">(4)</span></a></li><li><a href="https://lbarasti.comtags/channel">channel <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/concurrency">concurrency <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/fiber">fiber <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/genserver">genserver <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/live-coding">live-coding <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/random">random <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/ruby">ruby <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

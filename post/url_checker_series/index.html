@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.62.2" />
+<meta name="generator" content="Hugo 0.66.0" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.comimages/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-224ddb75e51dd0d04b1e71827aad96f9 {
+  background-image: url(https://lbarasti.com/src/intro_to_statistics/00_header.png);
+}
+
+
+
 .thumb-408d2f8615f913914e565d9a2093a3a4 {
   background-image: url(https://lbarasti.com/src/url_checker_series/header.jpeg);
 }
@@ -794,6 +800,12 @@ section.footer > header a {
 
 
 
+article.sn > .article-body figcaption {
+  color: #1c9fda;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
 
 
 
@@ -851,12 +863,12 @@ ga('send', 'pageview');
   
 
   <div class="article-body"><h2 id="introduction">Introduction</h2>
-<p>Over the past couple of months, I've been recording a series of live-coding sessions exploring Crystal‚Äôs concurrency by means of building a simple terminal-based app.</p>
+<p>Over the past couple of months, I&rsquo;ve been recording a series of live-coding sessions exploring Crystal‚Äôs concurrency by means of building a simple terminal-based app.</p>
 <p>I decided to collect them all here with some comments and errata.
 You can find the source code on <a href="https://github.com/lbarasti/twitch-url-checker">github</a>, in case you feel like following along.</p>
 <h2 id="what-are-we-building">What are we building?</h2>
-<p>In this series, we'll build a URL checker: a tool to fetch a user-defined set of URLs periodically, reporting on their health.</p>
-<p>Along the journey, we'll implement basic tracking and alerting functionality, as well as a polished terminal UI to display information. While doing so, we'll introduce and explore concurrency concepts and patterns from a paradigm called Communicating Sequential Processes (<a href="https://en.wikipedia.org/wiki/Communicating_sequential_processes">CSP</a>).</p>
+<p>In this series, we&rsquo;ll build a URL checker: a tool to fetch a user-defined set of URLs periodically, reporting on their health.</p>
+<p>Along the journey, we&rsquo;ll implement basic tracking and alerting functionality, as well as a polished terminal UI to display information. While doing so, we&rsquo;ll introduce and explore concurrency concepts and patterns from a paradigm called Communicating Sequential Processes (<a href="https://en.wikipedia.org/wiki/Communicating_sequential_processes">CSP</a>).</p>
 <h2 id="session-1---getting-started">Session 1 - Getting started</h2>
 <p>In this session, we lay the foundations for our terminal-based, concurrent application written in Crystal.</p>
 
@@ -875,7 +887,7 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
 </ol>
 <h2 id="session-2---classes-modules-tasks">Session 2 - Classes, modules, tasks</h2>
 <p>In this session, we start organising our code by splitting concerns and encapsulating logic into modules and classes.</p>
-<p>If you're new to Crystal and are not familiar with Ruby, then I think you'll find these valuable üí∞</p>
+<p>If you&rsquo;re new to Crystal and are not familiar with Ruby, then I think you&rsquo;ll find these valuable üí∞</p>
 <ol>
 <li><a href="https://www.youtube.com/watch?v=e9nBJTFCohg">Classes and aliases</a></li>
 <li><a href="https://www.youtube.com/watch?v=F2ju3VOOosA">Extracting tasks into modules</a></li>
@@ -891,7 +903,7 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
 <li><a href="https://www.youtube.com/watch?v=x_9y7Z8MvHE">Signals, timers and select statement</a></li>
 </ol>
 <h2 id="session-4---fibers-terminated">Session 4 - Fibers: terminated</h2>
-<p>When sharing a channel between fibers, it's important that we are clear on each fiber's responsibility. Some will write to the channel, some will read from it, and some will mark the end of the communication by closing it.</p>
+<p>When sharing a channel between fibers, it&rsquo;s important that we are clear on each fiber&rsquo;s responsibility. Some will write to the channel, some will read from it, and some will mark the end of the communication by closing it.</p>
 <p>In this session, we talk about <em>channel ownership</em> and discuss some fairly advanced <em>termination strategies</em>.</p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
@@ -906,7 +918,7 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
 <li><a href="https://www.youtube.com/watch?v=d6JaNC35R20">Waiting</a> for a pipeline to be <em>done</em></li>
 </ol>
 <h2 id="session-5---two-way-communication-between-fibers">Session 5 - two-way communication between Fibers</h2>
-<p>In this session, we talk about two-way communication between Fibers, taking inspiration from Elixir's <code>GenServer</code> and Akka's <code>Actor</code>. If the topic interests you, then you should also check this <a href="/post/two_way_comm_between_fibers/">deep-dive</a> out.</p>
+<p>In this session, we talk about two-way communication between Fibers, taking inspiration from Elixir&rsquo;s <code>GenServer</code> and Akka&rsquo;s <code>Actor</code>. If the topic interests you, then you should also check this <a href="/post/two_way_comm_between_fibers/">deep-dive</a> out.</p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/-cXmAZTEjy4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
@@ -925,7 +937,7 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
 <ol>
 <li><code>most_recent.reduce(&amp;.+)</code> is equivalent to <code>most_recent.reduce {|a| a.+}</code>, which is definitely not what I was going for. You can use <code>most_recent.reduce {|a,b| a + b}</code> instead, or opt for the more compact <code>most_recent.sum</code></li>
 <li>On the same line, we should be dividing the sum of the response times by the size of <code>most_recent</code>, rather than by <code>width</code>. Dividing by <code>width</code> produces the wrong result until <code>most_recent</code> is full.</li>
-<li>If you look carefully, you'll notice that we're computing the average response time <em>over all</em>, rather than computing the average response time <em>by URL</em>. We define a suitable data structure to store aggregated data by URL in video <a href="https://www.youtube.com/watch?v=egmKFrqwfh0">8.2</a>.</li>
+<li>If you look carefully, you&rsquo;ll notice that we&rsquo;re computing the average response time <em>over all</em>, rather than computing the average response time <em>by URL</em>. We define a suitable data structure to store aggregated data by URL in video <a href="https://www.youtube.com/watch?v=egmKFrqwfh0">8.2</a>.</li>
 </ol>
 <h2 id="session-7---testing-concurrent-code">Session 7 - Testing concurrent code</h2>
 <p>When testing concurrent code, things get a lot easier when we split concurrency and business logic, so that we can test the two in isolation.</p>
@@ -946,8 +958,8 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
 <h4 id="notes">Notes</h4>
 <p>Once you add the dependency on <a href="https://github.com/maiha/crt.cr">crt</a>, you might see the error <code>cannot find -lgpm</code> when compiling the app. Installing <code>libncursesw5-dev</code> should solve the issue.</p>
 <h2 id="heading"></h2>
-<p>This is it! I hope you had some fun and learned something while watching these videos. As for myself, I am currently looking for new, concurrency-releated topics to dig into, so I'd love to hear your suggestions on new topics or apps I could live-code - just leave a comment below to have your say üëá</p>
-<p>If you'd like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
+<p>This is it! I hope you had some fun and learned something while watching these videos. As for myself, I am currently looking for new, concurrency-releated topics to dig into, so I&rsquo;d love to hear your suggestions on new topics or apps I could live-code - just leave a comment below to have your say üëá</p>
+<p>If you&rsquo;d like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
 
 <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
 <style type="text/css">
@@ -1053,6 +1065,27 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
         </div>
         
         
+        <div class="mcol c6">
+          <header>Next Article</header>
+          <article class="lism">
+  <a href="https://lbarasti.com/post/intro_to_statistics/">
+    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
+
+    <div class="inner">
+      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+        </div>
+        
       </div>
     </div>
 
@@ -1107,6 +1140,24 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
   <header>LATESTS</header>
   <div>
     <div class="articles sm">
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/intro_to_statistics/">
+    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
+
+    <div class="inner">
+      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
       
       <article class="lism">
   <a href="https://lbarasti.com/post/url_checker_series/">
@@ -1173,7 +1224,7 @@ Remember you can speed up the playback, if things get a bit too slow for you üè
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.comtags/crystal">crystal <span class="count">(3)</span></a></li><li><a href="https://lbarasti.comtags/channel">channel <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/concurrency">concurrency <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/fiber">fiber <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/genserver">genserver <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/live-coding">live-coding <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/ruby">ruby <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/series">series <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.comtags/crystal">crystal <span class="count">(4)</span></a></li><li><a href="https://lbarasti.comtags/channel">channel <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/concurrency">concurrency <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/fiber">fiber <span class="count">(2)</span></a></li><li><a href="https://lbarasti.comtags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/genserver">genserver <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/live-coding">live-coding <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/random">random <span class="count">(1)</span></a></li><li><a href="https://lbarasti.comtags/ruby">ruby <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

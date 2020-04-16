@@ -6,10 +6,46 @@
     <description>Recent content in Tags on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 12 Jan 2020 22:12:33 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 10:12:33 +0100</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>crystal</title>
+      <link>https://lbarasti.com/tags/crystal/</link>
+      <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/crystal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>random</title>
+      <link>https://lbarasti.com/tags/random/</link>
+      <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/random/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistical distributions</title>
+      <link>https://lbarasti.com/tags/statistical-distributions/</link>
+      <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/statistical-distributions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>https://lbarasti.com/tags/statistics/</link>
+      <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/statistics/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Channel</title>
@@ -26,15 +62,6 @@
       <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/concurrency/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>crystal</title>
-      <link>https://lbarasti.com/tags/crystal/</link>
-      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
-      <guid>https://lbarasti.com/tags/crystal/</guid>
       <description></description>
     </item>
     
