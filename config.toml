@@ -1,4 +1,4 @@
-baseURL = "https://lbarasti.com"
+baseURL = "https://lbarasti.com/"
 languageCode = "en-gb"
 title = "lbarasti's blog"
 theme = "hugo_theme_robust"
