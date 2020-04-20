@@ -6,7 +6,7 @@ shards:
 
   ishi:
     github: toddsundsted/ishi
-    commit: ef1a79fe38b4fdbede51b5097f0fa74180f86f37
+    commit: 1bb8048f177024afb56edd15cc4f567db420fe91
 
   statistics:
     github: lbarasti/statistics
