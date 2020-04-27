@@ -8,8 +8,8 @@ dependencies:
   aquaplot:
     github: crystal-data/aquaplot
   ishi:
-    github: toddsundsted/ishi
-    branch: master
+    github: lbarasti/ishi
+    branch: scatter_size
   statistics:
     github: lbarasti/statistics
     branch: master
