@@ -6,17 +6,53 @@
     <description>Recent content in Tags on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Fri, 10 Apr 2020 10:12:33 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2020 23:03:29 +0100</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>channel</title>
+      <link>https://lbarasti.com/tags/channel/</link>
+      <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/channel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>concurrency</title>
+      <link>https://lbarasti.com/tags/concurrency/</link>
+      <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/concurrency/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>crystal</title>
       <link>https://lbarasti.com/tags/crystal/</link>
-      <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
+      <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/crystal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fiber</title>
+      <link>https://lbarasti.com/tags/fiber/</link>
+      <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/fiber/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>select</title>
+      <link>https://lbarasti.com/tags/select/</link>
+      <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/select/</guid>
       <description></description>
     </item>
     
@@ -44,33 +80,6 @@
       <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/statistics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Channel</title>
-      <link>https://lbarasti.com/tags/channel/</link>
-      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
-      <guid>https://lbarasti.com/tags/channel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>concurrency</title>
-      <link>https://lbarasti.com/tags/concurrency/</link>
-      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
-      <guid>https://lbarasti.com/tags/concurrency/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Fiber</title>
-      <link>https://lbarasti.com/tags/fiber/</link>
-      <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
-      <guid>https://lbarasti.com/tags/fiber/</guid>
       <description></description>
     </item>
     

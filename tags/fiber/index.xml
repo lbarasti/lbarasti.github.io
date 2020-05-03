@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fiber on lbarasti&#39;s blog</title>
+    <title>fiber on lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/tags/fiber/</link>
-    <description>Recent content in Fiber on lbarasti&#39;s blog</description>
+    <description>Recent content in fiber on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 12 Jan 2020 22:12:33 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2020 23:03:29 +0100</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/tags/fiber/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>5 use cases for Crystal&#39;s select statement</title>
+      <link>https://lbarasti.com/post/select_statement/</link>
+      <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/post/select_statement/</guid>
+      <description>Usage of the select statement</description>
+    </item>
     
     <item>
       <title>Live coding a URL checker in Crystal</title>
