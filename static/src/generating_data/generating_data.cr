@@ -148,17 +148,17 @@ world_components =  world.split("\n\n")
     .reject(&.empty?)
     .map(&.to_f)))
 
-Ishi.new {
-  world_components.each { |component|
+# Ishi.new {
+#   world_components.each { |component|
   
-  x, y = component.transpose
-    plot(x, y, style: :lines, lc: "blue").show_key(false)
-  }
+#   x, y = component.transpose
+#     plot(x, y, style: :lines, lc: "blue").show_key(false)
+#   }
   
-  # 5. world map
-  lat, lng = coords.transpose
-  scatter(lng, lat, pointsize: 0.3, pt: "o", lc: "red", style: :points)
-}
+#   # 5. world map
+#   lat, lng = coords.transpose
+#   scatter(lng, lat, pointsize: 0.3, pt: "o", lc: "red", style: :points)
+# }
 
 # Data
 ## timestamp | session duration | device | age | lat | long
@@ -167,16 +167,16 @@ Ishi.new {
 ## skew age towards 25-34 (<16, 16-24, 25-34, 35-49, 50-65, >65)
 
 # Charts
+##@ 1.2 views per hour - histogram, line
+##@ 3. distribution of session duration - frequency / views histogram, bar
+##@ 4. device usage - histogram fequency vs device
+##@ 4.2 age distribution
+##@ 5. world map
+
+# Analysis
 ##x 1. cumulative total views - time-series, line
 ##x 1.1 cumulative total views on sliding window - time-series, line
-##x 1.2 views per hour - histogram, line
 
 ##x 2. session duration over time - time-series, line or step
 
-##x 3. distribution of session duration - frequency / views histogram, bar
-
-##x 4. device usage - histogram fequency vs device
-##x 4.2 age distribution
 ##x 4.1 device vs age - scatter
-
-##x 5. world map
