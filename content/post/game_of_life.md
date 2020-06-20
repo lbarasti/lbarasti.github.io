@@ -46,7 +46,7 @@ population.flat_map { |cell| expand(cell) }
   .keys
 ```
 
-Here, `expand` is a simple function the returns the 9 cells in the 3x3 square centered in the cell passed as argument.
+Here, `expand` is a simple function that returns the 9 cells in the 3x3 square centered in the cell passed as argument.
 
 ```crystal
 OriginSquare = [
@@ -96,7 +96,7 @@ population.flat_map { |cell| expand(cell) }
   # => {{0, 1} => 3, {0, 0} => 3, {1, 0} => 4, {1, -1} => 3}
 ```
 
-{{< figure src="/src/game_of_life/06_ex.png" alt="The figure highlights the new generation of live cells" caption="Figure 4. The figure highlights in bold the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation." >}}
+{{< figure src="/src/game_of_life/06_ex.png" alt="The figure highlights the new generation of live cells" caption="Figure 4. The numbers in bold show the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation." >}}
 
 We now discard the number of occurrences, and keep the cells' coordinates.
 
