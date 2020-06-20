@@ -13,30 +13,30 @@
 
 
 
-    <link rel="canonical" href="https://lbarasti.com/post/intro_to_statistics/">
+    <link rel="canonical" href="https://lbarasti.com/post/game_of_life/">
     
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Sampling random variables and plotting histograms in Crystal - lbarasti&#39;s blog</title>
+    <title>Conway&#39;s Game of Life, sparse - lbarasti&#39;s blog</title>
     
-<meta name="description" content="In this article, we look into sampling value from well-known distributions.">
+<meta name="description" content="Yet another implementation of Conway&rsquo;s Game of Life">
 
-<meta property="og:title" content="Sampling random variables and plotting histograms in Crystal - lbarasti&#39;s blog">
+<meta property="og:title" content="Conway&#39;s Game of Life, sparse - lbarasti&#39;s blog">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://lbarasti.com/post/intro_to_statistics/">
-<meta property="og:image" content="https://lbarasti.com/src/intro_to_statistics/00_header.png">
+<meta property="og:url" content="https://lbarasti.com/post/game_of_life/">
+<meta property="og:image" content="https://lbarasti.com/src/game_of_life/06_ex.png">
 <meta property="og:site_name" content="lbarasti&#39;s blog">
-<meta property="og:description" content="In this article, we look into sampling value from well-known distributions.">
+<meta property="og:description" content="Yet another implementation of Conway&rsquo;s Game of Life">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="lbarasti&#39;s blog">
-<meta name="twitter:url" content="https://lbarasti.com/post/intro_to_statistics/">
-<meta name="twitter:title" content="Sampling random variables and plotting histograms in Crystal - lbarasti&#39;s blog">
-<meta name="twitter:description" content="In this article, we look into sampling value from well-known distributions.">
-<meta name="twitter:image" content="https://lbarasti.com/src/intro_to_statistics/00_header.png">
+<meta name="twitter:url" content="https://lbarasti.com/post/game_of_life/">
+<meta name="twitter:title" content="Conway&#39;s Game of Life, sparse - lbarasti&#39;s blog">
+<meta name="twitter:description" content="Yet another implementation of Conway&rsquo;s Game of Life">
+<meta name="twitter:image" content="https://lbarasti.com/src/game_of_life/06_ex.png">
 
 
 <script type="application/ld+json">
@@ -47,15 +47,15 @@
       "@type": "WebPage",
       "@id":"https:\/\/lbarasti.com\/"
     },
-    "headline": "Sampling random variables and plotting histograms in Crystal-lbarasti's blog",
+    "headline": "Conway's Game of Life, sparse-lbarasti's blog",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/lbarasti.com\/src\/intro_to_statistics\/00_header.png",
+      "url": "https:\/\/lbarasti.com\/src\/game_of_life\/06_ex.png",
       "height": 800,
       "width": 800
     },
-    "datePublished": "2020-04-10T10:12:33JST",
-    "dateModified": "2020-04-10T10:12:33JST",
+    "datePublished": "2020-06-20T18:52:41JST",
+    "dateModified": "2020-06-20T18:52:41JST",
     "author": {
       "@type": "Person",
       "name": "lbarasti's blog"
@@ -70,7 +70,7 @@
         "height": 60
       }
     },
-    "description": "In this article, we look into sampling value from well-known distributions."
+    "description": "Yet another implementation of Conway\x26rsquo;s Game of Life"
   }
 </script>
 
@@ -850,24 +850,24 @@ ga('send', 'pageview');
 
     <article class="sn">
 
-  <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
+  <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
 
   <header class="article-header">
-    <h1 class="title">Sampling random variables and plotting histograms in Crystal</h1>
+    <h1 class="title">Conway&#39;s Game of Life, sparse</h1>
 
     <ul class="facts">
-      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2020-04-10T10:12:33JST">Apr 10, 2020</time></li>
+      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2020-06-20T18:52:41JST">Jun 20, 2020</time></li>
       
       <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.com/post/">POST</a></li>
       
     </ul>
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&title=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&text=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&t=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&title=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&title=Conway%27s%20Game%20of%20Life%2c%20sparse" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&text=Conway%27s%20Game%20of%20Life%2c%20sparse&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&t=Conway%27s%20Game%20of%20Life%2c%20sparse" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&title=Conway%27s%20Game%20of%20Life%2c%20sparse" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
   </header>
@@ -875,94 +875,117 @@ ga('send', 'pageview');
   
 
   <div class="article-body"><h2 id="introduction">Introduction</h2>
-<p>If you ever need to simulate a real-world system or generate random data that resembles the real one, then you will likely have to sample a random variable with a given probability distribution.</p>
-<p>In this article, we show how we can do this in Crystal, using an ensemble of libraries that will make our life easier and help us <em>visualise</em> the patterns behind the numbers.</p>
-<h2 id="sampling-from-a-normal-distribution">Sampling from a Normal distribution</h2>
-<p><a href="https://en.wikipedia.org/wiki/Normal_distribution">Normal distributions</a> are ubiquitous in nature and in data, so let&rsquo;s take one of those to practice. First, let&rsquo;s use the <a href="https://github.com/lbarasti/statistics">statistics</a> package to define a normal distribution with the desired mean and standard deviation.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">normal <span style="color:#f92672">=</span> Normal<span style="color:#f92672">.</span>new(<span style="color:#e6db74">mean</span>: <span style="color:#ae81ff">0.8</span>, <span style="color:#e6db74">std</span>: <span style="color:#ae81ff">0.2</span>)
-</code></pre></div><p>We can now sample values from a random variable with such distribution by calling <code>normal.rand</code>, or even build an arbitrarily large sample as follows.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
-sample <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span><span style="color:#f92672">...</span>size)<span style="color:#f92672">.</span>map { normal<span style="color:#f92672">.</span>rand }
-</code></pre></div><p>We can also <code>describe</code> the sample to inspect its descriptive statistics and verify our expectations.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">info <span style="color:#f92672">=</span> Statistics<span style="color:#f92672">.</span>describe(sample)
-</code></pre></div><p>The function returns a <code>NamedTuple</code> where the keys are the summary statistic coefficients. This makes it easy to iterate over the values and display the information in tabular format, for better readability. Here is a sample output I&rsquo;ve built using <a href="https://github.com/hutou/tablo">tablo</a>.</p>
-<pre><code>+--------------+--------------+
-| mean         |        0.802 |
-| var          |         0.04 |
-| std          |          0.2 |
-| skewness     |       -0.039 |
-| kurtosis     |        2.921 |
-| min          |        0.066 |
-| middle       |        0.795 |
-| max          |        1.524 |
-| q1           |        0.671 |
-| median       |          0.8 |
-| q3           |        0.938 |
-+--------------+--------------+
-</code></pre><p>Notice how both the <em>mean</em> and <em>std</em> of our sample match the ones of our population. This is more likely to be the case the larger your sample size is. We can take our examination a bit further, and observe that both <em>skewness</em> and <em>kurtosis</em> also approximate the expected values for a normal distribution - zero and 3, respectively.</p>
-<h2 id="lets-get-visual">Let&rsquo;s get visual</h2>
-<p>OK, tables are great, but how about we plot a histogram of our sample, to get a qualitative feel for it. To build a histogram, we need to perform an operation called <a href="https://en.wikipedia.org/wiki/Data_binning">data binning</a>, i.e. to split and count the sample&rsquo;s values into bins - of equal size, in this case. We can achieve this by calling <code>Statistics.bin_count</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">bins <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
-sample_bins <span style="color:#f92672">=</span> Statistics<span style="color:#f92672">.</span>bin_count(sample, <span style="color:#e6db74">bins</span>: bins, <span style="color:#e6db74">edge</span>: <span style="color:#e6db74">:centre</span>)
-</code></pre></div><p>The option <code>edge: :centre</code> tells the function to compute the centre of each bin edge. That&rsquo;s what our graphics library expects - rather than their vertices - when drawing boxes.
-The returned object exposes the bin <code>counts</code>, the <code>edges</code> and the <code>step</code> size computed based on the number of bins.</p>
-<p>Preparing the data for visualisation is now trivial:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">x <span style="color:#f92672">=</span> sample_bins<span style="color:#f92672">.</span>edges
-y <span style="color:#f92672">=</span> sample_bins<span style="color:#f92672">.</span>counts
-</code></pre></div><p>We&rsquo;ll be plotting our data with <a href="https://github.com/toddsundsted/ishi">Ishi</a>, a Crystal graphing package powered by <a href="http://www.gnuplot.info/">Gnuplot</a>.</p>
-<p>Here is how we can plot the histogram with some decorations: a legend (<em>title</em>), a plotting <em>style</em>, a fill-style (<em>fs</em>) and x / y labels.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
-  plot(x, y, <span style="color:#e6db74">title</span>: <span style="color:#e6db74">&#34;sample </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">~ N(0.8, 0.04)&#34;</span>, <span style="color:#e6db74">style</span>: <span style="color:#e6db74">:boxes</span>, <span style="color:#e6db74">fs</span>: <span style="color:#ae81ff">0.25</span>)
-    <span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;value&#34;</span>)
-    <span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;frequency&#34;</span>)
+<p>A lot has been written about Conway&rsquo;s Game of Life. If you&rsquo;re reading this, chances are you&rsquo;ve implemented a version of it yourself.</p>
+<p>This article offers a visual guide to a less-common formulation of the game and presents a surprisingly succinct implementation of it, mostly for fun.</p>
+<p>I&rsquo;ll assume you&rsquo;re already familiar with the game. If that&rsquo;s not the case, I&rsquo;d recommend reading the <a href="https://web.stanford.edu/class/sts145/Library/life.pdf">original article</a> published on <em>Scientific American</em> in 1970.</p>
+<h2 id="canonical-formulation">Canonical formulation</h2>
+<p>When you think of Game of Life, you probably think about a grid where live and dead cells are represented with different colors, and the following 3 rules define how to evolve the grid from the current state to the next (source: <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia</a>).</p>
+<ol>
+<li>Any live cell with two or three live neighbours survives.</li>
+<li>Any dead cell with three live neighbours becomes a live cell.</li>
+<li>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</li>
+</ol>
+<p>These rules emphasise the role of both live and dead cells and lead to a straight-forward implementation where the state of the system is represented by a matrix of boolean values where each <em>(i, j)</em> entry represents a cell&rsquo;s state: <code>true</code> for live, <code>false</code> for dead.</p>
+<h2 id="a-sparse-formulation">A sparse formulation</h2>
+<p>Compact as the above might be, I&rsquo;ve always found the following, equivalent formulation more interesting.</p>
+<p>Consider an infinite grid of cells defined as per the canonical formulation. For each live cell, gather the coordinates <em>(i, j)</em> of all the cell&rsquo;s neighbours, plus the coordinates of the live cell itself.</p>
+<p>Now count the number of times each cell appears in the collection.
+Only the cells abiding by the following rules will be part of the next generation:</p>
+<ol>
+<li>Any cell that occurs 3 times</li>
+<li>Any cell that occurs 4 times <em>and</em> is currently live.</li>
+</ol>
+<hr>
+<p>One thing I enjoy about this formulation, is the fact that it leads to a very natural implementation based on a sparse representation of the grid, where we only keep track of live cells.</p>
+<p>Given a set of live cells - aptly called <code>population</code> - the next generation can be computed as follows - the code below is in <a href="https://crystal-lang.org/">Crystal</a>, but your favourite language&rsquo;s implementation shouldn&rsquo;t differ much from this.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+  <span style="color:#f92672">.</span>tally
+  <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
+  <span style="color:#f92672">.</span>keys
+</code></pre></div><p>Here, <code>expand</code> is a simple function the returns the 9 cells in the 3x3 square centered in the cell passed as argument.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">OriginSquare <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+  {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>},
+  {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>},
+  {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}
+<span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">expand</span>(cell)
+  OriginSquare<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>(x, y)<span style="color:#f92672">|</span> {cell<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#f92672">+</span> x, cell<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">+</span> y} }
 <span style="color:#66d9ef">end</span>
+</code></pre></div><p>Let&rsquo;s explore the code line by means of an example.</p>
+<p>Consider the L-shaped population</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>{<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>}<span style="color:#f92672">]</span>
 </code></pre></div><figure>
-    <img src="/src/intro_to_statistics/02_histogram.png"
-         alt="A histogram showing the distribution of our sample"/> <figcaption>
-            <p>A histogram showing the frequency of the values sampled from a random variable with probability distribution N(0.8, 0.04).</p>
+    <img src="/src/game_of_life/01_ex.png"
+         alt="The initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]`"/> <figcaption>
+            <p>Figure 1. The picture shows the initial population <code>[{2, 0}, {1, 0}, {0, 0}, {0, 1}]</code> on a two-dimensional orthogonal grid of square cells. We can think of the grid as a Cartesian plane where a live cell <code>{x, y}</code> is represented by a gray square with bottom left corner in <code>{x, y}</code>.</p>
         </figcaption>
 </figure>
 
-<p>Notice how the shape of the histogram resembles the one of a normal curve. Let&rsquo;s qualitatively check that the distribution of the sample approximates the one underlying the random variable that generated it. We can do so by overlapping the corresponding normal distribution probability density function (PDF) to the histogram.</p>
-<p>Remember that the integral of a PDF is 1, whereas the histogram we&rsquo;re looking at represents the absolute count of sample&rsquo;s values falling in each bin. To address this, we&rsquo;ll normalise the bin count by dividing each value by the histogram area.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">area <span style="color:#f92672">=</span> size <span style="color:#f92672">*</span> sample_bins<span style="color:#f92672">.</span>step
-normalized_y <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>map <span style="color:#f92672">&amp;.</span>/(area) <span style="color:#75715e"># shorthand syntax</span>
-
-pdf <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> normal<span style="color:#f92672">.</span>pdf(x) }
-
-Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
-  plot(x, normalized_y, <span style="color:#e6db74">title</span>: <span style="color:#e6db74">&#34;sample </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">~ N(0.8, 0.04)&#34;</span>, <span style="color:#e6db74">style</span>: <span style="color:#e6db74">:boxes</span>, <span style="color:#e6db74">fs</span>: <span style="color:#ae81ff">0.25</span>)
-    <span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;value&#34;</span>)
-    <span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;frequency&#34;</span>)
-  plot(x, pdf, <span style="color:#e6db74">title</span>: <span style="color:#e6db74">&#34;N(0.8, 0.04)&#34;</span>, <span style="color:#e6db74">lw</span>: <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">ps</span>: <span style="color:#ae81ff">0</span>)
-<span style="color:#66d9ef">end</span>
+<p>We iterate over the live cells and <em>expand</em> them into the neighbouring cells plus the live cell itself - see Figure 2 below.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+<span style="color:#75715e"># =&gt; [{-1, 2}, {0, 2}, {1, 2}, {-1, 1}, ..., {2, -1}, {3, -1}]</span>
 </code></pre></div><figure>
-    <img src="/src/intro_to_statistics/03_histogram.png"
-         alt="A normalized histogram showing the distribution of our sample overlapped with the PDF of N(0.8, 0.04)"/> <figcaption>
-            <p>A normalized histogram showing the frequency of the values sampled from a random variable with probability distribution N(0.8, 0.04), overlapped with the PDF of the same normal distribution.</p>
+    <img src="/src/game_of_life/01_ex_aa.png"
+         alt="Each live cell is expanded into its nighbouring square"/> <figcaption>
+            <p>Figure 2. The picture represents the expansion of each live cell into the corresponding 3x3 square. Cells in such squares are accumulated into a collection, with repetition. Notice that the number of <em>stars</em> in each cell at the end of iteration 4 - bottom right picture - reflects the number of times a cell appears in any expanded square.</p>
         </figcaption>
 </figure>
 
-<p>This concludes our brief tour of <a href="https://github.com/lbarasti/statistics">statistics</a> and <a href="https://github.com/toddsundsted/ishi">ishi</a>. You can find a working version of the code we discussed on <a href="https://gist.github.com/lbarasti/57a3407cae387ab4b7646f74e8931820">github</a>. I&rsquo;ve also included an example where we sample from a random variable with exponential distribution, to spice things up.</p>
-<h2 id="what-now">What now?</h2>
-<p>So far, we&rsquo;ve seen two things:</p>
+<p>We now count the number of times a cell appears in the computed collection. In Crystal, this is as easy as calling <code>#tally</code> on an array. This returns a dictionary from cell to number of occurrences.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+  <span style="color:#f92672">.</span>tally
+  <span style="color:#75715e"># =&gt; {{-1, 2} =&gt; 1, {0, 2} =&gt; 1, ..., {3, -1} =&gt; 1}</span>
+</code></pre></div><figure>
+    <img src="/src/game_of_life/06_1_ex.png"
+         alt="The figure shows the number of occurrences for each cell in the expanded squares"/> <figcaption>
+            <p>Figure 3. The figure shows the number of occurrences for each cell in the expanded squares.</p>
+        </figcaption>
+</figure>
+
+<p>Finally, we filter out any cell that doesn&rsquo;t match either rule 1 or rule 2 defined above. This is done by invoking <code>.select</code> on the dictionary with a predicate representing the rules.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+  <span style="color:#f92672">.</span>tally
+  <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
+  <span style="color:#75715e"># =&gt; {{0, 1} =&gt; 3, {0, 0} =&gt; 3, {1, 0} =&gt; 4, {1, -1} =&gt; 3}</span>
+</code></pre></div><figure>
+    <img src="/src/game_of_life/06_ex.png"
+         alt="The figure highlights the new generation of live cells"/> <figcaption>
+            <p>Figure 4. The figure highlights in bold the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation.</p>
+        </figcaption>
+</figure>
+
+<p>We now discard the number of occurrences, and keep the cells&rsquo; coordinates.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+  <span style="color:#f92672">.</span>tally
+  <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
+  <span style="color:#f92672">.</span>keys
+  <span style="color:#75715e"># =&gt; [{0, 1}, {0, 0}, {1, 0}, {1, -1}]</span>
+</code></pre></div><figure>
+    <img src="/src/game_of_life/07_ex.png"
+         alt="The new generation of live cells"/> <figcaption>
+            <p>Figure 5. The new generation of live cells is represented by the squares in light gray.</p>
+        </figcaption>
+</figure>
+
+<p>Excellent! Let&rsquo;s talk about some of the features of this algorithm, but first&hellip;</p>
+<hr>
+<p><strong>Challenge.</strong> Now that we&rsquo;ve discussed a script to evolve a population, can you extract this into a function or instance method, so that we can run an arbitrary number of evolutions? I&rsquo;m thinking about something like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">new_population <span style="color:#f92672">=</span> GameOfLife<span style="color:#f92672">.</span>evolve(population, <span style="color:#e6db74">times</span>: <span style="color:#ae81ff">20</span>)
+</code></pre></div><h2 id="some-notes-on-efficiency">Some notes on efficiency</h2>
+<p>The memory-efficiency of the sparse implementation makes evolving some configurations feasible, where they wouldn&rsquo;t be on the dense one. In particular, we can cope with cells patterns moving arbitrarily far from each other without going out of memory. This is not true for the dense implementation, where an initial population featuring, for example, two <a href="https://en.wikipedia.org/wiki/Spaceship_(cellular_automaton)">spaceships</a> heading in different directions will exhaust your memory fairly quickly.</p>
+<p>I like how the sparse implementation encodes a strong system invariant: in terms of state, nothing can ever change far from live cells.</p>
+<p>Hence, the sparse implementation is more memory-efficient than the dense one, but the battle for best performance is totally open and depends on the configuration we&rsquo;re evolving. If you&rsquo;re thinking that the dense implementation might enjoy performance gains thanks to GPU architectures, then you&rsquo;re <a href="https://www.google.com/search?q=gpu+game+of+life">right on point</a>.</p>
+<hr>
+<p><strong>Challenge.</strong> No matter the underlying implementation, printing a grid on the screen still poses a challenge, as we&rsquo;re materialising a possibly very large grid of cells. Can you think of strategies to display the current state of the grid that don&rsquo;t require printing it in its entirety?</p>
+<h2 id="further-reading">Further reading</h2>
 <ul>
-<li>how we can sample values from random variables with a given distribution</li>
-<li>how we can use descriptive statistics and visualisation tools to explore a dataset</li>
-</ul>
-<p>In the next article, we&rsquo;ll put the two together: first, we&rsquo;ll generate a real-world-like dataset representing user visits on a website, then we&rsquo;ll run some simple analysis and visualisation on the data. Stay tuned!</p>
-<h2 id="references">References</h2>
-<ul>
-<li>A working version of the code we saw can be found <a href="https://gist.github.com/lbarasti/57a3407cae387ab4b7646f74e8931820">here</a>.</li>
-<li>We used <a href="https://github.com/lbarasti/statistics">statistics</a> to draw samples from a random variable, compute summary statistics and perform data binning on a dataset.<br>
-<strong>Full disclosure</strong>: I am the shard&rsquo;s author.</li>
-<li>We used <a href="https://github.com/hutou/tablo">tablo</a> to print data in tabular format.</li>
-<li>We used <a href="https://github.com/toddsundsted/ishi">Ishi</a> to plot histograms. On the topic of data visualisation, you might also want to check out <a href="https://github.com/crystal-data/aquaplot">Aquaplot</a>. Both shards are powered by <a href="http://www.gnuplot.info/">Gnuplot</a> and offer similar functionalities.</li>
-<li><a href="https://realpython.com/python-histograms/">Python Histogram Plotting</a> by realpython.com was a valuable source of inspiration and reference for this article.</li>
-<li><a href="https://en.wikipedia.org/wiki/Normal_distribution">Wikipedia</a> was used as the main reference for the statistical content in this article.</li>
+<li>In case you missed it, here is the <a href="https://web.stanford.edu/class/sts145/Library/life.pdf">original article</a> where Conway&rsquo;s Game of Life was introduced.</li>
+<li><em>Towards data science</em> offers an <a href="(https://towardsdatascience.com/from-scratch-the-game-of-life-161430453ee3)">exhaustive coverage</a> of both dense and sparse implementations of Conway&rsquo;s Game of Life in Python and in Haskel.</li>
+<li>If you&rsquo;d like to know more about the Crystal programming language, then you can check out <a href="https://crystal-lang.org/">this page</a>.</li>
 </ul>
 <h2 id="heading"></h2>
-<p>Thanks for reading, I hope you found this useful. You can share your experiences with Crystal and statistics in the comments section below.</p>
+<p>Thanks for reading, I hope this article made you want to sprint to your laptop and code the sparse Game of Life in your favourite language. You can share your Game of Life implementation in the comments section below, I&rsquo;d love to see what you came up with.</p>
 <p>If you&rsquo;d like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
 
 <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
@@ -988,11 +1011,11 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
   <footer class="article-footer">
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&title=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&text=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&t=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f&title=Sampling%20random%20variables%20and%20plotting%20histograms%20in%20Crystal" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fintro_to_statistics%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&title=Conway%27s%20Game%20of%20Life%2c%20sparse" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&text=Conway%27s%20Game%20of%20Life%2c%20sparse&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&t=Conway%27s%20Game%20of%20Life%2c%20sparse" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f&title=Conway%27s%20Game%20of%20Life%2c%20sparse" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fgame_of_life%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
 
@@ -1004,7 +1027,7 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
             
             <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.com/post/" itemprop="url"><span itemprop="title">POST</span></a></li>
             
-            <li class="active">Sampling random variables and plotting histograms in Crystal</li>
+            <li class="active">Conway&#39;s Game of Life, sparse</li>
           </ol>
         </nav>
       </div>
@@ -1024,11 +1047,9 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
           
           <li><a href="https://lbarasti.com/tags/crystal/">crystal</a></li>
           
-          <li><a href="https://lbarasti.com/tags/statistics/">statistics</a></li>
+          <li><a href="https://lbarasti.com/tags/game-of-life/">game of life</a></li>
           
-          <li><a href="https://lbarasti.com/tags/random/">random</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/statistical-distributions/">statistical distributions</a></li>
+          <li><a href="https://lbarasti.com/tags/automata/">automata</a></li>
           
         </ul>
       </div>
@@ -1045,28 +1066,6 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
         
         <div class="mcol c6">
           <header>Previous Article</header>
-          <article class="lism">
-  <a href="https://lbarasti.com/post/url_checker_series/">
-    <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
-
-    <div class="inner">
-      <div class="title">Live coding a URL checker in Crystal</div>
-
-      <ul class="facts sm">
-        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-01-12T22:12:33JST">Jan 12, 2020</time></li>
-        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
-        
-      </ul>
-
-    </div>
-  </a>
-</article>
-
-        </div>
-        
-        
-        <div class="mcol c6">
-          <header>Next Article</header>
           <article class="lism">
   <a href="https://lbarasti.com/post/select_statement/">
     <div class="thumb thumb-b3e7b513b3545669e5ee97fd0b828bf4"></div>
@@ -1085,6 +1084,7 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
 </article>
 
         </div>
+        
         
       </div>
     </div>

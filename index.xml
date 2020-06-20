@@ -6,10 +6,19 @@
     <description>Recent content on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 30 Apr 2020 23:03:29 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2020 18:52:41 +0100</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Conway&#39;s Game of Life, sparse</title>
+      <link>https://lbarasti.com/post/game_of_life/</link>
+      <pubDate>Sat, 20 Jun 2020 18:52:41 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/post/game_of_life/</guid>
+      <description>Yet another implementation of Conway&amp;rsquo;s Game of Life</description>
+    </item>
     
     <item>
       <title>5 use cases for Crystal&#39;s select statement</title>
