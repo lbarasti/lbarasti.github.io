@@ -902,7 +902,7 @@ Only the cells abiding by the following rules will be part of the next generatio
   <span style="color:#f92672">.</span>tally
   <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
   <span style="color:#f92672">.</span>keys
-</code></pre></div><p>Here, <code>expand</code> is a simple function the returns the 9 cells in the 3x3 square centered in the cell passed as argument.</p>
+</code></pre></div><p>Here, <code>expand</code> is a simple function that returns the 9 cells in the 3x3 square centered in the cell passed as argument.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">OriginSquare <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>},
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>},
@@ -951,7 +951,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 </code></pre></div><figure>
     <img src="/src/game_of_life/06_ex.png"
          alt="The figure highlights the new generation of live cells"/> <figcaption>
-            <p>Figure 4. The figure highlights in bold the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation.</p>
+            <p>Figure 4. The numbers in bold show the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation.</p>
         </figcaption>
 </figure>
 
