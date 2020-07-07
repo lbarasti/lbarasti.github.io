@@ -75,7 +75,7 @@ population.flat_map { |cell| expand(cell) }
 # => [{-1, 2}, {0, 2}, {1, 2}, {-1, 1}, ..., {2, -1}, {3, -1}]
 ```
 
-{{< figure src="/src/game_of_life/01_ex_aa.png" alt="Each live cell is expanded into its nighbouring square" caption="Figure 2. The picture represents the expansion of each live cell into the corresponding 3x3 square. Cells in such squares are accumulated into a collection, with repetition. Notice that the number of *stars* in each cell at the end of iteration 4 - bottom right picture - reflects the number of times a cell appears in any expanded square." >}}
+{{< figure src="/src/game_of_life/01_ex_aa.png" alt="Each live cell is expanded into its neighbouring square" caption="Figure 2. The picture represents the expansion of each live cell into the corresponding 3x3 square. Cells in such squares are accumulated into a collection, with repetition. Notice that the number of *stars* in each cell at the end of iteration 4 - bottom right picture - reflects the number of times a cell appears in any expanded square." >}}
 
 We now count the number of times a cell appears in the computed collection. In Crystal, this is as easy as calling `#tally` on an array. This returns a dictionary from cell to number of occurrences.
 
