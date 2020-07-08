@@ -15,7 +15,7 @@ This article offers a visual guide to a less-common formulation of the game and 
 I'll assume you're already familiar with the game. If that's not the case, I'd recommend reading the [original article](https://web.stanford.edu/class/sts145/Library/life.pdf) published on *Scientific American* in 1970.
 
 ## Canonical formulation
-When you think of Game of Life, you probably think about a grid where live and dead cells are represented with different colors, and the following 3 rules define how to evolve the grid from the current state to the next (source: [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)).
+When you think of Game of Life, you probably think about a grid where live and dead cells are represented with different colours, and the following 3 rules define how to evolve the grid from the current state to the next (source: [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)).
 
 1. Any live cell with two or three live neighbours survives.
 1. Any dead cell with three live neighbours becomes a live cell.
@@ -46,7 +46,7 @@ population.flat_map { |cell| expand(cell) }
   .keys
 ```
 
-Here, `expand` is a simple function that returns the 9 cells in the 3x3 square centered in the cell passed as argument.
+Here, `expand` is a simple function that returns the 9 cells in the 3x3 square centred in the cell passed as argument.
 
 ```crystal
 OriginSquare = [
@@ -67,7 +67,7 @@ Consider the L-shaped population
 population = [{2, 0}, {1, 0}, {0, 0}, {0, 1}]
 ```
 
-{{< figure src="/src/game_of_life/01_ex.png" alt="The initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]`" caption="Figure 1. The picture shows the initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]` on a two-dimensional orthogonal grid of square cells. We can think of the grid as a Cartesian plane where a live cell `{x, y}` is represented by a gray square with bottom left corner in `{x, y}`." >}}
+{{< figure src="/src/game_of_life/01_ex.png" alt="The initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]`" caption="Figure 1. The picture shows the initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]` on a two-dimensional orthogonal grid of square cells. We can think of the grid as a Cartesian plane where a live cell `{x, y}` is represented by a grey square with bottom left corner in `{x, y}`." >}}
 
 We iterate over the live cells and *expand* them into the neighbouring cells plus the live cell itself - see Figure 2 below.
 ```crystal
@@ -96,7 +96,7 @@ population.flat_map { |cell| expand(cell) }
   # => {{0, 1} => 3, {0, 0} => 3, {1, 0} => 4, {1, -1} => 3}
 ```
 
-{{< figure src="/src/game_of_life/06_ex.png" alt="The figure highlights the new generation of live cells" caption="Figure 4. The numbers in bold show the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation." >}}
+{{< figure src="/src/game_of_life/06_ex.png" alt="The figure highlights the new generation of live cells" caption="Figure 4. The numbers in bold show the new generation of live cells. The light grey squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation." >}}
 
 We now discard the number of occurrences, and keep the cells' coordinates.
 
@@ -108,7 +108,7 @@ population.flat_map { |cell| expand(cell) }
   # => [{0, 1}, {0, 0}, {1, 0}, {1, -1}]
 ```
 
-{{< figure src="/src/game_of_life/07_ex.png" alt="The new generation of live cells" caption="Figure 5. The new generation of live cells is represented by the squares in light gray." >}}
+{{< figure src="/src/game_of_life/07_ex.png" alt="The new generation of live cells" caption="Figure 5. The new generation of live cells is represented by the squares in light grey." >}}
 
 Excellent! Let's talk about some of the features of this algorithm, but first...
 
@@ -132,7 +132,7 @@ Hence, the sparse implementation is more memory-efficient than the dense one, bu
 
 ## Further reading
 * In case you missed it, here is the [original article](https://web.stanford.edu/class/sts145/Library/life.pdf) where Conway's Game of Life was introduced.
-* *Towards data science* offers an [exhaustive coverage]((https://towardsdatascience.com/from-scratch-the-game-of-life-161430453ee3)) of both dense and sparse implementations of Conway's Game of Life in Python and in Haskel.
+* *Towards data science* offers an [exhaustive coverage]((https://towardsdatascience.com/from-scratch-the-game-of-life-161430453ee3)) of both dense and sparse implementations of Conway's Game of Life in Python and in Haskell.
 * If you'd like to know more about the Crystal programming language, then you can check out [this page](https://crystal-lang.org/).
 
 ##
