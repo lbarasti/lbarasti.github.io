@@ -3,37 +3,77 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://lbarasti.com/post/byoidsl/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/crystal/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/dsl/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/game-of-life/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/generics/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/interpreter/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/macros/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/parser/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/parser-combinators/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/repl/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/</loc>
+    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://lbarasti.com/tags/automata/</loc>
     <lastmod>2020-06-20T18:52:41+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://lbarasti.com/post/game_of_life/</loc>
-    <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/crystal/</loc>
-    <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/game-of-life/</loc>
-    <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/</loc>
-    <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/post/</loc>
-    <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/</loc>
     <lastmod>2020-06-20T18:52:41+01:00</lastmod>
   </url>
   

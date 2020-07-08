@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-379cdddbc8bab5ea691bccb3059844eb {
+  background-image: url(https://lbarasti.com/src/byoidsl/00_header.png);
+}
+
+
+
 .thumb-b0e4f6f597dd7100c40a783ccbe3c9f9 {
   background-image: url(https://lbarasti.com/src/game_of_life/06_ex.png);
 }
@@ -879,7 +885,7 @@ ga('send', 'pageview');
 <p>This article offers a visual guide to a less-common formulation of the game and presents a surprisingly succinct implementation of it, mostly for fun.</p>
 <p>I&rsquo;ll assume you&rsquo;re already familiar with the game. If that&rsquo;s not the case, I&rsquo;d recommend reading the <a href="https://web.stanford.edu/class/sts145/Library/life.pdf">original article</a> published on <em>Scientific American</em> in 1970.</p>
 <h2 id="canonical-formulation">Canonical formulation</h2>
-<p>When you think of Game of Life, you probably think about a grid where live and dead cells are represented with different colors, and the following 3 rules define how to evolve the grid from the current state to the next (source: <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia</a>).</p>
+<p>When you think of Game of Life, you probably think about a grid where live and dead cells are represented with different colours, and the following 3 rules define how to evolve the grid from the current state to the next (source: <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia</a>).</p>
 <ol>
 <li>Any live cell with two or three live neighbours survives.</li>
 <li>Any dead cell with three live neighbours becomes a live cell.</li>
@@ -902,7 +908,7 @@ Only the cells abiding by the following rules will be part of the next generatio
   <span style="color:#f92672">.</span>tally
   <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
   <span style="color:#f92672">.</span>keys
-</code></pre></div><p>Here, <code>expand</code> is a simple function that returns the 9 cells in the 3x3 square centered in the cell passed as argument.</p>
+</code></pre></div><p>Here, <code>expand</code> is a simple function that returns the 9 cells in the 3x3 square centred in the cell passed as argument.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">OriginSquare <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>},
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>},
@@ -918,7 +924,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 </code></pre></div><figure>
     <img src="/src/game_of_life/01_ex.png"
          alt="The initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]`"/> <figcaption>
-            <p>Figure 1. The picture shows the initial population <code>[{2, 0}, {1, 0}, {0, 0}, {0, 1}]</code> on a two-dimensional orthogonal grid of square cells. We can think of the grid as a Cartesian plane where a live cell <code>{x, y}</code> is represented by a gray square with bottom left corner in <code>{x, y}</code>.</p>
+            <p>Figure 1. The picture shows the initial population <code>[{2, 0}, {1, 0}, {0, 0}, {0, 1}]</code> on a two-dimensional orthogonal grid of square cells. We can think of the grid as a Cartesian plane where a live cell <code>{x, y}</code> is represented by a grey square with bottom left corner in <code>{x, y}</code>.</p>
         </figcaption>
 </figure>
 
@@ -927,7 +933,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 <span style="color:#75715e"># =&gt; [{-1, 2}, {0, 2}, {1, 2}, {-1, 1}, ..., {2, -1}, {3, -1}]</span>
 </code></pre></div><figure>
     <img src="/src/game_of_life/01_ex_aa.png"
-         alt="Each live cell is expanded into its nighbouring square"/> <figcaption>
+         alt="Each live cell is expanded into its neighbouring square"/> <figcaption>
             <p>Figure 2. The picture represents the expansion of each live cell into the corresponding 3x3 square. Cells in such squares are accumulated into a collection, with repetition. Notice that the number of <em>stars</em> in each cell at the end of iteration 4 - bottom right picture - reflects the number of times a cell appears in any expanded square.</p>
         </figcaption>
 </figure>
@@ -951,7 +957,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 </code></pre></div><figure>
     <img src="/src/game_of_life/06_ex.png"
          alt="The figure highlights the new generation of live cells"/> <figcaption>
-            <p>Figure 4. The numbers in bold show the new generation of live cells. The light gray squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation.</p>
+            <p>Figure 4. The numbers in bold show the new generation of live cells. The light grey squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation.</p>
         </figcaption>
 </figure>
 
@@ -964,7 +970,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 </code></pre></div><figure>
     <img src="/src/game_of_life/07_ex.png"
          alt="The new generation of live cells"/> <figcaption>
-            <p>Figure 5. The new generation of live cells is represented by the squares in light gray.</p>
+            <p>Figure 5. The new generation of live cells is represented by the squares in light grey.</p>
         </figcaption>
 </figure>
 
@@ -981,7 +987,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 <h2 id="further-reading">Further reading</h2>
 <ul>
 <li>In case you missed it, here is the <a href="https://web.stanford.edu/class/sts145/Library/life.pdf">original article</a> where Conway&rsquo;s Game of Life was introduced.</li>
-<li><em>Towards data science</em> offers an <a href="(https://towardsdatascience.com/from-scratch-the-game-of-life-161430453ee3)">exhaustive coverage</a> of both dense and sparse implementations of Conway&rsquo;s Game of Life in Python and in Haskel.</li>
+<li><em>Towards data science</em> offers an <a href="(https://towardsdatascience.com/from-scratch-the-game-of-life-161430453ee3)">exhaustive coverage</a> of both dense and sparse implementations of Conway&rsquo;s Game of Life in Python and in Haskell.</li>
 <li>If you&rsquo;d like to know more about the Crystal programming language, then you can check out <a href="https://crystal-lang.org/">this page</a>.</li>
 </ul>
 <h2 id="heading"></h2>
@@ -1086,6 +1092,27 @@ Only the cells abiding by the following rules will be part of the next generatio
         </div>
         
         
+        <div class="mcol c6">
+          <header>Next Article</header>
+          <article class="lism">
+  <a href="https://lbarasti.com/post/byoidsl/">
+    <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
+
+    <div class="inner">
+      <div class="title">Building an interactive DSL</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="7007-07-07T19:17:57JST">Jul 7, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+        </div>
+        
       </div>
     </div>
 
@@ -1140,6 +1167,24 @@ Only the cells abiding by the following rules will be part of the next generatio
   <header>LATESTS</header>
   <div>
     <div class="articles sm">
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/byoidsl/">
+    <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
+
+    <div class="inner">
+      <div class="title">Building an interactive DSL</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="7007-07-07T19:17:57JST">Jul 7, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
       
       <article class="lism">
   <a href="https://lbarasti.com/post/game_of_life/">
@@ -1260,7 +1305,7 @@ Only the cells abiding by the following rules will be part of the next generatio
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(6)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/automata">automata <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/genserver">genserver <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/live-coding">live-coding <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(7)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/automata">automata <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/dsl">dsl <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/generics">generics <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

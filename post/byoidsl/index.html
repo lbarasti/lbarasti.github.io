@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="theme-color" content="#263238">
+
+<meta name="generator" content="Hugo 0.68.3" />
+
+<link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
+
+
+
+
+    <link rel="canonical" href="https://lbarasti.com/post/byoidsl/">
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Building an interactive DSL - lbarasti&#39;s blog</title>
+    
+<meta name="description" content="A companion to the live-coding series Build Your Own interactive DSL">
+
+<meta property="og:title" content="Building an interactive DSL - lbarasti&#39;s blog">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lbarasti.com/post/byoidsl/">
+<meta property="og:image" content="https://lbarasti.com/src/byoidsl/00_header.png">
+<meta property="og:site_name" content="lbarasti&#39;s blog">
+<meta property="og:description" content="A companion to the live-coding series Build Your Own interactive DSL">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="lbarasti&#39;s blog">
+<meta name="twitter:url" content="https://lbarasti.com/post/byoidsl/">
+<meta name="twitter:title" content="Building an interactive DSL - lbarasti&#39;s blog">
+<meta name="twitter:description" content="A companion to the live-coding series Build Your Own interactive DSL">
+<meta name="twitter:image" content="https://lbarasti.com/src/byoidsl/00_header.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/lbarasti.com\/"
+    },
+    "headline": "Building an interactive DSL-lbarasti's blog",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/lbarasti.com\/src\/byoidsl\/00_header.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-07-07T19:17:57JST",
+    "dateModified": "2020-07-07T19:17:57JST",
+    "author": {
+      "@type": "Person",
+      "name": "lbarasti's blog"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "lbarasti's blog",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/lbarasti.com\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "A companion to the live-coding series Build Your Own interactive DSL"
+  }
+</script>
+
+
+    <style>
+html {
+  font-size: 18px;
+  background-color: rgba(236,239,241,.5);
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+body {
+  color: #333;
+  font-family: 'Roboto Slab','ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif;
+  font-feature-settings : "palt";
+  font-size: inherit;
+  line-height: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 ,h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1rem;
+  margin: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dashed #cfd8dc;
+  margin: 1rem 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1rem;
+}
+
+a {
+  color: #2196f3;
+  text-decoration: none;
+  transition-duration: .3s;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  font-size: .8rem;
+  padding: .5rem;
+}
+
+tr {
+  border-bottom: 1px dashed #ddd;
+}
+
+/* Layouts */
+main,
+aside {
+  display: block;
+}
+
+main { padding: 1rem 0 3rem 0; }
+aside.h { padding: 3rem 0; }
+
+main.f,
+aside.f {
+  background-color: #333;
+  border-top: 2px dashed #fff;
+  border-bottom: 2px dashed #fff;
+}
+
+.l-container {
+  position: relative;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.l-container.thin {
+  max-width: 44rem;
+}
+
+.l-header {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.l-header .description {
+  margin-top: .5rem;
+  font-size: .8rem;
+}
+
+.l-footer {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  font-size: .6rem;
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .l-sidebar {
+    margin-top: 4rem;
+  }
+}
+
+.mrow {
+  margin: 0 -1rem;
+  overflow: hidden;
+}
+
+.mcol {
+  box-sizing: border-box;
+  float: left;
+  padding: 0 1rem;
+}
+
+.c6 { width: 50%; }
+.c4 { width: 33.26323833%; }
+.c8 { width: 66.66666%; }
+
+@media (max-width: 768px) {
+  .mcol {
+    width: 100%;
+    float: none;
+  }
+}
+
+.logo a {
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.articles {
+  margin: -1rem 0;
+  margin-bottom: 1rem;
+}
+
+.articles.sm {
+  margin: -.5rem 0;
+  margin-bottom: 0;
+}
+
+article {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+article.li {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  height: 20rem;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+article.li > a {
+  display: block;
+  color: #333;
+}
+
+article.li .inner {
+  padding: 1rem;
+}
+
+article.li .thumb {
+  height: 8rem;
+}
+
+article.li .title {
+  color: #333;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+article.li .summary {
+  font-size: .8rem;
+  height: 6rem;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+article.li .summary::after {
+  content: '...';
+}
+
+article.lism {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  margin: .5rem 0;
+}
+
+article.lism::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+article.lism > a {
+  display: block;
+  color: #333;
+}
+
+article.lism .inner {
+  display: table-cell;
+  vertical-align: middle;
+  height: 5rem;
+  padding: 0 .75rem;
+}
+
+article.lism .thumb {
+  width: 5rem;
+  height: 5rem;
+  float: left;
+}
+
+article.lism .title {
+  font-weight: 700;
+  font-size: .8rem;
+  margin-bottom: .25rem;
+}
+
+article.sn {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  margin-bottom: 1rem;
+}
+
+article.sn .thumb {
+  height: 20rem;
+}
+
+@media (max-width: 768px) {
+  article.sn .thumb {
+    height: 10rem;
+  }
+}
+
+article.sn > .article-header,
+article.sn > .article-body,
+article.sn .article-footer {
+  padding: 2rem;
+}
+
+article.sn > .article-body {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-header,
+  article.sn > .article-body,
+  article.sn .article-footer {
+    padding: 1rem;
+  }
+
+  article.sn > .article-body {
+    padding: 0 1rem;
+  }
+}
+
+article.sn > .article-header .title {
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-bottom: .5rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-header .title {
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+  }
+}
+
+article.sn > .article-header .facts {
+  margin-bottom: 1rem;
+}
+
+article.sn > .article-body {
+  margin-bottom: 1.5rem;
+}
+
+article.sn > .article-body h2 {
+  border-bottom: .25rem solid #333;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  padding: .5rem 0;
+}
+
+article.sn > .article-body h3 {
+  border-left: .5rem solid #333;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  padding: .125rem .5rem;
+}
+
+article.sn > .article-body ul,
+article.sn > .article-body ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+article.sn > .article-body li {
+  padding-bottom: .5rem;
+  line-height: 1.5rem;
+}
+
+article.sn > .article-body li:last-child {
+  padding-bottom: 0;
+}
+article.sn > .article-body p {
+  margin: 1rem 0;
+  line-height: 1.5rem;
+}
+
+article.sn > .article-body strong,
+article.sn > .article-body em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+article.sn > .article-body strong {
+  box-shadow: 0 -.5rem 0 0 #ffc107 inset;
+}
+
+article.sn > .article-body em {
+  color: #8bc34a;
+}
+
+article.sn > .article-body code,
+article.sn > .article-body pre {
+  font-family: Menlo, Consolas, monospace;
+  font-size: .7rem;
+}
+
+article.sn > .article-body pre {
+  background-color: #333;
+  color: #fff;
+  line-height: 1rem;
+  margin: 1.5rem -2rem;
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body pre {
+    margin: 1.5rem -1rem;
+  }
+}
+
+article.sn > .article-body pre > code {
+  display: block;
+  padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body pre > code {
+    padding: 1rem;
+  }
+}
+
+article.sn > .article-body p code {
+  background-color: #eceff1;
+  color: #333;
+  border-radius: 4px;
+  margin: 0 .25rem;
+  padding: .375rem;
+  white-space: nowrap;
+}
+
+article.sn > .article-body blockquote {
+  position: relative;
+  border-left: .25rem solid #333;
+  font-size: .8rem;
+  padding: .125rem 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body blockquote {
+    font-size: 1rem;
+  }
+}
+
+article.sn > .article-body blockquote p {
+  margin: .5rem 0;
+  line-height: 1rem;
+}
+
+article.sn > .article-body figure {
+  margin: 1.5rem 0;
+}
+
+article.sn > .article-body img,
+article.sn > .article-body figure img,
+article.sn > .article-body figure amp-img {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  max-width: 100%;
+}
+
+article.sn > .article-body figcaption {
+  color: #cfd8dc;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
+
+.facts li {
+  display: inline;
+  font-size: .8rem;
+  margin-right: 1rem;
+}
+
+.facts i {
+  color: #cfd8dc;
+  margin-right: .5em;
+}
+
+.facts.sm li {
+  font-size: .7rem;
+}
+
+.sections.sidebar {
+  margin: -1rem 0;
+}
+
+.sections.footer {
+  margin: -1rem 0;
+}
+
+section.sidebar {
+  margin: 2rem 0;
+}
+
+section.sidebar > header {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+section.footer {
+  margin: 1rem 0;
+}
+
+section.footer > header {
+  font-size: .8rem;
+  margin: .5rem 0;
+}
+
+section.footer > header::before {
+  content: "- ";
+}
+
+section.footer > header a {
+  font-weight: 700;
+  color: #333;
+  text-decoration: underline;
+}
+
+.terms {
+  margin: -.25rem;
+}
+
+.terms li {
+  display: inline-block;
+}
+
+.terms a {
+  display: block;
+  float: left;
+  background-color: #333;
+  border-radius: 4px;
+  color: #fff;
+  font-size: .7rem;
+  margin: .25rem;
+  padding: 0 .75rem;
+  line-height: 1.75rem;
+}
+
+.paging {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.paging a {
+  display: inline-block;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  border-radius: 4px;
+  color: #333;
+  padding: 0 1rem;
+  line-height: 3rem;
+}
+
+.page-title {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  border-bottom: .25rem solid #333;
+  width: 3rem;
+  margin: 1.5rem auto;
+}
+
+.page-title > .title {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+/* Parts:breadcrumb */
+.crumb ol {
+  text-overflow: ellipsis;
+  color: #cfd8dc;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.crumb li {
+  display: inline;
+  font-size: .8rem;
+}
+
+.crumb li::after {
+  content: '›';
+  margin: 0 .25rem 0 .5rem;
+}
+
+.crumb li:last-child::after {
+  content: '';
+}
+
+.crumb a {
+  color: #cfd8dc;
+}
+
+.crumb i {
+  margin-right: .5em;
+}
+
+.share {
+  padding: 0;
+}
+
+.share a {
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  min-width: 1rem;
+  height: 2rem;
+  border-radius: 4px;
+  color: #333;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 2rem;
+  text-align: center;
+  padding: 0 .5rem;
+}
+
+.adj article.lism {
+  margin-bottom: 1rem;
+}
+
+.adj header {
+  font-weight: 700;
+  font-size: .8rem;
+}
+
+.toc {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .toc {
+    padding: 0 1rem;
+  }
+}
+
+.toc {
+  margin: 1rem 0;
+}
+
+.toc nav>ul {
+  background-color: #eceff1;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: .8rem;
+  padding: .5rem 1rem;
+  word-break: break-all;
+  list-style: none;
+}
+
+.toc ul {
+  padding: 0;
+}
+
+.toc ul ul {
+  padding-left: 1rem;
+}
+
+.toc ul ul ul {
+  padding-left: 1rem;
+}
+
+.toc li {
+  color: #90a4ae;
+}
+
+.toc ul ul>li {
+  font-weight: 700;
+  margin: .5rem 0;
+  list-style-type: decimal;
+}
+
+.toc ul ul ul>li {
+  list-style-type: disc;
+  font-weight: 500;
+}
+
+.author {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.author .author-thumb {
+  margin: 0 auto 1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background-color: #eceff1;
+  background-size: cover;
+  background-position: center;
+}
+
+.author .author-name {
+  margin-bottom: .5rem;
+  font-weight: 700;
+}
+
+.author .author-facts {
+  margin-bottom: 1rem;
+}
+
+.author .author-facts li {
+  display: inline;
+}
+
+.author .author-facts li a {
+  display: inline-block;
+  background-color: #eceff1;
+  width: 1.75rem;
+  height: 1.75rem;
+  line-height: 1.75rem;
+  text-align: center;
+  color: #333;
+  font-size: .8rem;
+  border-radius: 2px;
+}
+
+.author .author-facts li a:hover {
+  color: #fff;
+  background-color: #333;
+}
+
+.author .author-description {
+  text-align: left;
+  font-size: .8rem;
+}
+
+.author .author-description p {
+  margin: .5rem 0;
+}
+
+.thumb {
+  background-image: url(https://lbarasti.com/images/default.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+.thumb-379cdddbc8bab5ea691bccb3059844eb {
+  background-image: url(https://lbarasti.com/src/byoidsl/00_header.png);
+}
+
+
+
+.thumb-b0e4f6f597dd7100c40a783ccbe3c9f9 {
+  background-image: url(https://lbarasti.com/src/game_of_life/06_ex.png);
+}
+
+
+
+.thumb-b3e7b513b3545669e5ee97fd0b828bf4 {
+  background-image: url(https://lbarasti.com/src/select_statement/00_header.png);
+}
+
+
+
+.thumb-224ddb75e51dd0d04b1e71827aad96f9 {
+  background-image: url(https://lbarasti.com/src/intro_to_statistics/00_header.png);
+}
+
+
+
+.thumb-408d2f8615f913914e565d9a2093a3a4 {
+  background-image: url(https://lbarasti.com/src/url_checker_series/header.jpeg);
+}
+
+
+
+.thumb-2f8501660be1b202f0622f4169e68f2a {
+  background-image: url(https://lbarasti.com/src/two_way_communication/00_header_3.png);
+}
+
+
+
+.thumb-a79bcaa63d57a1252d925acc5f4a4d76 {
+  background-image: url(https://lbarasti.com/images/crystal-symbol.png);
+}
+
+
+
+
+article.sn > .article-body figcaption {
+  color: #1c9fda;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
+
+
+
+    </style>
+
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', "UA-97340845-1", 'auto', {'useAmpClientId': true});
+ga('send', 'pageview');
+</script>
+
+  </head>
+  <body>
+    <header class="l-header">
+      <div class="l-container">
+        <div class="logo">
+          <a href="https://lbarasti.com/">lbarasti&#39;s blog</a>
+        </div>
+        
+
+      </div>
+    </header>
+
+    <main>
+      <div class="l-container">
+        
+<div class="mrow">
+  <div class="mcol c8">
+
+    <article class="sn">
+
+  <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
+
+  <header class="article-header">
+    <h1 class="title">Building an interactive DSL</h1>
+
+    <ul class="facts">
+      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2020-07-07T19:17:57JST">Jul 7, 2020</time></li>
+      
+      <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.com/post/">POST</a></li>
+      
+    </ul>
+
+    <aside class="share">
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&title=Building%20an%20interactive%20DSL" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&text=Building%20an%20interactive%20DSL&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&t=Building%20an%20interactive%20DSL" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&title=Building%20an%20interactive%20DSL" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+</aside>
+
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="introduction">Introduction</h2>
+<p>Over the past couple of months, I&rsquo;ve released a series of videos exploring the fundamentals of building an interactive Domain-Specific Language (iDSL) from the ground up.</p>
+<p>To be more specific, the series describes how to build an <em>external</em> DSL and REPL, by means of a general-purpose language - <a href="https://crystal-lang.org/">Crystal</a>, in this case. Concepts you&rsquo;ll find here are 100% transferable, so you should be able to replicate the behaviour our iDSL in your favourite language 🚀</p>
+<p>I&rsquo;ve collected all the episodes in this article, with some further technical comments, reflections and reading recommendations.
+You can find the project&rsquo;s source code on <a href="https://github.com/lbarasti/byoidsl">GitHub</a>, in case you feel like following along.</p>
+<h2 id="getting-ready">Getting ready</h2>
+<p>I&rsquo;ve broken our external iDSL architecture down into 5 components.</p>
+<figure>
+    <img src="/src/byoidsl/00_header.png"/> 
+</figure>
+
+<h4 id="1-read-eval-print-loop-repl">1. Read-eval-print-loop (REPL)</h4>
+<p>A REPL is &ldquo;an interactive computer programming environment that takes single user inputs (i.e., single expressions), evaluates (executes) them, and returns the result to the user&rdquo; (source: <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">Wikipedia</a>)</p>
+<p>Together with the Runtime System, this component is what makes our language truly <em>interactive</em>. A REPL can make on-boarding new users easier, and let them explore our language API in a frictionless way, e.g. thanks to some auto-completion feature.</p>
+<h4 id="2-parser">2. Parser</h4>
+<p>A parser takes instructions written in our DSL, and translates them into commands digestible by the language interpreter.</p>
+<p>All programming languages have one. Some languages parse input into commands and evaluate them in one go, others hand over the parsed command to an interpreter or are part of a compiler&rsquo;s <a href="https://en.wikipedia.org/wiki/Compiler#Front_end">phases</a>.</p>
+<p>In our DSL, the parser will turn user input into an <em>intermediate representation</em> for our interpreter to consume.</p>
+<h4 id="3-interpreter">3. Interpreter</h4>
+<p>In our architecture¹, the interpreter is the component that evaluates commands coming from the parser - the <em>Eval</em> in REPL - and computes some result to be handed back to the user.</p>
+<p>In very simple languages, commands can be interpreted in isolation, with no context of previously run instructions - a calculator supporting basic arithmetic is a good example of this. If we want to take this further, and interpret commands in context, then we need to leverage a <strong>runtime system</strong>.</p>
+<p>¹According to this Wikipedia <a href="https://en.wikipedia.org/wiki/Interpreter_(computing)">definition of interpreter</a>, our parser covers steps 1 and 2, while our interpreter covers step 3.</p>
+<h4 id="4-runtime-system">4. Runtime system</h4>
+<p>A runtime system is the access point to the DSL&rsquo;s parser and interpreter, and manages the state of the system at runtime. Interestingly, not all runtime systems support running commands interactively. We&rsquo;ll make sure ours does 😉</p>
+<h4 id="5-command-line-interface-cli">5. Command Line Interface (CLI)</h4>
+<p>To enable our users to launch scripts or run the REPL from the command line, we&rsquo;ll provide the user with a command-line interface. Our CLI will be akin to <a href="https://docs.python.org/3/using/cmdline.html">python</a>, in particular.</p>
+<h2 id="getting-the-repl-out-of-the-way">Getting the REPL out of the way</h2>
+<p>I first had the idea to make a video on how to build a REPL when I stumbled upon <a href="https://github.com/Papierkorb/fancyline">Fancyline</a>, a Crystal library that makes it extremely easy to build complex behaviour into your CLI.</p>
+<p>This series was the perfect use case to try it out, so, in session 1, we leverage Fancyline to write a general-purpose REPL featuring error handling, command history and backward search. Just brilliant 🌠</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/dD5Qn3xsooU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p><strong>Code highlight.</strong> In session 5, we&rsquo;ll add support for one more feature: loading scripts from the REPL via the magic-command <code>%load</code>. Here is what that looks like in the <a href="https://github.com/lbarasti/byoidsl/blob/master/src/lib/repl.cr#L10">code</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">if</span> input<span style="color:#f92672">.</span>starts_with?(<span style="color:#e6db74">&#34;%load&#34;</span>)
+  filepath <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>lchop(<span style="color:#e6db74">&#34;%load&#34;</span>)<span style="color:#f92672">.</span>strip
+  File<span style="color:#f92672">.</span>each_line(filepath) { <span style="color:#f92672">|</span>line<span style="color:#f92672">|</span>
+    Repl<span style="color:#f92672">.</span>eval_and_print process, line
+  }
+<span style="color:#66d9ef">else</span>
+  Repl<span style="color:#f92672">.</span>eval_and_print process, input
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h2 id="parsing-with-parser-combinators">Parsing with parser combinators</h2>
+<p>In session 2, we build a parser for a prototypical iDSL called <em>IGOL</em> (Interactive [Conway&rsquo;s] Game Of Life).</p>
+<p>Thanks to <a href="https://github.com/voximity/pars3k">Pars3k</a>, a Crystal library implementing parser combinators, we can define a modular, human-readable and <a href="https://github.com/lbarasti/byoidsl/blob/master/spec/igol_interpreter_spec.cr">testable</a> parser in a few lines of code.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/7P2_dgnHFZk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>I&rsquo;ve known about parser combinators for a while, but this <a href="https://www.lihaoyi.com/post/EasyParsingwithParserCombinators.html">introduction</a> by Li Haoyi - an exceptional member of the Scala community - reignited my interest in building something with them 🙏</p>
+<p><strong>Code highlight.</strong> I used the <a href="https://github.com/lbarasti/dataclass">dataclass</a> macro to define the Algebraic Data Types representing the commands. Here is an example from the <a href="https://github.com/lbarasti/byoidsl/blob/master/src/igol/commands.cr#L25">code</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">dataclass Apply{coord : {Int32, Int32}, pattern : VarName <span style="color:#f92672">|</span> Pattern} <span style="color:#f92672">&lt;</span> Command
+</code></pre></div><p><strong>Reminder.</strong> Unlike <a href="https://crystal-lang.org/reference/syntax_and_semantics/structs.html">structs</a>, classes support defining recursive data types. This is a pretty desirable feature when defining the grammar of a language - see <a href="https://www.lihaoyi.com/post/EasyParsingwithParserCombinators.html#recursive-parsers">this example</a>.</p>
+<h2 id="interpreting-commands">Interpreting commands</h2>
+<p>In session 3, we define the interpreter as a function that transforms a <code>State</code> and a <code>Command</code> into a new <code>State</code>, plus some return value. A signature for such a function could look like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">interpret</span>(state : State, command : Command) : {State, T}
+</code></pre></div><p>where <code>T</code> is the type of the return value.</p>
+<p>In this first implementation, we limit state management to the <code>GameOfLife</code> grid, and always return a <code>String</code> as return type.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/C8R5GYJ9KYo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p><strong>Code highlight.</strong> We leverage Crystal&rsquo;s <code>case</code> statement to safely match a command to its runtime type. Note how the return type of <code>interpret</code> is a tuple containing:</p>
+<ul>
+<li>the new <code>State</code> of the system</li>
+<li>the result of the command execution - this will be presented to the user by the <em>Print</em> step of our REPL.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">interpret</span>(state : State, command : Command) : {State, String}
+  <span style="color:#66d9ef">case</span> command
+  <span style="color:#66d9ef">when</span> Show
+    {state, state<span style="color:#f92672">.</span>grid<span style="color:#f92672">.</span>draw}
+  <span style="color:#66d9ef">when</span> Evolve
+    new_grid <span style="color:#f92672">=</span> state<span style="color:#f92672">.</span>grid<span style="color:#f92672">.</span>evolve(command<span style="color:#f92672">.</span>n)
+    new_state <span style="color:#f92672">=</span> state<span style="color:#f92672">.</span>copy(<span style="color:#e6db74">grid</span>: new_grid)
+    {new_state, new_grid<span style="color:#f92672">.</span>draw}
+  <span style="color:#75715e"># ...</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>You can look at the code above in context <a href="https://github.com/lbarasti/byoidsl/blob/master/src/igol/interpreter.cr#L5">here</a>.</p>
+<h2 id="generic-runtime-systems">Generic runtime systems</h2>
+<p>In session 4, we define a generic runtime system to support <em>any</em> interactive DSL. To prove it, we&rsquo;ll define a minimal DSL for a <a href="https://github.com/lbarasti/byoidsl/blob/master/src/counter/counter.cr">counter</a> - not the most exciting DSL in the world, I admit - and show how effortless it is to plug it into the runtime.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/LjsRoAOt0H4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p><strong>Code highlight.</strong> The runtime class is a beautiful display of Crystal generics: in the code below, <code>State</code>, <code>Cmd</code> and <code>Err</code> are type parameters, meaning you can instantiate the <code>Runtime</code> class with any state, parser and interpreter satisfying the given generic signatures.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Runtime</span>(State, Cmd, Err)
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(
+    @state : State,
+    @parser : String <span style="color:#f92672">-&gt;</span> Cmd <span style="color:#f92672">|</span> Err,
+    @interpreter : State, Cmd <span style="color:#f92672">-&gt;</span> {State, String})
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(input : String)
+    command <span style="color:#f92672">=</span> @parser<span style="color:#f92672">.</span>call(input)
+    <span style="color:#66d9ef">case</span> command
+    <span style="color:#66d9ef">when</span> Cmd
+      @state, output <span style="color:#f92672">=</span> @interpreter<span style="color:#f92672">.</span>call(@state, command)
+      input<span style="color:#f92672">.</span>strip<span style="color:#f92672">.</span>ends_with?(<span style="color:#e6db74">&#34;;&#34;</span>) ? <span style="color:#66d9ef">nil</span> : output
+    <span style="color:#66d9ef">else</span>
+      <span style="color:#e6db74">&#34;Syntax error: </span><span style="color:#e6db74">#{</span>command<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h2 id="a-user-friendly-cli">A user friendly CLI</h2>
+<p>In session 5, we define a user-friendly CLI that will either launch the REPL or run a script, depending on whether a file path is provided.</p>
+<p>We&rsquo;ll see how <a href="https://github.com/at-grandpa/clim">Clim</a>, a Crystal library to build CLIs, makes it simple to put together a CLI that is both pretty and extensible, in a few lines of code.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/9WEw1Bqlfxo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p><strong>Code highlight.</strong> To make the CLI reusable by other iDSLs, we used <a href="https://crystal-lang.org/reference/syntax_and_semantics/macros.html">macros</a> 🔮</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">module</span> CLI
+  <span style="color:#66d9ef">macro</span> <span style="color:#a6e22e">run</span>(mod)
+    <span style="color:#66d9ef">class</span> <span style="color:#e6db74">{{</span>mod<span style="color:#e6db74">}}</span>_CLI <span style="color:#f92672">&lt;</span> Clim
+      main <span style="color:#66d9ef">do</span>
+        desc <span style="color:#e6db74">&#34;{{mod}} interpreter&#34;</span>
+        usage <span style="color:#e6db74">{{</span>mod<span style="color:#f92672">.</span>stringify<span style="color:#f92672">.</span>downcase<span style="color:#e6db74">}}</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; [option] [filepath]&#34;</span>
+        version <span style="color:#e6db74">&#34;Version </span><span style="color:#e6db74">#{{{</span>mod<span style="color:#e6db74">}}</span><span style="color:#f92672">.</span>version<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">short</span>: <span style="color:#e6db74">&#34;-v&#34;</span>
+        help <span style="color:#e6db74">short</span>: <span style="color:#e6db74">&#34;-h&#34;</span>
+        argument <span style="color:#e6db74">&#34;filepath&#34;</span>, <span style="color:#e6db74">type</span>: String, <span style="color:#e6db74">desc</span>: <span style="color:#e6db74">&#34;path to {{mod}} script&#34;</span>
+        <span style="color:#75715e"># ...</span>
+</code></pre></div><p>This allows us to instantiate a CLI for any iDSL, provided that their module defines the <code>#version</code> and <code>#runtime</code> methods. Here is the final <code>main</code> for the <em>IGOL</em> iDSL:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;./lib/cli&#34;</span>
+<span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;./igol&#34;</span>
+
+<span style="color:#66d9ef">CLI</span><span style="color:#f92672">.</span>run(<span style="color:#66d9ef">IGOL</span>)
+</code></pre></div><p>And here is the end result:
+<figure>
+    <img src="https://github.com/lbarasti/byoidsl/raw/master/examples/demo.gif"/> 
+</figure>
+</p>
+<hr>
+<p>This is it! If you managed to read this far, then you deserve a ⭐<br>
+I hope you enjoyed the write-up and learned something new in the process. If you have any question or would like to share your iDSL stories, then I&rsquo;d love to read them in the comments section below.</p>
+<p>If you&rsquo;d like to stay in touch, you can subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
+
+<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+	 
+</style>
+<div id="mc_embed_signup">
+<form action="https://lbarasti.us4.list-manage.com/subscribe/post?u=2ae02926c5ced578d57958587&amp;id=e952a286b4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<label for="mce-EMAIL"></label>
+	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2ae02926c5ced578d57958587_e952a286b4" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+
+</div>
+
+  <footer class="article-footer">
+
+    <aside class="share">
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&title=Building%20an%20interactive%20DSL" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&text=Building%20an%20interactive%20DSL&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&t=Building%20an%20interactive%20DSL" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f&title=Building%20an%20interactive%20DSL" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fbyoidsl%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+</aside>
+
+
+    <section class="footer">
+      <div>
+        <nav class="crumb">
+          <ol>
+            <li><a href="https://lbarasti.com/"><i class="fas fa-home" aria-hidden="true"></i>TOP</a></li>
+            
+            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.com/post/" itemprop="url"><span itemprop="title">POST</span></a></li>
+            
+            <li class="active">Building an interactive DSL</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    
+    
+    
+    <section class="footer">
+      <header>
+        <a href="https://lbarasti.com/categories/">CATEGORIES</a>
+      </header>
+      <div>
+        <ul class="terms">
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="footer">
+      <header>
+        <a href="https://lbarasti.com/tags/">TAGS</a>
+      </header>
+      <div>
+        <ul class="terms">
+          
+          <li><a href="https://lbarasti.com/tags/dsl/">DSL</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/parser-combinators/">parser-combinators</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/parser/">parser</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/repl/">REPL</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/macros/">macros</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/interpreter/">interpreter</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/generics/">generics</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/game-of-life/">game of life</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/crystal/">crystal</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    <div class="adj">
+      <div class="mrow">
+        
+        <div class="mcol c6">
+          <header>Previous Article</header>
+          <article class="lism">
+  <a href="https://lbarasti.com/post/game_of_life/">
+    <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
+
+    <div class="inner">
+      <div class="title">Conway&#39;s Game of Life, sparse</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="20007-06-20T18:52:41JST">Jun 20, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+        </div>
+        
+        
+      </div>
+    </div>
+
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "lbarasti-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+  <div class="mcol c4">
+    <aside class="l-sidebar">
+
+  <div class="sections sidebar">
+    
+<section class="sidebar">
+  <header>AUTHOR</header>
+  <div>
+    <div class="author">
+      
+      <div class="author-thumb" style="background-image: url(https://lbarasti.com/images/profile-picture.jpg);"></div>
+      
+      <div class="author-name">Lorenzo Barasti</div>
+      <ul class="author-facts">
+        
+        <li><a href="https://twitter.com/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="https://github.com/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+        <li><a href="https://www.youtube.com/channel/UCaydNuV-VSO0gFSrvS9WgXg" rel="nofollow" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+        <li><a href="https://twitch.tv/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitch" aria-hidden="true"></i></a></li>
+      </ul>
+      <div class="author-description">Exploring concurrency in Crystal, live coding on occasion.</div>
+    </div>
+  </div>
+</section>
+
+
+    <section class="sidebar">
+  <header>LATESTS</header>
+  <div>
+    <div class="articles sm">
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/byoidsl/">
+    <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
+
+    <div class="inner">
+      <div class="title">Building an interactive DSL</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="7007-07-07T19:17:57JST">Jul 7, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/game_of_life/">
+    <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
+
+    <div class="inner">
+      <div class="title">Conway&#39;s Game of Life, sparse</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="20007-06-20T18:52:41JST">Jun 20, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/select_statement/">
+    <div class="thumb thumb-b3e7b513b3545669e5ee97fd0b828bf4"></div>
+
+    <div class="inner">
+      <div class="title">5 use cases for Crystal&#39;s select statement</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="30007-04-30T23:03:29JST">Apr 30, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/intro_to_statistics/">
+    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
+
+    <div class="inner">
+      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/url_checker_series/">
+    <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
+
+    <div class="inner">
+      <div class="title">Live coding a URL checker in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-01-12T22:12:33JST">Jan 12, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/two_way_comm_between_fibers/">
+    <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
+
+    <div class="inner">
+      <div class="title">2-way communication between Fibers</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-11-25T22:12:33JST">Nov 25, 2019</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/fun_with_crystal/">
+    <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
+
+    <div class="inner">
+      <div class="title">Going faster with Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-04-12T10:12:33JST">Apr 12, 2017</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+    </div>
+  </div>
+</section>
+
+    
+
+    
+<section class="sidebar">
+  <header>TAGS</header>
+  <div>
+    <ul class="terms">
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(7)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/algorithms">algorithms <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/automata">automata <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/dsl">dsl <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/generics">generics <span class="count">(1)</span></a></li>
+    </ul>
+  </div>
+</section>
+
+
+
+  </div>
+
+</aside>
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="l-container">
+        <p><span class="h-logo">&copy; lbarasti&#39;s blog</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
