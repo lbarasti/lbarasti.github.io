@@ -109,7 +109,7 @@ Ruby      | ~23 minutes
 Node      | 3.5 minutes
 Crystal   | 1.1 minutes
 
-And here is the source code used to generate the bechmark data above.
+And here is the source code used to generate the benchmark data above.
 
 - [js](/src/fun_with_crystal/loop.js)
 - [ruby/Crystal](/src/fun_with_crystal/loop.rb)

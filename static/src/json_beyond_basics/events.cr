@@ -1,7 +1,7 @@
 require "json"
 
 struct Peer
-  include JSON::Serializable
+  # include JSON::Serializable
 
   getter address : String
   getter port : Int32
@@ -12,14 +12,19 @@ end
 
 abstract struct Event
   include JSON::Serializable
-
-  # use_json_discriminator "type", {connected: Connected, started: Started, completed: Completed, terminated: Terminated, initialized: Initialized}
-
-  # getter type : String
-  
-  # macro inherited
-  #   getter type : String = {{@type.stringify.downcase}}
+  # macro subclasses
+  #   {
+  #     {% for name in @type.subclasses %}
+  #     {{ name.stringify.downcase.id }}: {{ name.id }},
+  #     {% end %}
+  #   }
   # end
+
+  use_json_discriminator "type", {connected: Connected, started: Started, completed: Completed}
+
+  macro inherited
+    getter type : String = {{@type.stringify.downcase}}
+  end
 end
 
 struct Connected < Event
@@ -37,15 +42,16 @@ struct Completed < Event
   def initialize(@peer : Peer, @piece : UInt32); end
 end
 
-struct Terminated < Event
-  getter peer
-  def initialize(@peer : Peer); end
-end
+e0 = Connected.new(Peer.new("0.0.0.0", 8020))
+e1 = Started.new(Peer.new("0.0.0.0", 8020), 2)
 
-struct Initialized < Event
-  getter total, todo, name
-  def initialize(@name : String, @total : Int32, @todo : Int32); end
-end
+s0 = e0.to_json #=> {"peer":"0.0.0.0"}
+s1 = e1.to_json #=> {"peer":"0.0.0.0","piece":2}
 
-c = Connected.new(Peer.new("0.0.0.0", 80))
-puts c.to_json
+Connected.from_json(e0.to_json) #=> Connected(@peer="0.0.0.0")
+Started.from_json(e1.to_json) #=> Started(@peer="0.0.0.0", @piece=2)
+
+
+puts Event.from_json(s0)
+puts Event.from_json(s1)
+# puts Event.subclasses
