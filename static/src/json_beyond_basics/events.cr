@@ -1,7 +1,7 @@
 require "json"
 
 struct Peer
-  # include JSON::Serializable
+  include JSON::Serializable
 
   getter address : String
   getter port : Int32
@@ -12,15 +12,42 @@ end
 
 abstract struct Event
   include JSON::Serializable
-  # macro subclasses
-  #   {
-  #     {% for name in @type.subclasses %}
-  #     {{ name.stringify.downcase.id }}: {{ name.id }},
-  #     {% end %}
-  #   }
-  # end
 
-  use_json_discriminator "type", {connected: Connected, started: Started, completed: Completed}
+  def self.new(pull : ::JSON::PullParser)
+    location = pull.location
+
+    discriminator_value = nil
+
+    # Try to find the discriminator while also getting the raw
+    # string value of the parsed JSON, so then we can pass it
+    # to the final type.
+    json = String.build do |io|
+      JSON.build(io) do |builder|
+        builder.start_object
+        pull.read_object do |key|
+          if key == "type"
+            discriminator_value = pull.read_string
+            builder.field(key, discriminator_value)
+          else
+            builder.field(key) { pull.read_raw(builder) }
+          end
+        end
+        builder.end_object
+      end
+    end
+
+    unless discriminator_value
+      raise ::JSON::MappingError.new("Missing JSON discriminator field 'type'", to_s, nil, *location, nil)
+    end
+
+    k = {{@type.subclasses}}.find { |klass| klass.to_s.downcase == discriminator_value }
+
+    unless k
+      raise ::JSON::MappingError.new("Missing JSON discriminator field '{{field.id}}'", to_s, nil, *location, nil)
+    end
+
+    k.from_json(json)
+  end
 
   macro inherited
     getter type : String = {{@type.stringify.downcase}}
