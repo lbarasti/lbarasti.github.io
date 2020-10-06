@@ -6,10 +6,19 @@
     <description>Recent content in Posts on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 07 Jul 2020 19:17:57 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2020 00:17:01 +0200</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Crystal JSON beyond the basics</title>
+      <link>https://lbarasti.com/post/json_beyond_basics/</link>
+      <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
+      
+      <guid>https://lbarasti.com/post/json_beyond_basics/</guid>
+      <description>In this article, we&amp;rsquo;ll look at how we can encode and decode Algebraic Data Types (ADTs) in Crystal using the json module and its powerful macros.</description>
+    </item>
     
     <item>
       <title>Building an interactive DSL</title>

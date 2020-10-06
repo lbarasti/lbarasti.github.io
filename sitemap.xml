@@ -3,12 +3,52 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://lbarasti.com/post/byoidsl/</loc>
-    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
+    <loc>https://lbarasti.com/tags/adt/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://lbarasti.com/tags/crystal/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/json_beyond_basics/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/json/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/macros/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/serialization/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/tags/</loc>
+    <lastmod>2020-09-21T00:17:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://lbarasti.com/post/byoidsl/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
   </url>
   
@@ -33,16 +73,6 @@
   </url>
   
   <url>
-    <loc>https://lbarasti.com/</loc>
-    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/macros/</loc>
-    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://lbarasti.com/tags/parser/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
   </url>
@@ -53,17 +83,7 @@
   </url>
   
   <url>
-    <loc>https://lbarasti.com/post/</loc>
-    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://lbarasti.com/tags/repl/</loc>
-    <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
   </url>
   
