@@ -4,7 +4,7 @@ thumbnail = "/src/ruby_ractor/00_header.png"
 tags = ["ruby", "actors", "ractors", "concurrency"]
 categories = []
 date = "2021-01-25T20:12:48Z"
-title = "Ruby Ractor"
+title = "Parallelism in Ruby with Ractors"
 summary = "Let's have a look at the new Ractor API introduced by Ruby 3.0."
 +++
 
