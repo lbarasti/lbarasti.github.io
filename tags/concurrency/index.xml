@@ -6,10 +6,19 @@
     <description>Recent content in concurrency on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 30 Apr 2020 23:03:29 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 25 Jan 2021 20:12:48 +0000</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ruby Ractor</title>
+      <link>https://lbarasti.com/post/ruby_ractor/</link>
+      <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
+      
+      <guid>https://lbarasti.com/post/ruby_ractor/</guid>
+      <description>Let&amp;rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.</description>
+    </item>
     
     <item>
       <title>5 use cases for Crystal&#39;s select statement</title>

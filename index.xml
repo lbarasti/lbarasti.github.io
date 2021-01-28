@@ -6,10 +6,19 @@
     <description>Recent content on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 21 Sep 2020 00:17:01 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 25 Jan 2021 20:12:48 +0000</lastBuildDate>
     
 	<atom:link href="https://lbarasti.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ruby Ractor</title>
+      <link>https://lbarasti.com/post/ruby_ractor/</link>
+      <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
+      
+      <guid>https://lbarasti.com/post/ruby_ractor/</guid>
+      <description>Let&amp;rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.</description>
+    </item>
     
     <item>
       <title>Crystal JSON beyond the basics</title>
