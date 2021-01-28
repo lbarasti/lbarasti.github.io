@@ -19,11 +19,11 @@
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Ruby Ractor - lbarasti&#39;s blog</title>
+    <title>Parallelism in Ruby with Ractors - lbarasti&#39;s blog</title>
     
 <meta name="description" content="Let&rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.">
 
-<meta property="og:title" content="Ruby Ractor - lbarasti&#39;s blog">
+<meta property="og:title" content="Parallelism in Ruby with Ractors - lbarasti&#39;s blog">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://lbarasti.com/post/ruby_ractor/">
 <meta property="og:image" content="https://lbarasti.com/src/ruby_ractor/00_header.png">
@@ -34,7 +34,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="lbarasti&#39;s blog">
 <meta name="twitter:url" content="https://lbarasti.com/post/ruby_ractor/">
-<meta name="twitter:title" content="Ruby Ractor - lbarasti&#39;s blog">
+<meta name="twitter:title" content="Parallelism in Ruby with Ractors - lbarasti&#39;s blog">
 <meta name="twitter:description" content="Let&rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.">
 <meta name="twitter:image" content="https://lbarasti.com/src/ruby_ractor/00_header.png">
 
@@ -47,7 +47,7 @@
       "@type": "WebPage",
       "@id":"https:\/\/lbarasti.com\/"
     },
-    "headline": "Ruby Ractor-lbarasti's blog",
+    "headline": "Parallelism in Ruby with Ractors-lbarasti's blog",
     "image": {
       "@type": "ImageObject",
       "url": "https:\/\/lbarasti.com\/src\/ruby_ractor\/00_header.png",
@@ -871,7 +871,7 @@ ga('send', 'pageview');
   <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
   <header class="article-header">
-    <h1 class="title">Ruby Ractor</h1>
+    <h1 class="title">Parallelism in Ruby with Ractors</h1>
 
     <ul class="facts">
       <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2021-01-25T20:12:48JST">Jan 25, 2021</time></li>
@@ -881,10 +881,10 @@ ga('send', 'pageview');
     </ul>
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Ruby%20Ractor" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Ruby%20Ractor&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Ruby%20Ractor" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Ruby%20Ractor" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Parallelism%20in%20Ruby%20with%20Ractors&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Parallelism%20in%20Ruby%20with%20Ractors" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
   <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
@@ -1087,10 +1087,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   <footer class="article-footer">
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Ruby%20Ractor" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Ruby%20Ractor&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Ruby%20Ractor" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Ruby%20Ractor" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Parallelism%20in%20Ruby%20with%20Ractors&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Parallelism%20in%20Ruby%20with%20Ractors" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
   <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
@@ -1103,7 +1103,7 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
             
             <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.com/post/" itemprop="url"><span itemprop="title">POST</span></a></li>
             
-            <li class="active">Ruby Ractor</li>
+            <li class="active">Parallelism in Ruby with Ractors</li>
           </ol>
         </nav>
       </div>
@@ -1235,7 +1235,7 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
     <div class="inner">
-      <div class="title">Ruby Ractor</div>
+      <div class="title">Parallelism in Ruby with Ractors</div>
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-01-25T20:12:48JST">Jan 25, 2021</time></li>
