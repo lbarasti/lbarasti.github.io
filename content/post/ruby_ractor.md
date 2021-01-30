@@ -71,7 +71,7 @@ def worker(behaviour, source:, name: nil)
 end
 ```
 
-`behaviour` defines the initial state of the actor and exposes a `receive` method that will transform a received message message and the current state of the actor into its next state.
+`behaviour` defines the initial state of the actor and exposes a `receive` method that will transform a received message and the current state of the actor into its next state.
 
 ---
 
