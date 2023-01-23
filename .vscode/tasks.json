@@ -6,7 +6,7 @@
     {
       "label": "crystal",
       "type": "shell",
-      "command": "ruby ${file}",
+      "command": "crystal ${file}",
       "group": {
         "kind": "build",
         "isDefault": true
