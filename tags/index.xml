@@ -6,17 +6,31 @@
     <description>Recent content in Tags on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 25 Jan 2021 20:12:48 +0000</lastBuildDate>
-    
-	<atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate><atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>12in23</title>
+      <link>https://lbarasti.com/tags/12in23/</link>
+      <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
+      
+      <guid>https://lbarasti.com/tags/12in23/</guid>
+      <description></description>
+    </item>
     
     <item>
-      <title>Actor</title>
-      <link>https://lbarasti.com/tags/actor/</link>
-      <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
+      <title>kotlin</title>
+      <link>https://lbarasti.com/tags/kotlin/</link>
+      <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
       
-      <guid>https://lbarasti.com/tags/actor/</guid>
+      <guid>https://lbarasti.com/tags/kotlin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>refactoring</title>
+      <link>https://lbarasti.com/tags/refactoring/</link>
+      <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
+      
+      <guid>https://lbarasti.com/tags/refactoring/</guid>
       <description></description>
     </item>
     
@@ -242,6 +256,15 @@
       <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
       
       <guid>https://lbarasti.com/tags/series/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Actor</title>
+      <link>https://lbarasti.com/tags/actor/</link>
+      <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
+      
+      <guid>https://lbarasti.com/tags/actor/</guid>
       <description></description>
     </item>
     

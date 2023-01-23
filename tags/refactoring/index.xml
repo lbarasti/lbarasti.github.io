@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>refactoring on lbarasti&#39;s blog</title>
+    <link>https://lbarasti.com/tags/refactoring/</link>
+    <description>Recent content in refactoring on lbarasti&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate><atom:link href="https://lbarasti.com/tags/refactoring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kotlin refactoring: 8 tips from practice</title>
+      <link>https://lbarasti.com/post/kotlin_refactoring/</link>
+      <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
+      
+      <guid>https://lbarasti.com/post/kotlin_refactoring/</guid>
+      <description>Learning from the exercism.org community</description>
+    </item>
+    
+  </channel>
+</rss>

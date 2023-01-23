@@ -6,11 +6,7 @@
     <description>Recent content in automata on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 20 Jun 2020 18:52:41 +0100</lastBuildDate>
-    
-	<atom:link href="https://lbarasti.com/tags/automata/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 20 Jun 2020 18:52:41 +0100</lastBuildDate><atom:link href="https://lbarasti.com/tags/automata/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Conway&#39;s Game of Life, sparse</title>
       <link>https://lbarasti.com/post/game_of_life/</link>

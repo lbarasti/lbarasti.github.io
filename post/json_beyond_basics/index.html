@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -70,7 +70,7 @@
         "height": 60
       }
     },
-    "description": "In this article, we\x26rsquo;ll look at how we can encode and decode Algebraic Data Types (ADTs) in Crystal using the json module and its powerful macros."
+    "description": "In this article, we\u0026rsquo;ll look at how we can encode and decode Algebraic Data Types (ADTs) in Crystal using the json module and its powerful macros."
   }
 </script>
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -912,7 +918,7 @@ ga('send', 'pageview');
 <p>A common pattern in this scenario is to represent the various types of event as classes or structs inheriting from a base <code>Event</code> type. Events are inherently immutable, so it makes sense to model them as structs with getters.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -928,7 +934,7 @@ ga('send', 'pageview');
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">Peer</span> <span style="color:#f92672">=</span> String
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">Peer</span> <span style="color:#f92672">=</span> String
 
 <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
 <span style="color:#66d9ef">end</span>
@@ -953,14 +959,14 @@ ga('send', 'pageview');
 <p>As we are contemplating our nicely designed events hierarchy, a requirement comes in saying that we need to persist all the P2P events processed by our application for auditing purposes. After an intense discussion with the team, we decide to go for the JSON format. Let&rsquo;s update our code so that we can turn <code>Event</code> instances into JSON</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;json&#34;</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;json&#34;</span>
 
 <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">::</span>Serializable
@@ -969,16 +975,16 @@ ga('send', 'pageview');
 </div>
 <p>Here we are importing the JSON package (line 1), and then simply <em>mixing</em> the <code>JSON::Serializable</code> module <em>into</em> <code>Event</code> (line 4).</p>
 <p>Is that it? Well, let&rsquo;s see&hellip;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0 <span style="color:#f92672">=</span> Connected<span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;0.0.0.0&#34;</span>) <span style="color:#75715e">#=&gt; Connected(@peer=&#34;0.0.0.0&#34;)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0 <span style="color:#f92672">=</span> Connected<span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;0.0.0.0&#34;</span>) <span style="color:#75715e">#=&gt; Connected(@peer=&#34;0.0.0.0&#34;)</span>
 e1 <span style="color:#f92672">=</span> Started<span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#=&gt; Started(@peer=&#34;0.0.0.0&#34;, @piece=2)</span>
 
 e0<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;peer&#34;:&#34;0.0.0.0&#34;}</span>
 e1<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;peer&#34;:&#34;0.0.0.0&#34;,&#34;piece&#34;:2}</span>
 </code></pre></div><p>Now, that&rsquo;s impressive! Simply including the <code>JSON::Serializable</code> module into the base type resulted in equipping its subtypes with working <code>#to_json</code> methods. The following works, too:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Connected<span style="color:#f92672">.</span>from_json(e0<span style="color:#f92672">.</span>to_json) <span style="color:#75715e">#=&gt; Connected(@peer=&#34;0.0.0.0&#34;)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Connected<span style="color:#f92672">.</span>from_json(e0<span style="color:#f92672">.</span>to_json) <span style="color:#75715e">#=&gt; Connected(@peer=&#34;0.0.0.0&#34;)</span>
 Started<span style="color:#f92672">.</span>from_json(e1<span style="color:#f92672">.</span>to_json) <span style="color:#75715e">#=&gt; Started(@peer=&#34;0.0.0.0&#34;, @piece=2)</span>
 </code></pre></div><p>This is nice, e.g. for testing purposes, but mind that the exact type of an event will likely be unknown to us at compile time, so what we&rsquo;d <em>actually</em> like to run is</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Event<span style="color:#f92672">.</span>from_json(e0<span style="color:#f92672">.</span>to_json)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Event<span style="color:#f92672">.</span>from_json(e0<span style="color:#f92672">.</span>to_json)
 <span style="color:#75715e"># raises &#34;Error: can&#39;t instantiate abstract struct Event&#34;</span>
 </code></pre></div><p>Unfortunately, this raises an error: by default, the deserializer defined within the <code>JSON::Serializable</code> module tries to instantiate an <code>Event</code> object. As we mentioned above, this is not possible, due to the abstract nature of the type. So, where do we go from here?</p>
 <h4 id="discriminators-to-the-rescue">Discriminators to the rescue</h4>
@@ -987,7 +993,7 @@ Started<span style="color:#f92672">.</span>from_json(e1<span style="color:#f9267
 <p>Let&rsquo;s update our code to add support for discriminators.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -1009,7 +1015,7 @@ Started<span style="color:#f92672">.</span>from_json(e1<span style="color:#f9267
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">::</span>Serializable
 
   use_json_discriminator <span style="color:#e6db74">&#34;type&#34;</span>, {
@@ -1038,16 +1044,16 @@ Started<span style="color:#f92672">.</span>from_json(e1<span style="color:#f9267
 </ul>
 <p>You&rsquo;ll notice a correspondence between the value of each <code>type</code> field and the discriminator mapping.</p>
 <p>Let&rsquo;s check how this affects our serializer.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;type&#34;:&#34;connected&#34;,&#34;peer&#34;:&#34;0.0.0.0&#34;}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;type&#34;:&#34;connected&#34;,&#34;peer&#34;:&#34;0.0.0.0&#34;}</span>
 e1<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;type&#34;:&#34;started&#34;,&#34;peer&#34;:&#34;0.0.0.0&#34;,&#34;piece&#34;:2}</span>
 </code></pre></div><p>Notice how the type metadata is now part of the generated JSON. This in turn makes the following work:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Event<span style="color:#f92672">.</span>from_json(e0<span style="color:#f92672">.</span>to_json) <span style="color:#75715e">#=&gt; Connected(@type=&#34;connected&#34;, @peer=&#34;0.0.0.0&#34;)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Event<span style="color:#f92672">.</span>from_json(e0<span style="color:#f92672">.</span>to_json) <span style="color:#75715e">#=&gt; Connected(@type=&#34;connected&#34;, @peer=&#34;0.0.0.0&#34;)</span>
 Event<span style="color:#f92672">.</span>from_json(e1<span style="color:#f92672">.</span>to_json) <span style="color:#75715e">#=&gt; Started(@type=&#34;started&#34;, @peer=&#34;0.0.0.0&#34;, @piece=2)</span>
 </code></pre></div><p>Brilliant!</p>
 <h4 id="composing-composite-types">Composing composite types</h4>
 <p>The above works all right with composite types where fields are primitive types, but what if we were to define composite types on the top of other composite types? 😱</p>
 <p>Let&rsquo;s expand the definition of <code>Peer</code> to check this out:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Peer</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Peer</span>
   getter address : String
   getter port : Int32
 
@@ -1058,11 +1064,11 @@ Event<span style="color:#f92672">.</span>from_json(e1<span style="color:#f92672"
 e0 <span style="color:#f92672">=</span> Connected<span style="color:#f92672">.</span>new(Peer<span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#ae81ff">8020</span>))
 e1 <span style="color:#f92672">=</span> Started<span style="color:#f92672">.</span>new(Peer<span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#ae81ff">8020</span>), <span style="color:#ae81ff">2</span>)
 </code></pre></div><p>Now the following fails</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0<span style="color:#f92672">.</span>to_json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0<span style="color:#f92672">.</span>to_json
 <span style="color:#75715e"># raises &#34;Error: no overload matches &#39;Peer#to_json&#39; with type JSON::Builder&#34;</span>
 </code></pre></div><p>The compiler is pretty explicit here: it does not know how to turn a <code>Peer</code> object into JSON.</p>
 <p>🤔 I know this one! Let&rsquo;s include <code>JSON::Serializable</code> into <code>Peer</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Peer</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Peer</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">::</span>Serializable
 
   getter address : String
@@ -1072,10 +1078,10 @@ e1 <span style="color:#f92672">=</span> Started<span style="color:#f92672">.</sp
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>And now try</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;type&#34;:&#34;connected&#34;,&#34;peer&#34;:{&#34;address&#34;:&#34;0.0.0.0&#34;,&#34;port&#34;:8020}}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">e0<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;type&#34;:&#34;connected&#34;,&#34;peer&#34;:{&#34;address&#34;:&#34;0.0.0.0&#34;,&#34;port&#34;:8020}}</span>
 e1<span style="color:#f92672">.</span>to_json <span style="color:#75715e">#=&gt; {&#34;type&#34;:&#34;started&#34;,&#34;peer&#34;:{&#34;address&#34;:&#34;0.0.0.0&#34;,&#34;port&#34;:8020},&#34;piece&#34;:2}</span>
 </code></pre></div><p>Success! What about deserialization?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Event<span style="color:#f92672">.</span>from_json(s0) <span style="color:#75715e">#=&gt; Connected(@type=&#34;connected&#34;, @peer=Peer(@address=&#34;0.0.0.0&#34;, @port=8020))</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Event<span style="color:#f92672">.</span>from_json(s0) <span style="color:#75715e">#=&gt; Connected(@type=&#34;connected&#34;, @peer=Peer(@address=&#34;0.0.0.0&#34;, @port=8020))</span>
 Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715e">#=&gt; Started(@type=&#34;started&#34;, @peer=Peer(@address=&#34;0.0.0.0&#34;, @port=8020), @piece=2)</span>
 </code></pre></div><p>Excellent! This is really all there is to it. Let&rsquo;s wrap up with an interesting trick and some more considerations on the extensibility of this method.</p>
 <h4 id="adding-event-subtypes">Adding Event subtypes</h4>
@@ -1084,7 +1090,7 @@ Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715
 <p>It turns out we can:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -1095,7 +1101,7 @@ Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">::</span>Serializable
 
   use_json_discriminator <span style="color:#e6db74">&#34;type&#34;</span>, {<span style="color:#e6db74">connected</span>: Connected, <span style="color:#e6db74">started</span>: Started}
@@ -1108,7 +1114,7 @@ Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715
 </div>
 <p>Wait, what is this <code>macro inherited</code> on line 6 about? It&rsquo;s a special macro <em>hook</em> that injects the code in its body into any type inheriting from <code>Event</code>. This is exactly what we need, as it gives us the opportunity to inject the <code>type</code> getter into each implementation of <code>Event</code> and set it to the type name, stringified and downcased. On line 7, note that occurrences of <code>@type</code> in a macro resolve to the name of the instantiating type.</p>
 <p>Now the rest of the code looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Connected</span> <span style="color:#f92672">&lt;</span> Event
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Connected</span> <span style="color:#f92672">&lt;</span> Event
   getter peer
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(@peer : Peer); <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
@@ -1119,13 +1125,13 @@ Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>No trace of JSON logic 🎉</p>
 <p>Let&rsquo;s introduce a new <code>Event</code> type to demonstrate this.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#75715e"># An event indicating the completion of a file piece.</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#75715e"># An event indicating the completion of a file piece.</span>
 <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Completed</span> <span style="color:#f92672">&lt;</span> Event
   getter peer, piece
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(@peer : Peer, @piece : UInt32); <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>No extra logic on the implementer side, as expected, but mind that we still need to update the discriminator mapping:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
   use_json_discriminator <span style="color:#e6db74">&#34;type&#34;</span>, {
     <span style="color:#e6db74">connected</span>: Connected,
     <span style="color:#e6db74">started</span>: Started,
@@ -1135,7 +1141,7 @@ Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p><strong>Challenge.</strong> Can we avoid having to manually update the mapping?</p>
 <p><em>Hint:</em> the following macro generates exactly the <code>NamedTupleLiteral</code> we&rsquo;re looking for:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Event</span>
   <span style="color:#66d9ef">macro</span> <span style="color:#a6e22e">subclasses</span>
     {
       <span style="color:#e6db74">{%</span> <span style="color:#66d9ef">for</span> name <span style="color:#66d9ef">in</span> @type<span style="color:#f92672">.</span>subclasses <span style="color:#e6db74">%}</span>
@@ -1147,7 +1153,7 @@ Event<span style="color:#f92672">.</span>from_json(s1) <span style="color:#75715
 
 Event<span style="color:#f92672">.</span>subclasses <span style="color:#75715e"># =&gt; {connected: Connected, started: Started, completed: Completed}</span>
 </code></pre></div><p>Unfortunately, the following does not work.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">use_json_discriminator <span style="color:#e6db74">&#34;type&#34;</span>, Event<span style="color:#f92672">.</span>subclasses
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">use_json_discriminator <span style="color:#e6db74">&#34;type&#34;</span>, Event<span style="color:#f92672">.</span>subclasses
 <span style="color:#75715e">#=&gt; raises Error: mapping argument must be a HashLiteral or a NamedTupleLiteral, not Call</span>
 </code></pre></div><p>This is because at the time when the <code>use_json_discriminator</code> macro is expanded, <code>Event.subclasses</code> hasn&rsquo;t been expanded, yet. I&rsquo;ve seen this kind of issues arising often when working with macros: they can save you from writing a lot of code, but composing them can be frustratingly complicated.</p>
 <p>Here is my recommendation:</p>
@@ -1356,6 +1362,24 @@ Event<span style="color:#f92672">.</span>subclasses <span style="color:#75715e">
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1528,7 +1552,7 @@ Event<span style="color:#f92672">.</span>subclasses <span style="color:#75715e">
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

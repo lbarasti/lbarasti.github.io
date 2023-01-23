@@ -1,5 +1,4 @@
 require "statistics"
-require "tablo"
 require "ishi"
 include Statistics::Distributions
 
@@ -7,14 +6,6 @@ include Statistics::Distributions
 R = Random.new(64)
 
 def rand; R.rand end
-
-# Turns a named tuple into tabular representation
-def table(data : NamedTuple)
-  Tablo::Table.new(data.map { |k, v| [k, v] }, header_frequency: nil) { |t|
-    t.add_column("coefficient") { |n| n[0] }
-    t.add_column("value") { |n| n[1].as(Float64).round(3) }
-  }
-end
 
 size = 5000
 exp_day = Exponential.new(150)
@@ -27,11 +18,22 @@ poi = Poisson.new(1)
 #   cumulative << v + cumulative.last
 # }
 
-t = 0
+start_date = Time.utc(year: 2022, month: 1, day: 5)
+time_unit = Time::Span.new(hours: 1)
 daylight = 7..22
-timestamp = (0...size).map {
-  t += daylight.includes?(t.to_i % 24) ? exp_day.rand : exp_night.rand
+
+timestamp = (0...size).accumulate(start_date) { |curr, _|
+  start_date + time_unit * (daylight.includes?(curr.time_of_day.hours) ?
+    exp_day.rand :
+    exp_night.rand)
 }
+
+
+Ishi.new do
+  x, y = timestamp.map(&.to_unix_f), (0..size).to_a
+  plot x, y
+end
+exit
 
 session_duration = (0...size).map { poi.rand }.map { |v| v * 15 }
 
@@ -84,13 +86,13 @@ coords = world_cities[1..].map(&.[2..3].map(&.to_f)).sample(size)
 #   plot timestamp, (1..size).to_a, style: :lines
 # end
 
-upper_timestamp = timestamp.last.ceil
-bins = Statistics.bin_count(timestamp, bins: upper_timestamp.to_i, min: 0.0, max: upper_timestamp)
-window_size = 7
+# upper_timestamp = timestamp.last.ceil
+# bins = Statistics.bin_count(timestamp, bins: upper_timestamp.to_i, min: 0.0, max: upper_timestamp)
+# window_size = 7
 
-sliding_count = bins.edges[1..-1].map { |e|
-  timestamp.count { |v| v <= e && v > e - window_size }
-}
+# sliding_count = bins.edges[1..-1].map { |e|
+#   timestamp.count { |v| v <= e && v > e - window_size }
+# }
 
 # Ishi.new do
 #   # 1.1 title: "sliding window"

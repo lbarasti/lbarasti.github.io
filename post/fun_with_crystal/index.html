@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -901,9 +907,8 @@ We define the distance between two points u,v as the <a href="https://xlinux.nis
 <p>dist(u,v) = |x_u - x_v| + |y_u - y_v|</p>
 </blockquote>
 <p>where |n| is the absolute value of n.</p>
-<p><figure>
-    <img src="/src/fun_with_crystal/point_dist.png"
-         alt="We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3"/> <figcaption>
+<p><figure><img src="/src/fun_with_crystal/point_dist.png"
+         alt="We work out the distance between two pairs of points. dist(A,B) = 2, dist(D,E) = 3"/><figcaption>
             <p>Figure 1. We give a visual representation of the distance between two points as defined above and work out the computation for points A(1,1), B(3,1) and D(3,4), E(5,5)</p>
         </figcaption>
 </figure>
@@ -911,9 +916,8 @@ We define the distance between two points u,v as the <a href="https://xlinux.nis
 <!-- raw HTML omitted --></p>
 <p>Our task is to group the given points so that the minimum distance between any two groups - let&rsquo;s call them <em>clusters</em> - is at least 3.
 In other words, if two points have distance less than 3, then we want them to be in the same cluster.</p>
-<p><figure>
-    <img src="/src/fun_with_crystal/cluster_dist.png"
-         alt="We compute the distance between two clusters as the minimum distance between two points belonging to different clusters"/> <figcaption>
+<p><figure><img src="/src/fun_with_crystal/cluster_dist.png"
+         alt="We compute the distance between two clusters as the minimum distance between two points belonging to different clusters"/><figcaption>
             <p>Figure 2. The figure shows a grouping of the points into clusters such that the distance between each cluster is at least 3. We define the distance between two clusters S_i, S_j as the minimum distance between u and v where u ∊ S_i and v ∊ S_j.</p>
         </figcaption>
 </figure>
@@ -921,7 +925,7 @@ In other words, if two points have distance less than 3, then we want them to be
 <!-- raw HTML omitted -->
 The first approach that comes to my mind is the following: we compute the distance between all the possible pairs of points, and put points that are close enough in the same cluster.
 The following pseudo-code seems to do the job.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">..</span>n
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">..</span>n
   <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..</span>n
     <span style="color:#66d9ef">if</span> dist(i,j) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>
       merge_clusters(i, j)
@@ -929,7 +933,7 @@ The following pseudo-code seems to do the job.</p>
 <h2 id="the-more-urgent-issue">The more urgent issue</h2>
 <p>The total number of pairs in a set of <code>n</code> points happens to be <code>n(n-1)/2</code>, which means that the number of pairs we need to go through grows quadratically with respect to the number of points. This implies that the computational cost of our brute force implementation is <em>at least</em> O(n²). Let&rsquo;s get a feel for that.</p>
 <p>Try running the following ruby script for increasing values of <code>size</code> up to 10^5 - name the file <code>loop.rb</code> for future reference.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">size <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>your value here<span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">size <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>your value here<span style="color:#f92672">&gt;</span>
 a <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">..</span>size)<span style="color:#f92672">.</span>map{ <span style="color:#f92672">[</span>rand(<span style="color:#ae81ff">1000</span>), rand(<span style="color:#ae81ff">1000</span>)<span style="color:#f92672">]</span> }
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dist</span>(u,v)
@@ -953,7 +957,7 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
 <code>crystal loop.rb</code> - yes, just like that.</p>
 <p>Our script happens to be fully compatible with Crystal&rsquo;s specification, so the <code>crystal</code> binary is happy to compile it and run it at once. Sadly, the runtime for size = 100000 is still over 12 minutes&hellip;</p>
 <p>Is that it? Not really, the <a href="https://crystal-lang.org/docs/using_the_compiler/">getting started</a> guide to Crystal recommends you compile your source code with the <code>--release</code> flag once you&rsquo;re happy with it.</p>
-<pre><code>crystal build loop.rb --release
+<pre tabindex="0"><code>crystal build loop.rb --release
 </code></pre><p>This produces a blazing fast <code>loop</code> executable that runs in under 70 seconds. We just cut the running time by a factor of <!-- raw HTML omitted -->20<!-- raw HTML omitted --> and all we had to do was to compile and run our code with Crystal. Awesome!</p>
 <h2 id="considerations">Considerations</h2>
 <p>I hope you got to appreciate how Crystal can enhance the performance of our code without affecting our productivity.</p>
@@ -1154,6 +1158,24 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1326,7 +1348,7 @@ a<span style="color:#f92672">.</span>each_with_index {<span style="color:#f92672
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

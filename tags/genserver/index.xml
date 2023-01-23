@@ -6,11 +6,7 @@
     <description>Recent content in GenServer on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate>
-    
-	<atom:link href="https://lbarasti.com/tags/genserver/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 25 Nov 2019 22:12:33 +0100</lastBuildDate><atom:link href="https://lbarasti.com/tags/genserver/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2-way communication between Fibers</title>
       <link>https://lbarasti.com/post/two_way_comm_between_fibers/</link>

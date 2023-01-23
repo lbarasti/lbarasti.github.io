@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -902,7 +908,7 @@ ga('send', 'pageview');
 <p>In the snippet below, the <em>echo</em> fiber loops over values coming from two channels: <code>values</code> and <code>terminate</code>.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -914,7 +920,7 @@ ga('send', 'pageview');
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
   loop <span style="color:#66d9ef">do</span>
     select
     <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
@@ -930,9 +936,9 @@ ga('send', 'pageview');
 This will capture the closure of the channel as a <code>nil</code> value.
 Whether the <code>terminate</code> channel is closed or receives a value, the loop will break, and the fiber will terminate.</p>
 <p>A concurrent fiber can politely ask for <em>echo</em> to terminate at any time with</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">terminate<span style="color:#f92672">.</span>close
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">terminate<span style="color:#f92672">.</span>close
 </code></pre></div><p><strong>Tip.</strong> <code>Channel#close</code> is non-blocking, meaning that the invoking fiber won&rsquo;t wait for the channel closure to be acknowledged by any receiving fiber. If you need a guarantee that the receiving fiber has completed its work, then you need to define a <a href="https://en.wikipedia.org/wiki/Fork%E2%80%93join_model">join point</a> between the two fibers. In the example below, the <em>echo</em> fiber notifies <em>main</em> of its termination by closing a <code>done</code> channel both fibers have a reference to (see Figure 1).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
   loop <span style="color:#66d9ef">do</span>
     select
     <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
@@ -948,9 +954,8 @@ Whether the <code>terminate</code> channel is closed or receives a value, the lo
 terminate<span style="color:#f92672">.</span>close
 done<span style="color:#f92672">.</span>receive?
 </code></pre></div><p>You can check out the full code <a href="https://gist.github.com/lbarasti/4d36cb8608dc700a3f4a6273ae0d40c4">here</a> and try it for yourself 💻</p>
-<figure>
-    <img src="/src/select_statement/01_join_point.png"
-         alt="Figure 1. A diagram showing the interaction between a parent fiber (main) and child fiber (echo)."/> <figcaption>
+<figure><img src="/src/select_statement/01_join_point.png"
+         alt="Figure 1. A diagram showing the interaction between a parent fiber (main) and child fiber (echo)."/><figcaption>
             <p>Figure 1. The diagram shows the interaction between a parent fiber (main) and child fiber (echo), where the parent issues a termination request and then waits for the child termination on a separate channel. The dashed arrows represent the causal relation between non-blocking calls and blocking ones.</p>
         </figcaption>
 </figure>
@@ -959,7 +964,7 @@ done<span style="color:#f92672">.</span>receive?
 <p>We&rsquo;ve seen how we can use <code>select</code> to receive on multiple channels. Now let&rsquo;s make a case for mixing <code>send</code> and <code>receive</code> in a <code>select</code> block.</p>
 <h4 id="2-retrieving-values-from-a-stateful-fiber">#2. Retrieving values from a stateful fiber</h4>
 <p>In the example below - full code <a href="https://gist.github.com/lbarasti/c73927c04002f3b5c475197be01de113">here</a> - we run a stateful fiber that aggregates values coming from a channel. Thanks to the <code>select</code> statement, the fiber supports sending the current cumulative sum to a concurrent fiber over the <code>result</code> channel, on demand.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;sum calculator&#34;</span>) <span style="color:#66d9ef">do</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;sum calculator&#34;</span>) <span style="color:#66d9ef">do</span>
   sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
   loop <span style="color:#66d9ef">do</span>
     select
@@ -970,7 +975,7 @@ done<span style="color:#f92672">.</span>receive?
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>All it takes for another fiber to query the current aggregated value is the following.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">sum <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>receive
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">sum <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>receive
 </code></pre></div><p><strong>Challenge.</strong> Can you combine the two approaches shown above to gracefully terminate a stateful fiber?</p>
 <h2 id="receiving-and-sending-with-timeout">Receiving and sending with timeout</h2>
 <p>Since <a href="https://crystal-lang.org/2020/02/14/crystal-0.33.0-released.html">Crystal 0.33</a>, <code>select</code> supports a timeout action. This allows us to run custom logic when a timeout is triggered.</p>
@@ -978,7 +983,7 @@ done<span style="color:#f92672">.</span>receive?
 <h4 id="3-timeout-on-async-calls">#3. Timeout on async calls</h4>
 <p>Imagine you want to give users the latest available stock market information by calling a third-party API, provided that the API response comes in a timely fashion.</p>
 <p>Here is a function simulating an asynchronous call to an external API.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price_async</span>(sym : Symbol) : Channel(Float64)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price_async</span>(sym : Symbol) : Channel(Float64)
   Channel(Float64)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>ch<span style="color:#f92672">|</span>
     spawn <span style="color:#66d9ef">do</span>
       sleep rand
@@ -987,7 +992,7 @@ done<span style="color:#f92672">.</span>receive?
   }
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>And here is the corresponding synchronous function with timeout.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price</span>(sym : Symbol, max_wait : Time<span style="color:#f92672">::</span>Span)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price</span>(sym : Symbol, max_wait : Time<span style="color:#f92672">::</span>Span)
   select
   <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> get_stock_price_async(sym)<span style="color:#f92672">.</span>receive
     Cache<span style="color:#f92672">[</span>sym<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> v
@@ -996,14 +1001,14 @@ done<span style="color:#f92672">.</span>receive?
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Now our users won&rsquo;t ever have to wait longer than the set time span - unless we have a cache-miss, but let&rsquo;s face it, they would have dropped off anyway.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">get_stock_price(<span style="color:#e6db74">:tsla</span>, <span style="color:#ae81ff">0.5</span><span style="color:#f92672">.</span>seconds)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">get_stock_price(<span style="color:#e6db74">:tsla</span>, <span style="color:#ae81ff">0.5</span><span style="color:#f92672">.</span>seconds)
 </code></pre></div><p>You can play with the code above <a href="https://gist.github.com/lbarasti/dab35d474ff55c68fdbb985a1d6147c9">here</a> 📉</p>
 <hr>
 <p>Timeouts are also really useful when dealing with back-pressure in a pipeline, which leads us to&hellip;</p>
 <h4 id="4-easing-back-pressure">#4. Easing back-pressure</h4>
 <p>When sending values downstream in a data pipeline, a stage might block on the <code>send</code> operation for a non-negligible amount of time. This is an unequivocal symptom of the fact that the downstream stages are struggling with the work load. Ignoring this could be fatal: our entire pipeline could grind to a halt, leaving us no other option than a restart. Timeouts give us the opportunity to act upon such - hopefully transient - data congestions.</p>
 <p>In the <code>word_size</code> stage below, we assume that it&rsquo;s OK to drop messages whenever the downstream stage is taking too long to accept the value being sent. This should keep the pipeline responsive at all time and let it self-heal as soon as the work load becomes manageable again.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_size</span>(input : Channel(String), max_wait : Time<span style="color:#f92672">::</span>Span) : Channel(String)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_size</span>(input : Channel(String), max_wait : Time<span style="color:#f92672">::</span>Span) : Channel(String)
   Channel(String)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>ch<span style="color:#f92672">|</span> 
     spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;word_size&#34;</span>) <span style="color:#66d9ef">do</span>
       loop <span style="color:#66d9ef">do</span>
@@ -1018,16 +1023,16 @@ done<span style="color:#f92672">.</span>receive?
   }
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>To see this code in action, we&rsquo;ll start the pipeline&hellip;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">random_word <span style="color:#f92672">=</span> <span style="color:#f92672">-&gt;</span> { <span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#f92672">*</span> rand(<span style="color:#ae81ff">10</span>) }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">random_word <span style="color:#f92672">=</span> <span style="color:#f92672">-&gt;</span> { <span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#f92672">*</span> rand(<span style="color:#ae81ff">10</span>) }
 output <span style="color:#f92672">=</span> word_size(producer(<span style="color:#e6db74">&#34;word_gen&#34;</span>, <span style="color:#f92672">&amp;</span>random_word), <span style="color:#ae81ff">0.7</span><span style="color:#f92672">.</span>seconds)
 </code></pre></div><p>&hellip; And simulate a slow consumer.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">loop <span style="color:#66d9ef">do</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">loop <span style="color:#66d9ef">do</span>
   sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> rand
   size <span style="color:#f92672">=</span> output<span style="color:#f92672">.</span>receive
   log <span style="color:#e6db74">&#34;received word size </span><span style="color:#e6db74">#{</span>size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>You can find a working version of the code <a href="https://gist.github.com/lbarasti/8508999f4db57c3e9615b0265160162b">here</a>. The output will look similar to the following.</p>
-<pre><code>word_size: successfully processed aaaaaaa
+<pre tabindex="0"><code>word_size: successfully processed aaaaaaa
 main: received word size 7
 word_size: timed out while processing aaa
 main: received word size 4
@@ -1041,9 +1046,9 @@ This is often desirable, but there are cases where you are fine with the receive
 <p>Adding an <code>else</code> clause to a <code>select</code> lets us define some behaviour to be triggered whenever every other clause is blocked. This is often seen in loop / select blocks, when it makes sense for the fiber to run some background job - or chunks of it - while waiting for other clauses to unblock.</p>
 <p>Another use case for the <code>else</code> clause has to do with non-essential / optional channel operations.</p>
 <h4 id="5-heartbeats-and-diagnostic-messages">#5. Heartbeats and diagnostic messages</h4>
-<p>A technique to monitor fibers&rsquo; health status is to have fibers sending <code>heartbeat</code> messages to a monitoring fiber via a dedicated channel. Such messages can give us insight into how our system is functioning, but are not essential for its execution - just like logging and tracing. Let&rsquo;s see how an <code>else</code> clause can express this semantics.</p>
+<p>A technique to monitor fibers' health status is to have fibers sending <code>heartbeat</code> messages to a monitoring fiber via a dedicated channel. Such messages can give us insight into how our system is functioning, but are not essential for its execution - just like logging and tracing. Let&rsquo;s see how an <code>else</code> clause can express this semantics.</p>
 <p>Suppose we want a <em>worker</em> fiber to send a heartbeat to a global <code>Diagnostic</code> channel - with capacity zero, for simplicity - when it gets spawned.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;worker&#34;</span>) <span style="color:#66d9ef">do</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;worker&#34;</span>) <span style="color:#66d9ef">do</span>
   select
   <span style="color:#66d9ef">when</span> Diagnostic<span style="color:#f92672">.</span>send Heartbeat<span style="color:#f92672">.</span>new
   <span style="color:#66d9ef">else</span>
@@ -1252,6 +1257,24 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1424,7 +1447,7 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

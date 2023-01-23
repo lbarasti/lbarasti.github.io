@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="theme-color" content="#263238">
+
+<meta name="generator" content="Hugo 0.92.2" />
+
+<link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
+
+
+
+
+    <link rel="canonical" href="https://lbarasti.com/post/kotlin_refactoring/">
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Kotlin refactoring: 8 tips from practice - lbarasti&#39;s blog</title>
+    
+<meta name="description" content="Learning from the exercism.org community">
+
+<meta property="og:title" content="Kotlin refactoring: 8 tips from practice - lbarasti&#39;s blog">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lbarasti.com/post/kotlin_refactoring/">
+<meta property="og:image" content="https://lbarasti.com/src/kotlin_refactoring/00_header.png">
+<meta property="og:site_name" content="lbarasti&#39;s blog">
+<meta property="og:description" content="Learning from the exercism.org community">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="lbarasti&#39;s blog">
+<meta name="twitter:url" content="https://lbarasti.com/post/kotlin_refactoring/">
+<meta name="twitter:title" content="Kotlin refactoring: 8 tips from practice - lbarasti&#39;s blog">
+<meta name="twitter:description" content="Learning from the exercism.org community">
+<meta name="twitter:image" content="https://lbarasti.com/src/kotlin_refactoring/00_header.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/lbarasti.com\/"
+    },
+    "headline": "Kotlin refactoring: 8 tips from practice-lbarasti's blog",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/lbarasti.com\/src\/kotlin_refactoring\/00_header.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2023-01-23T15:53:48JST",
+    "dateModified": "2023-01-23T15:53:48JST",
+    "author": {
+      "@type": "Person",
+      "name": "lbarasti's blog"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "lbarasti's blog",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/lbarasti.com\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Learning from the exercism.org community"
+  }
+</script>
+
+
+    <style>
+html {
+  font-size: 18px;
+  background-color: rgba(236,239,241,.5);
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+body {
+  color: #333;
+  font-family: 'Roboto Slab','ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif;
+  font-feature-settings : "palt";
+  font-size: inherit;
+  line-height: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 ,h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1rem;
+  margin: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dashed #cfd8dc;
+  margin: 1rem 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1rem;
+}
+
+a {
+  color: #2196f3;
+  text-decoration: none;
+  transition-duration: .3s;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  font-size: .8rem;
+  padding: .5rem;
+}
+
+tr {
+  border-bottom: 1px dashed #ddd;
+}
+
+/* Layouts */
+main,
+aside {
+  display: block;
+}
+
+main { padding: 1rem 0 3rem 0; }
+aside.h { padding: 3rem 0; }
+
+main.f,
+aside.f {
+  background-color: #333;
+  border-top: 2px dashed #fff;
+  border-bottom: 2px dashed #fff;
+}
+
+.l-container {
+  position: relative;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.l-container.thin {
+  max-width: 44rem;
+}
+
+.l-header {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.l-header .description {
+  margin-top: .5rem;
+  font-size: .8rem;
+}
+
+.l-footer {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  font-size: .6rem;
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .l-sidebar {
+    margin-top: 4rem;
+  }
+}
+
+.mrow {
+  margin: 0 -1rem;
+  overflow: hidden;
+}
+
+.mcol {
+  box-sizing: border-box;
+  float: left;
+  padding: 0 1rem;
+}
+
+.c6 { width: 50%; }
+.c4 { width: 33.26323833%; }
+.c8 { width: 66.66666%; }
+
+@media (max-width: 768px) {
+  .mcol {
+    width: 100%;
+    float: none;
+  }
+}
+
+.logo a {
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.articles {
+  margin: -1rem 0;
+  margin-bottom: 1rem;
+}
+
+.articles.sm {
+  margin: -.5rem 0;
+  margin-bottom: 0;
+}
+
+article {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+article.li {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  height: 20rem;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+article.li > a {
+  display: block;
+  color: #333;
+}
+
+article.li .inner {
+  padding: 1rem;
+}
+
+article.li .thumb {
+  height: 8rem;
+}
+
+article.li .title {
+  color: #333;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+article.li .summary {
+  font-size: .8rem;
+  height: 6rem;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+article.li .summary::after {
+  content: '...';
+}
+
+article.lism {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  margin: .5rem 0;
+}
+
+article.lism::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+article.lism > a {
+  display: block;
+  color: #333;
+}
+
+article.lism .inner {
+  display: table-cell;
+  vertical-align: middle;
+  height: 5rem;
+  padding: 0 .75rem;
+}
+
+article.lism .thumb {
+  width: 5rem;
+  height: 5rem;
+  float: left;
+}
+
+article.lism .title {
+  font-weight: 700;
+  font-size: .8rem;
+  margin-bottom: .25rem;
+}
+
+article.sn {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  margin-bottom: 1rem;
+}
+
+article.sn .thumb {
+  height: 20rem;
+}
+
+@media (max-width: 768px) {
+  article.sn .thumb {
+    height: 10rem;
+  }
+}
+
+article.sn > .article-header,
+article.sn > .article-body,
+article.sn .article-footer {
+  padding: 2rem;
+}
+
+article.sn > .article-body {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-header,
+  article.sn > .article-body,
+  article.sn .article-footer {
+    padding: 1rem;
+  }
+
+  article.sn > .article-body {
+    padding: 0 1rem;
+  }
+}
+
+article.sn > .article-header .title {
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-bottom: .5rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-header .title {
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+  }
+}
+
+article.sn > .article-header .facts {
+  margin-bottom: 1rem;
+}
+
+article.sn > .article-body {
+  margin-bottom: 1.5rem;
+}
+
+article.sn > .article-body h2 {
+  border-bottom: .25rem solid #333;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  padding: .5rem 0;
+}
+
+article.sn > .article-body h3 {
+  border-left: .5rem solid #333;
+  line-height: 1.5rem;
+  margin: 1.5rem 0;
+  padding: .125rem .5rem;
+}
+
+article.sn > .article-body ul,
+article.sn > .article-body ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+article.sn > .article-body li {
+  padding-bottom: .5rem;
+  line-height: 1.5rem;
+}
+
+article.sn > .article-body li:last-child {
+  padding-bottom: 0;
+}
+article.sn > .article-body p {
+  margin: 1rem 0;
+  line-height: 1.5rem;
+}
+
+article.sn > .article-body strong,
+article.sn > .article-body em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+article.sn > .article-body strong {
+  box-shadow: 0 -.5rem 0 0 #ffc107 inset;
+}
+
+article.sn > .article-body em {
+  color: #8bc34a;
+}
+
+article.sn > .article-body code,
+article.sn > .article-body pre {
+  font-family: Menlo, Consolas, monospace;
+  font-size: .7rem;
+}
+
+article.sn > .article-body pre {
+  background-color: #333;
+  color: #fff;
+  line-height: 1rem;
+  margin: 1.5rem -2rem;
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body pre {
+    margin: 1.5rem -1rem;
+  }
+}
+
+article.sn > .article-body pre > code {
+  display: block;
+  padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body pre > code {
+    padding: 1rem;
+  }
+}
+
+article.sn > .article-body p code {
+  background-color: #eceff1;
+  color: #333;
+  border-radius: 4px;
+  margin: 0 .25rem;
+  padding: .375rem;
+  white-space: nowrap;
+}
+
+article.sn > .article-body blockquote {
+  position: relative;
+  border-left: .25rem solid #333;
+  font-size: .8rem;
+  padding: .125rem 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  article.sn > .article-body blockquote {
+    font-size: 1rem;
+  }
+}
+
+article.sn > .article-body blockquote p {
+  margin: .5rem 0;
+  line-height: 1rem;
+}
+
+article.sn > .article-body figure {
+  margin: 1.5rem 0;
+}
+
+article.sn > .article-body img,
+article.sn > .article-body figure img,
+article.sn > .article-body figure amp-img {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  max-width: 100%;
+}
+
+article.sn > .article-body figcaption {
+  color: #cfd8dc;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
+
+.facts li {
+  display: inline;
+  font-size: .8rem;
+  margin-right: 1rem;
+}
+
+.facts i {
+  color: #cfd8dc;
+  margin-right: .5em;
+}
+
+.facts.sm li {
+  font-size: .7rem;
+}
+
+.sections.sidebar {
+  margin: -1rem 0;
+}
+
+.sections.footer {
+  margin: -1rem 0;
+}
+
+section.sidebar {
+  margin: 2rem 0;
+}
+
+section.sidebar > header {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+section.footer {
+  margin: 1rem 0;
+}
+
+section.footer > header {
+  font-size: .8rem;
+  margin: .5rem 0;
+}
+
+section.footer > header::before {
+  content: "- ";
+}
+
+section.footer > header a {
+  font-weight: 700;
+  color: #333;
+  text-decoration: underline;
+}
+
+.terms {
+  margin: -.25rem;
+}
+
+.terms li {
+  display: inline-block;
+}
+
+.terms a {
+  display: block;
+  float: left;
+  background-color: #333;
+  border-radius: 4px;
+  color: #fff;
+  font-size: .7rem;
+  margin: .25rem;
+  padding: 0 .75rem;
+  line-height: 1.75rem;
+}
+
+.paging {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.paging a {
+  display: inline-block;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  border-radius: 4px;
+  color: #333;
+  padding: 0 1rem;
+  line-height: 3rem;
+}
+
+.page-title {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  border-bottom: .25rem solid #333;
+  width: 3rem;
+  margin: 1.5rem auto;
+}
+
+.page-title > .title {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+/* Parts:breadcrumb */
+.crumb ol {
+  text-overflow: ellipsis;
+  color: #cfd8dc;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.crumb li {
+  display: inline;
+  font-size: .8rem;
+}
+
+.crumb li::after {
+  content: '›';
+  margin: 0 .25rem 0 .5rem;
+}
+
+.crumb li:last-child::after {
+  content: '';
+}
+
+.crumb a {
+  color: #cfd8dc;
+}
+
+.crumb i {
+  margin-right: .5em;
+}
+
+.share {
+  padding: 0;
+}
+
+.share a {
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  min-width: 1rem;
+  height: 2rem;
+  border-radius: 4px;
+  color: #333;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 2rem;
+  text-align: center;
+  padding: 0 .5rem;
+}
+
+.adj article.lism {
+  margin-bottom: 1rem;
+}
+
+.adj header {
+  font-weight: 700;
+  font-size: .8rem;
+}
+
+.toc {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .toc {
+    padding: 0 1rem;
+  }
+}
+
+.toc {
+  margin: 1rem 0;
+}
+
+.toc nav>ul {
+  background-color: #eceff1;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: .8rem;
+  padding: .5rem 1rem;
+  word-break: break-all;
+  list-style: none;
+}
+
+.toc ul {
+  padding: 0;
+}
+
+.toc ul ul {
+  padding-left: 1rem;
+}
+
+.toc ul ul ul {
+  padding-left: 1rem;
+}
+
+.toc li {
+  color: #90a4ae;
+}
+
+.toc ul ul>li {
+  font-weight: 700;
+  margin: .5rem 0;
+  list-style-type: decimal;
+}
+
+.toc ul ul ul>li {
+  list-style-type: disc;
+  font-weight: 500;
+}
+
+.author {
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.author .author-thumb {
+  margin: 0 auto 1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background-color: #eceff1;
+  background-size: cover;
+  background-position: center;
+}
+
+.author .author-name {
+  margin-bottom: .5rem;
+  font-weight: 700;
+}
+
+.author .author-facts {
+  margin-bottom: 1rem;
+}
+
+.author .author-facts li {
+  display: inline;
+}
+
+.author .author-facts li a {
+  display: inline-block;
+  background-color: #eceff1;
+  width: 1.75rem;
+  height: 1.75rem;
+  line-height: 1.75rem;
+  text-align: center;
+  color: #333;
+  font-size: .8rem;
+  border-radius: 2px;
+}
+
+.author .author-facts li a:hover {
+  color: #fff;
+  background-color: #333;
+}
+
+.author .author-description {
+  text-align: left;
+  font-size: .8rem;
+}
+
+.author .author-description p {
+  margin: .5rem 0;
+}
+
+.thumb {
+  background-image: url(https://lbarasti.com/images/default.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
+.thumb-f53907a89c330f8b996d611ad301fd8a {
+  background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
+}
+
+
+
+.thumb-8eaea0461a73c8e51c8ff91c77df7ab0 {
+  background-image: url(https://lbarasti.com/src/json_beyond_basics/header.svg);
+}
+
+
+
+.thumb-379cdddbc8bab5ea691bccb3059844eb {
+  background-image: url(https://lbarasti.com/src/byoidsl/00_header.png);
+}
+
+
+
+.thumb-b0e4f6f597dd7100c40a783ccbe3c9f9 {
+  background-image: url(https://lbarasti.com/src/game_of_life/06_ex.png);
+}
+
+
+
+.thumb-b3e7b513b3545669e5ee97fd0b828bf4 {
+  background-image: url(https://lbarasti.com/src/select_statement/00_header.png);
+}
+
+
+
+.thumb-224ddb75e51dd0d04b1e71827aad96f9 {
+  background-image: url(https://lbarasti.com/src/intro_to_statistics/00_header.png);
+}
+
+
+
+.thumb-408d2f8615f913914e565d9a2093a3a4 {
+  background-image: url(https://lbarasti.com/src/url_checker_series/header.jpeg);
+}
+
+
+
+.thumb-2f8501660be1b202f0622f4169e68f2a {
+  background-image: url(https://lbarasti.com/src/two_way_communication/00_header_3.png);
+}
+
+
+
+.thumb-a79bcaa63d57a1252d925acc5f4a4d76 {
+  background-image: url(https://lbarasti.com/images/crystal-symbol.png);
+}
+
+
+
+
+article.sn > .article-body figcaption {
+  color: #1c9fda;
+  font-size: .8rem;
+  font-weight: 700;
+  margin-top: .5rem;
+}
+
+
+
+    </style>
+
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', "UA-97340845-1", 'auto', {'useAmpClientId': true});
+ga('send', 'pageview');
+</script>
+
+  </head>
+  <body>
+    <header class="l-header">
+      <div class="l-container">
+        <div class="logo">
+          <a href="https://lbarasti.com/">lbarasti&#39;s blog</a>
+        </div>
+        
+
+      </div>
+    </header>
+
+    <main>
+      <div class="l-container">
+        
+<div class="mrow">
+  <div class="mcol c8">
+
+    <article class="sn">
+
+  <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+  <header class="article-header">
+    <h1 class="title">Kotlin refactoring: 8 tips from practice</h1>
+
+    <ul class="facts">
+      <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2023-01-23T15:53:48JST">Jan 23, 2023</time></li>
+      
+      <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.com/post/">POST</a></li>
+      
+    </ul>
+
+    <aside class="share">
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&title=Kotlin%20refactoring%3a%208%20tips%20from%20practice" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&text=Kotlin%20refactoring%3a%208%20tips%20from%20practice&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&t=Kotlin%20refactoring%3a%208%20tips%20from%20practice" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&title=Kotlin%20refactoring%3a%208%20tips%20from%20practice" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+</aside>
+
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="introduction">Introduction</h2>
+<p>A great feature of <a href="https://exercism.org">exercism</a> is that once you complete an exercise, you can compare your solution with the ones other practitioners have written. This piqued my curiosity, so after I completed a few Kotlin exercises as part of the <a href="https://exercism.org/challenges/12in23">#12in#23</a> initiative, I went on to see how I could refactor my code to make it more idiomatic.</p>
+<p>The following overview is what came out of that: each section corresponds to one exercise. I&rsquo;ll give you a brief intro to the task, then show you my solution and finally share some refactoring tips I enjoyed.</p>
+<p>If you recently started coding in Kotlin or if you&rsquo;d like to get a sense for some of the language features in action, then you might find this helpful and discover some compelling use cases.</p>
+<h2 id="just-count">Just count&hellip;</h2>
+<figure><img src="/src/kotlin_refactoring/hamming.png"
+         alt="Figure 1. Two DNA sequences are represented: A C A T G G and A T C T G A. The distance between the two is computed as the sum of occurrences where two distinct bases appear in the same position. In this case: distance = 0 &#43; 1 &#43; 1 &#43; 0 &#43; 0 &#43; 1 = 3"/><figcaption>
+            <p>Figure 1. Counting the number of differences (<em>distance</em>) between two DNA sequences.</p>
+        </figcaption>
+</figure>
+
+<p>In the <a href="https://exercism.org/tracks/kotlin/exercises/hamming">first exercise</a>, I was tasked to count differences across two DNA sequences - which is analogous to comparing two arrays for equality element-wise. My approach was to <code>zip</code> the two and <code>fold</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">compute</span>(leftStrand: String, rightStrand: String): Int {
+  <span style="color:#66d9ef">if</span> (leftStrand.length <span style="color:#f92672">!=</span> rightStrand.length) {
+    <span style="color:#66d9ef">throw</span> IllegalArgumentException(
+      <span style="color:#e6db74">&#34;left and right strands must be of equal length&#34;</span>)
+  } 
+  <span style="color:#66d9ef">return</span> leftStrand.split(<span style="color:#e6db74">&#34;&#34;</span>)
+    .zip(rightStrand.split(<span style="color:#e6db74">&#34;&#34;</span>))
+    .fold(<span style="color:#ae81ff">0</span>) {
+        count, (l,r) <span style="color:#f92672">-&gt;</span> count + (<span style="color:#66d9ef">if</span> (l <span style="color:#f92672">==</span> r) {<span style="color:#ae81ff">0</span>} <span style="color:#66d9ef">else</span> {<span style="color:#ae81ff">1</span>})
+    }
+}
+</code></pre></div><p>I found 3 improvements based on other solutions:</p>
+<ol>
+<li>there is no need to <code>.split</code> the strings before zipping them. This is because <code>String</code> implements the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/zip.html#zip"><code>CharSequence</code></a> interface, which includes an implementation of <code>.zip</code>.</li>
+<li><code>fold</code> is always fun to use, but Kotlin offers a better alternative when the goal is to count instances satisfying a predicate: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/count.html#count"><code>Array#count</code></a> accepts a predicate and returns the number of instances where the predicate evaluates to <code>true</code>. This is just what we were looking for!</li>
+<li>When it comes to making assertions on the parameters of a function, Kotlin offers the idiomatic <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/require.html#require"><code>require</code></a>, which raises an <code>IllegalArgumentException</code> when the value passed is <code>false</code>.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">compute</span>(leftStrand: String, rightStrand: String): Int {
+  require(leftStrand.length <span style="color:#f92672">==</span> rightStrand.length) {
+    <span style="color:#e6db74">&#34;left and right strands must be of equal length&#34;</span>
+  }
+
+  <span style="color:#66d9ef">return</span> leftStrand
+    .zip(rightStrand)
+    .count { <span style="color:#66d9ef">it</span>.first <span style="color:#f92672">!=</span> <span style="color:#66d9ef">it</span>.second }
+}
+</code></pre></div><p><strong>Closer look.</strong> Note how convenient it is to be able to use the implicit name <code>it</code> for the lambda passed to <code>count</code>. This works anytime you have a <a href="https://kotlinlang.org/docs/lambdas.html#it-implicit-name-of-a-single-parameter">lambda with a single argument</a>.</p>
+<h2 id="constructor-once-constructor-twice">Constructor once, constructor twice</h2>
+<p>An <a href="https://exercism.org/tracks/kotlin/exercises/gigasecond">exercise</a> required to define a class with two 1-argument constructors accepting different types. My instinct was to define two constructors explicitly, so I wrote the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#75715e">// Given a date/time, this class computes what the `LocalDateTime` 10^9 seconds in the future will be.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gigasecond</span> {
+  <span style="color:#66d9ef">val</span> gigaSeconds = <span style="color:#ae81ff">1</span>e9.toLong()
+
+  <span style="color:#66d9ef">val</span> date: LocalDateTime
+  <span style="color:#66d9ef">constructor</span>(initialDate: LocalDateTime) {
+    date = initialDate.plusSeconds(gigaSeconds)
+  }
+
+  <span style="color:#66d9ef">constructor</span>(initialDate: LocalDate) : <span style="color:#66d9ef">this</span>(initialDate.atStartOfDay())
+}
+</code></pre></div><p>It turns out there is a more idiomatic option: we can use Kotlin <a href="https://kotlinlang.org/docs/classes.html#constructors">primary constructor</a> to save some code and remove any ambiguity around where and how the field <code>date</code> is initialised.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gigasecond</span>(initialDate: LocalDateTime) {
+  <span style="color:#66d9ef">val</span> gigaSeconds = <span style="color:#ae81ff">1</span>e9.toLong()
+
+  <span style="color:#66d9ef">val</span> date = initialDate.plusSeconds(gigaSeconds)
+
+  <span style="color:#66d9ef">constructor</span>(initialDate: LocalDate) : <span style="color:#66d9ef">this</span>(initialDate.atStartOfDay())
+}
+</code></pre></div><p>Fun fact: while looking at the community solutions, I got reminded of the exponential notation as a shorthand to define large <code>Double</code> numbers. My first take in defining the <code>gigaSecond</code> constant was the unnecessarily convoluted <code>(10.0).pow(9).toLong()</code>, which among other things requires importing <code>kotlin.math.pow</code> 😅 Anyway, read on for some more <code>pow</code> fun.</p>
+<p><strong>Closer look.</strong> Note that I didn&rsquo;t discuss the topic of class constants in this section. If you are interested, <a href="https://kotlinlang.org/docs/object-declarations.html#companion-objects">companion objects</a> are worth a look, although <a href="https://stackoverflow.com/questions/44038721/constants-in-kotlin-whats-a-recommended-way-to-create-them">some shortcomings apply</a>.</p>
+<h2 id="circling-around-squaring">Circling around squaring</h2>
+<p>An <a href="https://exercism.org/tracks/kotlin/exercises/difference-of-squares">exercise</a> asked to compute the square of the sum of the first <code>n</code> natural number. It turns out there is a formula for that: <code>(n(n + 1) / 2)²</code>, so I wrote</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">squareOfSum</span>(n: Int): Int {
+  <span style="color:#66d9ef">return</span> (n * (n + <span style="color:#ae81ff">1</span>) / <span style="color:#ae81ff">2</span>).toDouble().pow(<span style="color:#ae81ff">2</span>).toInt()
+}
+</code></pre></div><p>I found two improvements:</p>
+<ol>
+<li>Note how we go <code>toDouble</code> in order to invoke <code>Double#pow</code>, then have to convert back to <code>Int</code> with <code>toInt</code>. Instead, we could simply multiply the base by itself - this is a classic and recurring optimisation in code dealing with numerical computing.
+In other languages, we&rsquo;d have to define <code>x = n * (n + 1) / 2</code>, then return <code>x * x</code>. In Kotlin, we can use <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/let.html"><code>let</code></a>, which passes the receiver object as argument to a lambda and returns the result of the lambda.</li>
+<li>A nice shorthand applies when a function&rsquo;s body is a single expression. From the <a href="https://kotlinlang.org/docs/functions.html#single-expression-functions">docs</a>: &ldquo;When a function returns a single expression, the curly braces can be omitted&rdquo;. In that case, the body is specified after the <code>=</code> sign.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">squareOfSum</span>(n: Int): Int = (n * (n + <span style="color:#ae81ff">1</span>) / <span style="color:#ae81ff">2</span>).let { <span style="color:#66d9ef">it</span> * <span style="color:#66d9ef">it</span> }
+</code></pre></div><h2 id="mutatis-mutandis">Mutatis mutandis</h2>
+<figure><img src="/src/kotlin_refactoring/handshake.png"
+         alt="Figure 2. The integer 25 is transformed to its binary representation: 1 1 0 0 1. From the right, the first 4 bits represents a signal: wink, double blink, close your eyes, jump. When a bit is 1, it is part of the handshake sequence. The fifth bit acts as a modifier: when it&#39;s 1, it reverses the sequence of signals. The handshake represented by the numbre 25 is Jump, then wink."/><figcaption>
+            <p>Figure 2. Decoding an integer into a sequence of signals making up a secret handshake based on its binary representation.</p>
+        </figcaption>
+</figure>
+
+<p>The next <a href="https://exercism.org/tracks/kotlin/exercises/secret-handshake">exercise</a> asked to decipher the binary representation of an integer into a sequence of signals for a secret handshake. I came up with the following code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">HandshakeCalculator</span> {
+  <span style="color:#66d9ef">val</span> reverseList = <span style="color:#ae81ff">0</span>b10000
+
+  <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">calculateHandshake</span>(number: Int): List&lt;Signal&gt; {
+    <span style="color:#66d9ef">var</span> lst = mutableListOf&lt;Signal&gt;()
+    Signal.values().forEach {
+      <span style="color:#66d9ef">if</span> (number.and(<span style="color:#66d9ef">it</span>.int) <span style="color:#f92672">==</span> <span style="color:#66d9ef">it</span>.int) { lst.add(lst.size, <span style="color:#66d9ef">it</span>) }
+    }
+    <span style="color:#66d9ef">if</span> (number.and(reverseList) <span style="color:#f92672">==</span> reverseList) { 
+      <span style="color:#66d9ef">return</span> lst.reversed()
+    } <span style="color:#66d9ef">else</span> {
+      <span style="color:#66d9ef">return</span> lst
+    }
+  }
+}
+</code></pre></div><p>I really like that we can iterate over the values of the <code>Signal</code> enum with <code>Signal.values().forEach</code>, but I thought the way we alter the signal sequence <code>lst</code> could be improved. In fact, turns out we can do without declaring that variable altogether:</p>
+<ol>
+<li>We can modify the initial <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/"><code>MutableList</code></a> with an <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html"><code>apply</code></a> block, which lets us succintly call side-effecting methods on the receiver (A.K.A. the <em>context object</em>) and then returns it.</li>
+<li>We can extract the code for checking whether a bit appears in a <code>number</code> into its own function. As a bonus, we can even make that an <a href="https://kotlinlang.org/docs/extensions.html"><em>extension function</em></a> on the type <code>Int</code> 😎</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">HandshakeCalculator</span> {
+  <span style="color:#66d9ef">val</span> reverseList = <span style="color:#ae81ff">0</span>b10000
+
+  <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">calculateHandshake</span>(number: Int): List&lt;Signal&gt; =
+    mutableListOf&lt;Signal&gt;().apply {
+      Signal.values().forEach {
+        <span style="color:#66d9ef">if</span> (number.boolAnd(<span style="color:#66d9ef">it</span>.int)) add(size, <span style="color:#66d9ef">it</span>)
+      }
+      <span style="color:#66d9ef">if</span> (number.boolAnd(reverseList)) reverse()
+    }
+  
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">Int</span>.boolAnd(bit: Int): Boolean = and(bit) <span style="color:#f92672">==</span> bit
+}
+</code></pre></div><p><strong>Closer look.</strong> If you come from other languages where adding functionality to classes outside our control is frowned upon, then the concept of extension functions might feel like a code smell to you. I think Kotlin&rsquo;s implementation of this functionality is quite different than you might expect though: as specified in the <a href="https://kotlinlang.org/docs/extensions.html#extensions-are-resolved-statically">docs</a>, &ldquo;Extensions do not actually modify the classes they extend. By defining an extension, you are not inserting new members into a class, only making new functions callable with the dot-notation on variables of this type&rdquo;. Also, mind that the <code>private</code> keyword acts as a visibility modifier that ensures no one outside of the scope where the extension is defined can access that.</p>
+<p><strong>Closer look.</strong> Note how we moved from <code>reversed</code> to <code>reverse</code>. The <a href="https://github.com/JetBrains/kotlin/blob/30788566012c571aa1d3590912468d1ebe59983d/libraries/stdlib/common/src/generated/_Arrays.kt#L5735">first</a> returns a new <code>MutableList</code>, the <a href="https://github.com/JetBrains/kotlin/blob/30788566012c571aa1d3590912468d1ebe59983d/libraries/stdlib/jvm/src/generated/_CollectionsJvm.kt#L42">latter</a> modifies the list in-place and is more suited for the <code>apply</code> approach - once you&rsquo;re mutating objects, you might as well ermbrace mutability! As a general tip, to determine whether a method / function is mutating the caller / target, pay attention to the returned type in the signature. When <code>Unit</code> is returned, you&rsquo;re likely looking at side-effecting code.</p>
+<p><strong>Challenge.</strong> Can you rewrite <code>calculateHandshake</code> to operate on immutable collections only? 💡 Hint: you could consider <em>filtering</em> through signals.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>Source code for the Exercism exercises that inspired this article: <a href="https://exercism.org/tracks/kotlin/exercises/hamming/solutions/lbarasti">Hamming</a>, <a href="https://exercism.org/tracks/kotlin/exercises/gigasecond/solutions/lbarasti">Gigasecond</a>, <a href="https://exercism.org/tracks/kotlin/exercises/difference-of-squares/solutions/lbarasti">Difference of Squares</a>, <a href="https://exercism.org/tracks/kotlin/exercises/secret-handshake/solutions/lbarasti">Secret Handshake</a>.</li>
+<li>Official documentation for Kotlin <a href="https://kotlinlang.org/docs/scope-functions.html">scope functions</a></li>
+<li>Official documentation for Kotlin <a href="https://kotlinlang.org/docs/enum-classes.html">enums</a></li>
+</ul>
+<h2 id="heading"></h2>
+<p>This concludes our tour of the refactoring tips I extracted from <a href="https://exercism.org/tracks/kotlin/exercises">exercism&rsquo;s</a> brilliant community solution pages. Thanks for reading through, I hope you found this useful.</p>
+<p>What did I miss? Are there more you&rsquo;d like to share? Let me know in the comments section below 👇</p>
+<p>If you’d like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
+
+<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+	 
+</style>
+<div id="mc_embed_signup">
+<form action="https://lbarasti.us4.list-manage.com/subscribe/post?u=2ae02926c5ced578d57958587&amp;id=e952a286b4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<label for="mce-EMAIL"></label>
+	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2ae02926c5ced578d57958587_e952a286b4" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+
+</div>
+
+  <footer class="article-footer">
+
+    <aside class="share">
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&title=Kotlin%20refactoring%3a%208%20tips%20from%20practice" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&text=Kotlin%20refactoring%3a%208%20tips%20from%20practice&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&t=Kotlin%20refactoring%3a%208%20tips%20from%20practice" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f&title=Kotlin%20refactoring%3a%208%20tips%20from%20practice" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fkotlin_refactoring%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+</aside>
+
+
+    <section class="footer">
+      <div>
+        <nav class="crumb">
+          <ol>
+            <li><a href="https://lbarasti.com/"><i class="fas fa-home" aria-hidden="true"></i>TOP</a></li>
+            
+            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.com/post/" itemprop="url"><span itemprop="title">POST</span></a></li>
+            
+            <li class="active">Kotlin refactoring: 8 tips from practice</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    
+    
+    
+    <section class="footer">
+      <header>
+        <a href="https://lbarasti.com/categories/">CATEGORIES</a>
+      </header>
+      <div>
+        <ul class="terms">
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="footer">
+      <header>
+        <a href="https://lbarasti.com/tags/">TAGS</a>
+      </header>
+      <div>
+        <ul class="terms">
+          
+          <li><a href="https://lbarasti.com/tags/kotlin/">kotlin</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/refactoring/">refactoring</a></li>
+          
+          <li><a href="https://lbarasti.com/tags/12in23/">12in23</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    <div class="adj">
+      <div class="mrow">
+        
+        <div class="mcol c6">
+          <header>Previous Article</header>
+          <article class="lism">
+  <a href="https://lbarasti.com/post/ruby_ractor/">
+    <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
+
+    <div class="inner">
+      <div class="title">Parallelism in Ruby with Ractors</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-01-25T20:12:48JST">Jan 25, 2021</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+        </div>
+        
+        
+      </div>
+    </div>
+
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "lbarasti-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+  <div class="mcol c4">
+    <aside class="l-sidebar">
+
+  <div class="sections sidebar">
+    
+<section class="sidebar">
+  <header>AUTHOR</header>
+  <div>
+    <div class="author">
+      
+      <div class="author-thumb" style="background-image: url(https://lbarasti.com/images/profile-picture.jpg);"></div>
+      
+      <div class="author-name">Lorenzo Barasti</div>
+      <ul class="author-facts">
+        
+        <li><a href="https://twitter.com/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="https://github.com/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+        <li><a href="https://www.youtube.com/channel/UCaydNuV-VSO0gFSrvS9WgXg" rel="nofollow" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+        <li><a href="https://twitch.tv/lbarasti" rel="nofollow" target="_blank"><i class="fab fa-twitch" aria-hidden="true"></i></a></li>
+      </ul>
+      <div class="author-description">Exploring concurrency in Crystal, live coding on occasion.</div>
+    </div>
+  </div>
+</section>
+
+
+    <section class="sidebar">
+  <header>LATESTS</header>
+  <div>
+    <div class="articles sm">
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/ruby_ractor/">
+    <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
+
+    <div class="inner">
+      <div class="title">Parallelism in Ruby with Ractors</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-01-25T20:12:48JST">Jan 25, 2021</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/json_beyond_basics/">
+    <div class="thumb thumb-8eaea0461a73c8e51c8ff91c77df7ab0"></div>
+
+    <div class="inner">
+      <div class="title">Crystal JSON beyond the basics</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="21007-09-21T00:17:01JST">Sep 21, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/byoidsl/">
+    <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
+
+    <div class="inner">
+      <div class="title">Building an interactive DSL</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="7007-07-07T19:17:57JST">Jul 7, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/game_of_life/">
+    <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
+
+    <div class="inner">
+      <div class="title">Conway&#39;s Game of Life, sparse</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="20007-06-20T18:52:41JST">Jun 20, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/select_statement/">
+    <div class="thumb thumb-b3e7b513b3545669e5ee97fd0b828bf4"></div>
+
+    <div class="inner">
+      <div class="title">5 use cases for Crystal&#39;s select statement</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="30007-04-30T23:03:29JST">Apr 30, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/intro_to_statistics/">
+    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
+
+    <div class="inner">
+      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/url_checker_series/">
+    <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
+
+    <div class="inner">
+      <div class="title">Live coding a URL checker in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-01-12T22:12:33JST">Jan 12, 2020</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/two_way_comm_between_fibers/">
+    <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
+
+    <div class="inner">
+      <div class="title">2-way communication between Fibers</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-11-25T22:12:33JST">Nov 25, 2019</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/fun_with_crystal/">
+    <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
+
+    <div class="inner">
+      <div class="title">Going faster with Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-04-12T10:12:33JST">Apr 12, 2017</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+    </div>
+  </div>
+</section>
+
+    
+
+    
+<section class="sidebar">
+  <header>TAGS</header>
+  <div>
+    <ul class="terms">
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
+    </ul>
+  </div>
+</section>
+
+
+
+  </div>
+
+</aside>
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="l-container">
+        <p><span class="h-logo">&copy; lbarasti&#39;s blog</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

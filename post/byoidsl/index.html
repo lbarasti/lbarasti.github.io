@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -899,8 +905,7 @@ ga('send', 'pageview');
 You can find the project&rsquo;s source code on <a href="https://github.com/lbarasti/byoidsl">GitHub</a>, in case you feel like following along.</p>
 <h2 id="getting-ready">Getting ready</h2>
 <p>I&rsquo;ve broken our external iDSL architecture down into 5 components.</p>
-<figure>
-    <img src="/src/byoidsl/00_header.png"/> 
+<figure><img src="/src/byoidsl/00_header.png"/>
 </figure>
 
 <h4 id="1-read-eval-print-loop-repl">1. Read-eval-print-loop (REPL)</h4>
@@ -927,7 +932,7 @@ You can find the project&rsquo;s source code on <a href="https://github.com/lbar
 </div>
 
 <p><strong>Code highlight.</strong> In session 5, we&rsquo;ll add support for one more feature: loading scripts from the REPL via the magic-command <code>%load</code>. Here is what that looks like in the <a href="https://github.com/lbarasti/byoidsl/blob/master/src/lib/repl.cr#L10">code</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">if</span> input<span style="color:#f92672">.</span>starts_with?(<span style="color:#e6db74">&#34;%load&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">if</span> input<span style="color:#f92672">.</span>starts_with?(<span style="color:#e6db74">&#34;%load&#34;</span>)
   filepath <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>lchop(<span style="color:#e6db74">&#34;%load&#34;</span>)<span style="color:#f92672">.</span>strip
   File<span style="color:#f92672">.</span>each_line(filepath) { <span style="color:#f92672">|</span>line<span style="color:#f92672">|</span>
     Repl<span style="color:#f92672">.</span>eval_and_print process, line
@@ -945,11 +950,11 @@ You can find the project&rsquo;s source code on <a href="https://github.com/lbar
 
 <p>I&rsquo;ve known about parser combinators for a while, but this <a href="https://www.lihaoyi.com/post/EasyParsingwithParserCombinators.html">introduction</a> by Li Haoyi - an exceptional member of the Scala community - reignited my interest in building something with them 🙏</p>
 <p><strong>Code highlight.</strong> I used the <a href="https://github.com/lbarasti/dataclass">dataclass</a> macro to define the Algebraic Data Types representing the commands. Here is an example from the <a href="https://github.com/lbarasti/byoidsl/blob/master/src/igol/commands.cr#L25">code</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">dataclass Apply{coord : {Int32, Int32}, pattern : VarName <span style="color:#f92672">|</span> Pattern} <span style="color:#f92672">&lt;</span> Command
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">dataclass Apply{coord : {Int32, Int32}, pattern : VarName <span style="color:#f92672">|</span> Pattern} <span style="color:#f92672">&lt;</span> Command
 </code></pre></div><p><strong>Reminder.</strong> Unlike <a href="https://crystal-lang.org/reference/syntax_and_semantics/structs.html">structs</a>, classes support defining recursive data types. This is a pretty desirable feature when defining the grammar of a language - see <a href="https://www.lihaoyi.com/post/EasyParsingwithParserCombinators.html#recursive-parsers">this example</a>.</p>
 <h2 id="interpreting-commands">Interpreting commands</h2>
 <p>In session 3, we define the interpreter as a function that transforms a <code>State</code> and a <code>Command</code> into a new <code>State</code>, plus some return value. A signature for such a function could look like</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">interpret</span>(state : State, command : Command) : {State, T}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">interpret</span>(state : State, command : Command) : {State, T}
 </code></pre></div><p>where <code>T</code> is the type of the return value.</p>
 <p>In this first implementation, we limit state management to the <code>GameOfLife</code> grid, and always return a <code>String</code> as return type.</p>
 
@@ -962,7 +967,7 @@ You can find the project&rsquo;s source code on <a href="https://github.com/lbar
 <li>the new <code>State</code> of the system</li>
 <li>the result of the command execution - this will be presented to the user by the <em>Print</em> step of our REPL.</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">interpret</span>(state : State, command : Command) : {State, String}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">interpret</span>(state : State, command : Command) : {State, String}
   <span style="color:#66d9ef">case</span> command
   <span style="color:#66d9ef">when</span> Show
     {state, state<span style="color:#f92672">.</span>grid<span style="color:#f92672">.</span>draw}
@@ -981,7 +986,7 @@ You can find the project&rsquo;s source code on <a href="https://github.com/lbar
 </div>
 
 <p><strong>Code highlight.</strong> The runtime class is a beautiful display of Crystal generics: in the code below, <code>State</code>, <code>Cmd</code> and <code>Err</code> are type parameters, meaning you can instantiate the <code>Runtime</code> class with any state, parser and interpreter satisfying the given generic signatures.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Runtime</span>(State, Cmd, Err)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Runtime</span>(State, Cmd, Err)
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(
     @state : State,
     @parser : String <span style="color:#f92672">-&gt;</span> Cmd <span style="color:#f92672">|</span> Err,
@@ -1008,7 +1013,7 @@ You can find the project&rsquo;s source code on <a href="https://github.com/lbar
 </div>
 
 <p><strong>Code highlight.</strong> To make the CLI reusable by other iDSLs, we used <a href="https://crystal-lang.org/reference/syntax_and_semantics/macros.html">macros</a> 🔮</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">module</span> CLI
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">module</span> CLI
   <span style="color:#66d9ef">macro</span> <span style="color:#a6e22e">run</span>(mod)
     <span style="color:#66d9ef">class</span> <span style="color:#e6db74">{{</span>mod<span style="color:#e6db74">}}</span>_CLI <span style="color:#f92672">&lt;</span> Clim
       main <span style="color:#66d9ef">do</span>
@@ -1019,13 +1024,12 @@ You can find the project&rsquo;s source code on <a href="https://github.com/lbar
         argument <span style="color:#e6db74">&#34;filepath&#34;</span>, <span style="color:#e6db74">type</span>: String, <span style="color:#e6db74">desc</span>: <span style="color:#e6db74">&#34;path to {{mod}} script&#34;</span>
         <span style="color:#75715e"># ...</span>
 </code></pre></div><p>This allows us to instantiate a CLI for any iDSL, provided that their module defines the <code>#version</code> and <code>#runtime</code> methods. Here is the final <code>main</code> for the <em>IGOL</em> iDSL:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;./lib/cli&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;./lib/cli&#34;</span>
 <span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#34;./igol&#34;</span>
 
 <span style="color:#66d9ef">CLI</span><span style="color:#f92672">.</span>run(<span style="color:#66d9ef">IGOL</span>)
 </code></pre></div><p>And here is the end result:
-<figure>
-    <img src="https://github.com/lbarasti/byoidsl/raw/master/examples/demo.gif"/> 
+<figure><img src="https://github.com/lbarasti/byoidsl/raw/master/examples/demo.gif"/>
 </figure>
 </p>
 <hr>
@@ -1231,6 +1235,24 @@ I hope you enjoyed the write-up and learned something new in the process. If you
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1403,7 +1425,7 @@ I hope you enjoyed the write-up and learned something new in the process. If you
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

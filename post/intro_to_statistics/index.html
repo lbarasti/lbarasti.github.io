@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -897,14 +903,14 @@ ga('send', 'pageview');
 <p>In this article, we show how we can do this in Crystal, using an ensemble of libraries that will make our life easier and help us <em>visualise</em> the patterns behind the numbers.</p>
 <h2 id="sampling-from-a-normal-distribution">Sampling from a Normal distribution</h2>
 <p><a href="https://en.wikipedia.org/wiki/Normal_distribution">Normal distributions</a> are ubiquitous in nature and in data, so let&rsquo;s take one of those to practice. First, let&rsquo;s use the <a href="https://github.com/lbarasti/statistics">statistics</a> package to define a normal distribution with the desired mean and standard deviation.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">normal <span style="color:#f92672">=</span> Normal<span style="color:#f92672">.</span>new(<span style="color:#e6db74">mean</span>: <span style="color:#ae81ff">0.8</span>, <span style="color:#e6db74">std</span>: <span style="color:#ae81ff">0.2</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">normal <span style="color:#f92672">=</span> Normal<span style="color:#f92672">.</span>new(<span style="color:#e6db74">mean</span>: <span style="color:#ae81ff">0.8</span>, <span style="color:#e6db74">std</span>: <span style="color:#ae81ff">0.2</span>)
 </code></pre></div><p>We can now sample values from a random variable with such distribution by calling <code>normal.rand</code>, or even build an arbitrarily large sample as follows.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
 sample <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span><span style="color:#f92672">...</span>size)<span style="color:#f92672">.</span>map { normal<span style="color:#f92672">.</span>rand }
 </code></pre></div><p>We can also <code>describe</code> the sample to inspect its descriptive statistics and verify our expectations.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">info <span style="color:#f92672">=</span> Statistics<span style="color:#f92672">.</span>describe(sample)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">info <span style="color:#f92672">=</span> Statistics<span style="color:#f92672">.</span>describe(sample)
 </code></pre></div><p>The function returns a <code>NamedTuple</code> where the keys are the summary statistic coefficients. This makes it easy to iterate over the values and display the information in tabular format, for better readability. Here is a sample output I&rsquo;ve built using <a href="https://github.com/hutou/tablo">tablo</a>.</p>
-<pre><code>+--------------+--------------+
+<pre tabindex="0"><code>+--------------+--------------+
 | mean         |        0.802 |
 | var          |         0.04 |
 | std          |          0.2 |
@@ -920,30 +926,29 @@ sample <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span
 </code></pre><p>Notice how both the <em>mean</em> and <em>std</em> of our sample match the ones of our population. This is more likely to be the case the larger your sample size is. We can take our examination a bit further, and observe that both <em>skewness</em> and <em>kurtosis</em> also approximate the expected values for a normal distribution - zero and 3, respectively.</p>
 <h2 id="lets-get-visual">Let&rsquo;s get visual</h2>
 <p>OK, tables are great, but how about we plot a histogram of our sample, to get a qualitative feel for it. To build a histogram, we need to perform an operation called <a href="https://en.wikipedia.org/wiki/Data_binning">data binning</a>, i.e. to split and count the sample&rsquo;s values into bins - of equal size, in this case. We can achieve this by calling <code>Statistics.bin_count</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">bins <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">bins <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
 sample_bins <span style="color:#f92672">=</span> Statistics<span style="color:#f92672">.</span>bin_count(sample, <span style="color:#e6db74">bins</span>: bins, <span style="color:#e6db74">edge</span>: <span style="color:#e6db74">:centre</span>)
 </code></pre></div><p>The option <code>edge: :centre</code> tells the function to compute the centre of each bin edge. That&rsquo;s what our graphics library expects - rather than their vertices - when drawing boxes.
 The returned object exposes the bin <code>counts</code>, the <code>edges</code> and the <code>step</code> size computed based on the number of bins.</p>
 <p>Preparing the data for visualisation is now trivial:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">x <span style="color:#f92672">=</span> sample_bins<span style="color:#f92672">.</span>edges
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">x <span style="color:#f92672">=</span> sample_bins<span style="color:#f92672">.</span>edges
 y <span style="color:#f92672">=</span> sample_bins<span style="color:#f92672">.</span>counts
 </code></pre></div><p>We&rsquo;ll be plotting our data with <a href="https://github.com/toddsundsted/ishi">Ishi</a>, a Crystal graphing package powered by <a href="http://www.gnuplot.info/">Gnuplot</a>.</p>
 <p>Here is how we can plot the histogram with some decorations: a legend (<em>title</em>), a plotting <em>style</em>, a fill-style (<em>fs</em>) and x / y labels.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
   plot(x, y, <span style="color:#e6db74">title</span>: <span style="color:#e6db74">&#34;sample </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">~ N(0.8, 0.04)&#34;</span>, <span style="color:#e6db74">style</span>: <span style="color:#e6db74">:boxes</span>, <span style="color:#e6db74">fs</span>: <span style="color:#ae81ff">0.25</span>)
     <span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;value&#34;</span>)
     <span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;frequency&#34;</span>)
 <span style="color:#66d9ef">end</span>
-</code></pre></div><figure>
-    <img src="/src/intro_to_statistics/02_histogram.png"
-         alt="A histogram showing the distribution of our sample"/> <figcaption>
+</code></pre></div><figure><img src="/src/intro_to_statistics/02_histogram.png"
+         alt="A histogram showing the distribution of our sample"/><figcaption>
             <p>A histogram showing the frequency of the values sampled from a random variable with probability distribution N(0.8, 0.04).</p>
         </figcaption>
 </figure>
 
 <p>Notice how the shape of the histogram resembles the one of a normal curve. Let&rsquo;s qualitatively check that the distribution of the sample approximates the one underlying the random variable that generated it. We can do so by overlapping the corresponding normal distribution probability density function (PDF) to the histogram.</p>
 <p>Remember that the integral of a PDF is 1, whereas the histogram we&rsquo;re looking at represents the absolute count of sample&rsquo;s values falling in each bin. To address this, we&rsquo;ll normalise the bin count by dividing each value by the histogram area.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">area <span style="color:#f92672">=</span> size <span style="color:#f92672">*</span> sample_bins<span style="color:#f92672">.</span>step
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">area <span style="color:#f92672">=</span> size <span style="color:#f92672">*</span> sample_bins<span style="color:#f92672">.</span>step
 normalized_y <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>map <span style="color:#f92672">&amp;.</span>/(area) <span style="color:#75715e"># shorthand syntax</span>
 
 pdf <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> normal<span style="color:#f92672">.</span>pdf(x) }
@@ -954,9 +959,8 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
     <span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;frequency&#34;</span>)
   plot(x, pdf, <span style="color:#e6db74">title</span>: <span style="color:#e6db74">&#34;N(0.8, 0.04)&#34;</span>, <span style="color:#e6db74">lw</span>: <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">ps</span>: <span style="color:#ae81ff">0</span>)
 <span style="color:#66d9ef">end</span>
-</code></pre></div><figure>
-    <img src="/src/intro_to_statistics/03_histogram.png"
-         alt="A normalized histogram showing the distribution of our sample overlapped with the PDF of N(0.8, 0.04)"/> <figcaption>
+</code></pre></div><figure><img src="/src/intro_to_statistics/03_histogram.png"
+         alt="A normalized histogram showing the distribution of our sample overlapped with the PDF of N(0.8, 0.04)"/><figcaption>
             <p>A normalized histogram showing the frequency of the values sampled from a random variable with probability distribution N(0.8, 0.04), overlapped with the PDF of the same normal distribution.</p>
         </figcaption>
 </figure>
@@ -1160,6 +1164,24 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1332,7 +1354,7 @@ Ishi<span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

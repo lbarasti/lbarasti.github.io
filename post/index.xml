@@ -6,10 +6,15 @@
     <description>Recent content in Posts on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 25 Jan 2021 20:12:48 +0000</lastBuildDate>
-    
-	<atom:link href="https://lbarasti.com/post/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate><atom:link href="https://lbarasti.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kotlin refactoring: 8 tips from practice</title>
+      <link>https://lbarasti.com/post/kotlin_refactoring/</link>
+      <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
+      
+      <guid>https://lbarasti.com/post/kotlin_refactoring/</guid>
+      <description>Learning from the exercism.org community</description>
+    </item>
     
     <item>
       <title>Parallelism in Ruby with Ractors</title>

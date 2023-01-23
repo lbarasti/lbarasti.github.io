@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -70,7 +70,7 @@
         "height": 60
       }
     },
-    "description": "Let\x26rsquo;s have a look at the new Ractor API introduced by Ruby 3.0."
+    "description": "Let\u0026rsquo;s have a look at the new Ractor API introduced by Ruby 3.0."
   }
 </script>
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -894,9 +900,8 @@ ga('send', 'pageview');
 
   <div class="article-body"><h2 id="introduction">Introduction</h2>
 <p>Christmas 2020 came with quite an exceptional gift: a major Ruby release. Among the most anticipated features of this new version is the experimental support for actor-based concurrency and <em>parallelism</em> in the shape of Ractors: light-weight concurrency primitives that share no state and communicate with each other by passing messages.</p>
-<figure>
-    <img src="/src/ruby_ractor/03_patterns.png"
-         alt="Figure 1. Four diagrams, one on each corner. The top left corner shows how to create a Ractor: a = Ractor.new &amp;block. The top right corner shows the send / receive pattern, where actor a sends a message to actor b (b.send(msg)) and actor b receives the message with Ractor.receive. The bottom end of the picture shows two possible interleaving of events that could take place when using the yield / take pattern. In the bottom left corner we have actor a yielding a message with Ractor.yield(msg), and actor b then calling a.take and receiving msg straight away. In the bottom right corner we have actor b taking on actor a while no message is available. This blocks b until actor a yields a message."/> <figcaption>
+<figure><img src="/src/ruby_ractor/03_patterns.png"
+         alt="Figure 1. Four diagrams, one on each corner. The top left corner shows how to create a Ractor: a = Ractor.new &amp;block. The top right corner shows the send / receive pattern, where actor a sends a message to actor b (b.send(msg)) and actor b receives the message with Ractor.receive. The bottom end of the picture shows two possible interleaving of events that could take place when using the yield / take pattern. In the bottom left corner we have actor a yielding a message with Ractor.yield(msg), and actor b then calling a.take and receiving msg straight away. In the bottom right corner we have actor b taking on actor a while no message is available. This blocks b until actor a yields a message."/><figcaption>
             <p>Figure 1. A visual overview of the Ractor API. The API supports both pull and push communication patterns between actors.</p>
         </figcaption>
 </figure>
@@ -910,9 +915,8 @@ ga('send', 'pageview');
 </ul>
 <p>You can check out the <a href="https://github.com/ruby/ruby/blob/master/doc/ractor.md">official readme</a> for some simple examples and to further explore the API.</p>
 <p>In this article, we&rsquo;ll focus on defining some reusable components to implement the parallel producer(s) / consumer(s) architecture shown in Figure 2.</p>
-<figure>
-    <img src="/src/ruby_ractor/02_prod_cons.png"
-         alt="The picture shows a diagram. On the left-hand side, three circles represent sources of data generating data in parallel. We call these producers. In the middle, a circle represents a buffer. All data coming from the sources converges into the buffer. On the right-hand side, four circles represent workers. These take work off of the buffer and process it in parallel."/> <figcaption>
+<figure><img src="/src/ruby_ractor/02_prod_cons.png"
+         alt="The picture shows a diagram. On the left-hand side, three circles represent sources of data generating data in parallel. We call these producers. In the middle, a circle represents a buffer. All data coming from the sources converges into the buffer. On the right-hand side, four circles represent workers. These take work off of the buffer and process it in parallel."/><figcaption>
             <p>Figure 2. A diagram representing the parallel data flow between data sources and workers in a producer / consumer architecture.</p>
         </figcaption>
 </figure>
@@ -920,7 +924,7 @@ ga('send', 'pageview');
 <h2 id="building-blocks">Building blocks</h2>
 <h4 id="source">Source</h4>
 <p>Let&rsquo;s define a function <code>source</code> that returns an actor producing values in a loop and sending them to a target actor.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">source</span>(generator, <span style="color:#e6db74">target</span>:, name: <span style="color:#66d9ef">nil</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">source</span>(generator, <span style="color:#e6db74">target</span>:, name: <span style="color:#66d9ef">nil</span>)
   <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new(generator, target, name: name) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>generator, target<span style="color:#f92672">|</span>
     <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
       target<span style="color:#f92672">.</span>send generator<span style="color:#f92672">.</span>next
@@ -930,7 +934,7 @@ ga('send', 'pageview');
 </code></pre></div><p>Note how we can make a source stateful by encapsulating state in the <code>generator</code> object passed in at initialisation time.</p>
 <h4 id="buffer">Buffer</h4>
 <p>The <code>buffer</code> function returns an actor that yields each message received in its mailbox for any actor to take.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buffer</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buffer</span>
   <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
     <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
       <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>yield <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>receive
@@ -940,7 +944,7 @@ ga('send', 'pageview');
 </code></pre></div><p><strong>Closer look.</strong> <code>Ractor.yield</code> is a blocking call, meaning messages will keep on queuing up in the buffer actor&rsquo;s mailbox while it waits for another actor to <code>take</code> the yielded message. That&rsquo;s OK, as the capacity of an actor&rsquo;s mailbox is quite large, but heads up: although the mailbox can grow arbitrarily on paper, its size is still constrained by the host machine&rsquo;s memory. If the rate of incoming messages for an actor consistently exceeds the rate at which the actor consumes them, then your application will eventually run out of memory and crash 😱</p>
 <h4 id="worker">Worker</h4>
 <p>Our <code>worker</code> function takes a source actor and a behaviour object as an argument.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">worker</span>(behaviour, <span style="color:#e6db74">source</span>:, name: <span style="color:#66d9ef">nil</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">worker</span>(behaviour, <span style="color:#e6db74">source</span>:, name: <span style="color:#66d9ef">nil</span>)
   <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new(behaviour, source, name: name) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>behaviour, source<span style="color:#f92672">|</span>
     state <span style="color:#f92672">=</span> behaviour<span style="color:#f92672">.</span>init_state
     <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
@@ -962,7 +966,7 @@ ga('send', 'pageview');
 <p>First, we define a module to generate random integer values in a given range</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -971,7 +975,7 @@ ga('send', 'pageview');
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> RandInt
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> RandInt
   <span style="color:#66d9ef">MAX_INT</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">**</span><span style="color:#ae81ff">23</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">next</span>
     sleep rand <span style="color:#f92672">*</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span>
@@ -982,11 +986,11 @@ ga('send', 'pageview');
 </div>
 <p>Note how we&rsquo;ve introduced a random delay on line 4, to avoid flooding the buffer&rsquo;s mailbox.</p>
 <p><strong>Challenge.</strong> Can you guess what happens if you remove the <code>sleep</code> statement?</p>
-<p>Now that we have a generator, we can think about the workers&rsquo; <code>behaviour</code>. We&rsquo;ll make it so that every worker actor encapsulates its own cache mapping integers to a boolean indicating whether they are prime. This might seem somewhat contrived, as ideally actors would share the same cache to avoid repeating work done by other workers, but in practice you&rsquo;ll find this is a pretty common trade-off that keeps complexity low while providing some caching benefit.<br>
+<p>Now that we have a generator, we can think about the workers' <code>behaviour</code>. We&rsquo;ll make it so that every worker actor encapsulates its own cache mapping integers to a boolean indicating whether they are prime. This might seem somewhat contrived, as ideally actors would share the same cache to avoid repeating work done by other workers, but in practice you&rsquo;ll find this is a pretty common trade-off that keeps complexity low while providing some caching benefit.<br>
 This also demonstrates a common approach to actor state management.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -1003,7 +1007,7 @@ This also demonstrates a common approach to actor state management.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PrimeTest
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PrimeTest
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">init_state</span>
     <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new <span style="color:#75715e"># cache</span>
   <span style="color:#66d9ef">end</span>
@@ -1027,7 +1031,7 @@ This also demonstrates a common approach to actor state management.</p>
 </ul>
 <p>Remember that <code>receive</code> must return the up-to-date cache (line 13), so that the worker actor can update its internal state.</p>
 <p>OK, we now have all the modules we need to put a producer / consumer system together. Let&rsquo;s start with a single source and a single worker.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bfr <span style="color:#f92672">=</span> buffer
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bfr <span style="color:#f92672">=</span> buffer
 
 source(<span style="color:#66d9ef">RandInt</span>, <span style="color:#e6db74">target</span>: bfr)
 
@@ -1035,10 +1039,10 @@ worker(<span style="color:#66d9ef">PrimeTest</span>, <span style="color:#e6db74"
 </code></pre></div><p>As easy as that. Note how we have to define the <code>buffer</code> first, as that needs to be known to both producers and consumers.</p>
 <p>If you try running the code now, you&rsquo;ll get an underwhelming result: the application will terminate immediately. This is because a Ruby 3.0 application will terminate as soon as the <em>main</em> Ractor terminates. The main Ractor is the first actor invoked by the interpreter (<a href="https://github.com/ruby/ruby/blob/master/doc/ractor.md">docs</a>) and drives the execution of our code.<br>
 To keep our concurrent application running, we can <em>suspend</em> the main Ractor by calling <code>sleep</code> once the other actors have been spawned.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">sleep <span style="color:#75715e"># the last line of our main file</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">sleep <span style="color:#75715e"># the last line of our main file</span>
 </code></pre></div><h4 id="scaling-the-topology">Scaling the topology</h4>
 <p>To scale the actor topology up to a larger number of sources and workers (e.g. 2 and 5), our code could be updated as follows.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bfr <span style="color:#f92672">=</span> buffer
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bfr <span style="color:#f92672">=</span> buffer
 
 (<span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span> 
   source(<span style="color:#66d9ef">RandInt</span>, <span style="color:#e6db74">target</span>: bfr, name: <span style="color:#e6db74">&#34;source_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
@@ -1175,6 +1179,27 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
         </div>
         
         
+        <div class="mcol c6">
+          <header>Next Article</header>
+          <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+        </div>
+        
       </div>
     </div>
 
@@ -1229,6 +1254,24 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   <header>LATESTS</header>
   <div>
     <div class="articles sm">
+      
+      <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
       
       <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
@@ -1403,7 +1446,7 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

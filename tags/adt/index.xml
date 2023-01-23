@@ -6,11 +6,7 @@
     <description>Recent content in ADT on lbarasti&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 21 Sep 2020 00:17:01 +0200</lastBuildDate>
-    
-	<atom:link href="https://lbarasti.com/tags/adt/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 21 Sep 2020 00:17:01 +0200</lastBuildDate><atom:link href="https://lbarasti.com/tags/adt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Crystal JSON beyond the basics</title>
       <link>https://lbarasti.com/post/json_beyond_basics/</link>

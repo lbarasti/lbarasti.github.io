@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -70,7 +70,7 @@
         "height": 60
       }
     },
-    "description": "Yet another implementation of Conway\x26rsquo;s Game of Life"
+    "description": "Yet another implementation of Conway\u0026rsquo;s Game of Life"
   }
 </script>
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -916,12 +922,12 @@ Only the cells abiding by the following rules will be part of the next generatio
 <hr>
 <p>One thing I enjoy about this formulation, is the fact that it leads to a very natural implementation based on a sparse representation of the grid, where we only keep track of live cells.</p>
 <p>Given a set of live cells - aptly called <code>population</code> - the next generation can be computed as follows - the code below is in <a href="https://crystal-lang.org/">Crystal</a>, but your favourite language&rsquo;s implementation shouldn&rsquo;t differ much from this.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
   <span style="color:#f92672">.</span>tally
   <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
   <span style="color:#f92672">.</span>keys
 </code></pre></div><p>Here, <code>expand</code> is a simple function that returns the 9 cells in the 3x3 square centred in the cell passed as argument.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">OriginSquare <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">OriginSquare <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>},
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>},
   {<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}, {<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}
@@ -932,56 +938,51 @@ Only the cells abiding by the following rules will be part of the next generatio
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Let&rsquo;s explore the code line by means of an example.</p>
 <p>Consider the L-shaped population</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>{<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>}<span style="color:#f92672">]</span>
-</code></pre></div><figure>
-    <img src="/src/game_of_life/01_ex.png"
-         alt="The initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]`"/> <figcaption>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>{<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}, {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>}<span style="color:#f92672">]</span>
+</code></pre></div><figure><img src="/src/game_of_life/01_ex.png"
+         alt="The initial population `[{2, 0}, {1, 0}, {0, 0}, {0, 1}]`"/><figcaption>
             <p>Figure 1. The picture shows the initial population <code>[{2, 0}, {1, 0}, {0, 0}, {0, 1}]</code> on a two-dimensional orthogonal grid of square cells. We can think of the grid as a Cartesian plane where a live cell <code>{x, y}</code> is represented by a grey square with bottom left corner in <code>{x, y}</code>.</p>
         </figcaption>
 </figure>
 
 <p>We iterate over the live cells and <em>expand</em> them into the neighbouring cells plus the live cell itself - see Figure 2 below.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
 <span style="color:#75715e"># =&gt; [{-1, 2}, {0, 2}, {1, 2}, {-1, 1}, ..., {2, -1}, {3, -1}]</span>
-</code></pre></div><figure>
-    <img src="/src/game_of_life/01_ex_aa.png"
-         alt="Each live cell is expanded into its neighbouring square"/> <figcaption>
+</code></pre></div><figure><img src="/src/game_of_life/01_ex_aa.png"
+         alt="Each live cell is expanded into its neighbouring square"/><figcaption>
             <p>Figure 2. The picture represents the expansion of each live cell into the corresponding 3x3 square. Cells in such squares are accumulated into a collection, with repetition. Notice that the number of <em>stars</em> in each cell at the end of iteration 4 - bottom right picture - reflects the number of times a cell appears in any expanded square.</p>
         </figcaption>
 </figure>
 
 <p>We now count the number of times a cell appears in the computed collection. In Crystal, this is as easy as calling <code>#tally</code> on an array. This returns a dictionary from cell to number of occurrences.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
   <span style="color:#f92672">.</span>tally
   <span style="color:#75715e"># =&gt; {{-1, 2} =&gt; 1, {0, 2} =&gt; 1, ..., {3, -1} =&gt; 1}</span>
-</code></pre></div><figure>
-    <img src="/src/game_of_life/06_1_ex.png"
-         alt="The figure shows the number of occurrences for each cell in the expanded squares"/> <figcaption>
+</code></pre></div><figure><img src="/src/game_of_life/06_1_ex.png"
+         alt="The figure shows the number of occurrences for each cell in the expanded squares"/><figcaption>
             <p>Figure 3. The figure shows the number of occurrences for each cell in the expanded squares.</p>
         </figcaption>
 </figure>
 
 <p>Finally, we filter out any cell that doesn&rsquo;t match either rule 1 or rule 2 defined above. This is done by invoking <code>.select</code> on the dictionary with a predicate representing the rules.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
   <span style="color:#f92672">.</span>tally
   <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
   <span style="color:#75715e"># =&gt; {{0, 1} =&gt; 3, {0, 0} =&gt; 3, {1, 0} =&gt; 4, {1, -1} =&gt; 3}</span>
-</code></pre></div><figure>
-    <img src="/src/game_of_life/06_ex.png"
-         alt="The figure highlights the new generation of live cells"/> <figcaption>
+</code></pre></div><figure><img src="/src/game_of_life/06_ex.png"
+         alt="The figure highlights the new generation of live cells"/><figcaption>
             <p>Figure 4. The numbers in bold show the new generation of live cells. The light grey squares where the count is 4 are kept alive. Any cell with a count of 3 will be live in the next generation.</p>
         </figcaption>
 </figure>
 
-<p>We now discard the number of occurrences, and keep the cells&rsquo; coordinates.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
+<p>We now discard the number of occurrences, and keep the cells' coordinates.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">population<span style="color:#f92672">.</span>flat_map { <span style="color:#f92672">|</span>cell<span style="color:#f92672">|</span> expand(cell) }
   <span style="color:#f92672">.</span>tally
   <span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>cell, count<span style="color:#f92672">|</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">||</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> population<span style="color:#f92672">.</span>includes?(cell)) }
   <span style="color:#f92672">.</span>keys
   <span style="color:#75715e"># =&gt; [{0, 1}, {0, 0}, {1, 0}, {1, -1}]</span>
-</code></pre></div><figure>
-    <img src="/src/game_of_life/07_ex.png"
-         alt="The new generation of live cells"/> <figcaption>
+</code></pre></div><figure><img src="/src/game_of_life/07_ex.png"
+         alt="The new generation of live cells"/><figcaption>
             <p>Figure 5. The new generation of live cells is represented by the squares in light grey.</p>
         </figcaption>
 </figure>
@@ -989,7 +990,7 @@ Only the cells abiding by the following rules will be part of the next generatio
 <p>Excellent! Let&rsquo;s talk about some of the features of this algorithm, but first&hellip;</p>
 <hr>
 <p><strong>Challenge.</strong> Now that we&rsquo;ve discussed a script to evolve a population, can you extract this into a function or instance method, so that we can run an arbitrary number of evolutions? I&rsquo;m thinking about something like</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">new_population <span style="color:#f92672">=</span> GameOfLife<span style="color:#f92672">.</span>evolve(population, <span style="color:#e6db74">times</span>: <span style="color:#ae81ff">20</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">new_population <span style="color:#f92672">=</span> GameOfLife<span style="color:#f92672">.</span>evolve(population, <span style="color:#e6db74">times</span>: <span style="color:#ae81ff">20</span>)
 </code></pre></div><h2 id="some-notes-on-efficiency">Some notes on efficiency</h2>
 <p>The memory-efficiency of the sparse implementation makes evolving some configurations feasible, where they wouldn&rsquo;t be on the dense one. In particular, we can cope with cells patterns moving arbitrarily far from each other without going out of memory. This is not true for the dense implementation, where an initial population featuring, for example, two <a href="https://en.wikipedia.org/wiki/Spaceship_(cellular_automaton)">spaceships</a> heading in different directions will exhaust your memory fairly quickly.</p>
 <p>I like how the sparse implementation encodes a strong system invariant: in terms of state, nothing can ever change far from live cells.</p>
@@ -1181,6 +1182,24 @@ Only the cells abiding by the following rules will be part of the next generatio
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1353,7 +1372,7 @@ Only the cells abiding by the following rules will be part of the next generatio
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

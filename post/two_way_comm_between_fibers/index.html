@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
@@ -775,6 +775,12 @@ section.footer > header a {
 
 
 
+.thumb-d67d217ed6e72189359885e9e48f179a {
+  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+}
+
+
+
 .thumb-f53907a89c330f8b996d611ad301fd8a {
   background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
 }
@@ -898,8 +904,7 @@ ga('send', 'pageview');
 <h2 id="core-idea">Core idea</h2>
 <p>Let <code>A</code> and <code>B</code> be two fibers, where <code>A</code> holds information that <code>B</code> wants.
 <code>B</code> sends a request to <code>A</code> over a channel <code>requests</code>. <code>A</code> then sends a response back via a temporary channel <code>tmp</code>.</p>
-<figure>
-    <img src="/src/two_way_communication/00_idea.png"/> 
+<figure><img src="/src/two_way_communication/00_idea.png"/>
 </figure>
 
 <p>Now, you might be wondering: &ldquo;where does the <code>tmp</code> channel come from?&rdquo;</p>
@@ -907,7 +912,7 @@ ga('send', 'pageview');
 The following code illustrates the exchange.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -930,7 +935,7 @@ The following code illustrates the exchange.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record Request, tmp : Channel(Response)
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record Request, tmp : Channel(Response)
 record Response, value : Int32
 
 requests <span style="color:#f92672">=</span> Channel(Request)<span style="color:#f92672">.</span>new
@@ -974,12 +979,11 @@ sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></td><
 </ul>
 <h2 id="case-study-iot-weather-station">Case study: IoT weather station</h2>
 <p>Let&rsquo;s apply this abstract idea to a sample problem. Imagine we have a collection of temperature sensors sending data to a weather station.</p>
-<figure>
-    <img src="/src/two_way_communication/01_weather_station.png"/> 
+<figure><img src="/src/two_way_communication/01_weather_station.png"/>
 </figure>
 
 <p>In the following code, we model the weather station as a fiber, and simulate 5 sensors sending data concurrently, every few milliseconds.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
 record SetTemperature, id : Int32, temperature : Float64
 
 requests <span style="color:#f92672">=</span> Channel(SetTemperature)<span style="color:#f92672">.</span>new
@@ -1006,19 +1010,18 @@ spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;
 
 sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></div>
 <p>You can run this code yourself. The output should be similar to the following.</p>
-<pre><code>received SetTemperature(@id=4, @temperature=0.261551478436086)
+<pre tabindex="0"><code>received SetTemperature(@id=4, @temperature=0.261551478436086)
 received SetTemperature(@id=1, @temperature=0.5216787094023495)
 received SetTemperature(@id=2, @temperature=0.07117116427891625)
 ...
 </code></pre><p>We now want to give an <em>operator</em> the ability to retrieve the latest temperature readings at any point in time. Let&rsquo;s apply the pattern we&rsquo;ve seen above.</p>
-<figure>
-    <img src="/src/two_way_communication/00_header.png"/> 
+<figure><img src="/src/two_way_communication/00_header.png"/>
 </figure>
 
 <p>First, we need to define a new request message (or <em>command</em>) wrapping a channel for the weather station to return its state.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record GetTemperatures, return_channel : Channel(StationState)</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">record GetTemperatures, return_channel : Channel(StationState)</code></pre></div></p>
 <p>Then, we have to update the weather station&rsquo;s request channel and processing loop to support both <code>SetTemperature</code> and <code>GetTemperatures</code> commands.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">requests <span style="color:#f92672">=</span> Channel(SetTemperature <span style="color:#f92672">|</span> GetTemperatures)<span style="color:#f92672">.</span>new
 
 spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;weather_station&#34;</span>) <span style="color:#66d9ef">do</span>
   current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
@@ -1032,11 +1035,11 @@ spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span></code></pre></div>
 <p>We can now retrieve the current temperatures following the pattern we saw earlier:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">tmp <span style="color:#f92672">=</span> Channel(StationState)<span style="color:#f92672">.</span>new
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">tmp <span style="color:#f92672">=</span> Channel(StationState)<span style="color:#f92672">.</span>new
 requests<span style="color:#f92672">.</span>send GetTemperatures<span style="color:#f92672">.</span>new(tmp)
 temperatures <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>receive</code></pre></div>
 <p>Let&rsquo;s put this all together, simulating an operator querying the weather station every now and then</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
 record SetTemperature, id : Int32, temperature : Float64
 record GetTemperatures, return_channel : Channel(StationState)
 
@@ -1078,7 +1081,7 @@ spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;
 
 sleep <span style="color:#75715e"># suspend Main fiber</span></code></pre></div>
 <p>If you run this yourself, the output should look something like</p>
-<pre><code>received {0 =&gt; 0.8755427230041936, 1 =&gt; 0.9284330205519311, 2 =&gt; 0.5796278817786711, 3 =&gt; 0.7269647270575272, 4 =&gt; 0.005449870508358435}
+<pre tabindex="0"><code>received {0 =&gt; 0.8755427230041936, 1 =&gt; 0.9284330205519311, 2 =&gt; 0.5796278817786711, 3 =&gt; 0.7269647270575272, 4 =&gt; 0.005449870508358435}
 received {0 =&gt; 0.6971840652241449, 1 =&gt; 0.563615359462064, 2 =&gt;0.1376840269887423, 3 =&gt; 0.8042644922805047, 4 =&gt; 0.11204561419785454}
 ...
 </code></pre><p>We have achieved what we wanted, a thread-safe, two-way communication between fibers, but we have added quite a lot of accidental complexity to our code, in the process.
@@ -1095,7 +1098,7 @@ Wouldn&rsquo;t it be great if <code>weather_station</code> users didn&rsquo;t ha
 <ol>
 <li>
 <p>We encapsulate records, aliases and requests channel in a <code>WeatherStation</code> class.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
   <span style="color:#66d9ef">alias</span> <span style="color:#a6e22e">StationState</span> <span style="color:#f92672">=</span> Hash(Int32, Float64)
   <span style="color:#66d9ef">private</span> record SetTemperature, id : Int32, temperature : Float64
   <span style="color:#66d9ef">private</span> record GetTemperatures, return_channel : Channel(StationState)
@@ -1106,7 +1109,7 @@ Wouldn&rsquo;t it be great if <code>weather_station</code> users didn&rsquo;t ha
 </li>
 <li>
 <p>We spawn the weather station fiber inside the initialize method. Notice how <code>current_temperatures</code> is now an instance variable initialized at creation time.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
   <span style="color:#75715e"># ...</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
     @current_temperatures <span style="color:#f92672">=</span> StationState<span style="color:#f92672">.</span>new
@@ -1126,7 +1129,7 @@ Wouldn&rsquo;t it be great if <code>weather_station</code> users didn&rsquo;t ha
 </li>
 <li>
 <p>Finally, we provide convenience methods to set and retrieve temperatures. This is the <em>public API</em> of our <code>WeatherStation</code> instances.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeatherStation</span>
   <span style="color:#75715e"># continued</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_temp</span>(sensor_id : Int32, temperature : Float64)
     @requests<span style="color:#f92672">.</span>send SetTemperature<span style="color:#f92672">.</span>new(sensor_id, temperature)
@@ -1329,6 +1332,24 @@ Wouldn&rsquo;t it be great if <code>weather_station</code> users didn&rsquo;t ha
     <div class="articles sm">
       
       <article class="lism">
+  <a href="https://lbarasti.com/post/kotlin_refactoring/">
+    <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
+
+    <div class="inner">
+      <div class="title">Kotlin refactoring: 8 tips from practice</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+      
+      <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1501,7 +1522,7 @@ Wouldn&rsquo;t it be great if <code>weather_station</code> users didn&rsquo;t ha
   <header>TAGS</header>
   <div>
     <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/adt">adt <span class="count">(1)</span></a></li>
+      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
     </ul>
   </div>
 </section>

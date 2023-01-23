@@ -1,214 +1,142 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>https://lbarasti.com/tags/actor/</loc>
-    <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
+    <loc>https://lbarasti.com/tags/12in23/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
+    <loc>https://lbarasti.com/tags/kotlin/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
+    <loc>https://lbarasti.com/post/kotlin_refactoring/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
+    <loc>https://lbarasti.com/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
+    <loc>https://lbarasti.com/post/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
+    <loc>https://lbarasti.com/tags/refactoring/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
+    <loc>https://lbarasti.com/tags/</loc>
+    <lastmod>2023-01-23T15:53:48+00:00</lastmod>
+  </url><url>
     <loc>https://lbarasti.com/tags/actors/</loc>
     <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/concurrency/</loc>
     <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/</loc>
-    <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/ruby_ractor/</loc>
     <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/post/</loc>
-    <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/ractors/</loc>
     <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/ruby/</loc>
     <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lbarasti.com/tags/</loc>
-    <lastmod>2021-01-25T20:12:48+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/adt/</loc>
     <lastmod>2020-09-21T00:17:01+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/crystal/</loc>
     <lastmod>2020-09-21T00:17:01+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/json_beyond_basics/</loc>
     <lastmod>2020-09-21T00:17:01+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/json/</loc>
     <lastmod>2020-09-21T00:17:01+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/macros/</loc>
     <lastmod>2020-09-21T00:17:01+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/serialization/</loc>
     <lastmod>2020-09-21T00:17:01+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/byoidsl/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/dsl/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/game-of-life/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/generics/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/interpreter/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/parser/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/parser-combinators/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/repl/</loc>
     <lastmod>2020-07-07T19:17:57+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/automata/</loc>
     <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/game_of_life/</loc>
     <lastmod>2020-06-20T18:52:41+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/select_statement/</loc>
     <lastmod>2020-04-30T23:03:29+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/channel/</loc>
     <lastmod>2020-04-30T23:03:29+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/fiber/</loc>
     <lastmod>2020-04-30T23:03:29+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/select/</loc>
     <lastmod>2020-04-30T23:03:29+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/random/</loc>
     <lastmod>2020-04-10T10:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/intro_to_statistics/</loc>
     <lastmod>2020-04-10T10:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/statistical-distributions/</loc>
     <lastmod>2020-04-10T10:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/statistics/</loc>
     <lastmod>2020-04-10T10:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/live-coding/</loc>
     <lastmod>2020-01-12T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/url_checker_series/</loc>
     <lastmod>2020-01-12T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/series/</loc>
     <lastmod>2020-01-12T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/two_way_comm_between_fibers/</loc>
     <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://lbarasti.com/tags/actor/</loc>
+    <lastmod>2019-11-25T22:12:33+01:00</lastmod>
+  </url><url>
     <loc>https://lbarasti.com/tags/genserver/</loc>
     <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/server/</loc>
     <lastmod>2019-11-25T22:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/tags/algorithms/</loc>
     <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/post/fun_with_crystal/</loc>
     <lastmod>2017-04-12T10:12:33+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lbarasti.com/categories/</loc>
   </url>
-  
 </urlset>
