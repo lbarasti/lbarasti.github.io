@@ -179,7 +179,3 @@ You can find a working example of the weather station simulation [here](https://
 ## 
 
 Thanks for reading, I hope you found this useful. You can share your ideas on writing performant, thread-safe code in the comments section below.
-
-If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

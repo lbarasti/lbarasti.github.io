@@ -138,7 +138,3 @@ Hence, the sparse implementation is more memory-efficient than the dense one, bu
 ##
 
 Thanks for reading, I hope this article made you want to sprint to your laptop and code the sparse Game of Life in your favourite language. You can share your Game of Life implementation in the comments section below, I'd love to see what you came up with.
-
-If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

@@ -288,7 +288,3 @@ Anyhow, leave a comment in the section below, if you'd like to share your *~~hac
 ##
 
 I hope you enjoyed this JSON-themed article and learned something new about Crystal. If you have any question or learning in the JSON-serialization space, then I'd love to read about it in the comments section below.
-
-If you'd like to stay in touch, you can subscribe or follow me on [Twitter](https://twitter.com/lbarasti). You can also find me live coding on [Twitch](https://www.twitch.tv/lbarasti), sometimes :tv:
-
-{{< subscribe >}}

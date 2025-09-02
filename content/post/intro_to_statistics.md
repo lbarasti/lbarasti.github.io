@@ -119,7 +119,3 @@ In the next article, we'll put the two together: first, we'll generate a real-wo
 ##
 
 Thanks for reading, I hope you found this useful. You can share your experiences with Crystal and statistics in the comments section below.
-
-If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

@@ -108,7 +108,3 @@ Once you add the dependency on [crt](https://github.com/maiha/crt.cr), you might
 ## 
 
 This is it! I hope you had some fun and learned something while watching these videos. As for myself, I am currently looking for new, concurrency-releated topics to dig into, so I'd love to hear your suggestions on new topics or apps I could live-code - just leave a comment below to have your say :point_down:
-
-If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

@@ -121,6 +121,3 @@ And here is the source code used to generate the benchmark data above.
 ## 
 
 I hope you enjoyed the read! You can share _your_ experiences with Crystal scripting in the comments section below.
-
-If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-{{< subscribe >}}

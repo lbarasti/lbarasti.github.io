@@ -238,7 +238,3 @@ If you're hungry for more, you can go through [these](https://gobyexample.com/se
 ##
 
 Thanks for reading, I hope you found this useful. You can share your experiences with fibers and channels in the comments section below.
-
-If you'd like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

@@ -175,7 +175,3 @@ And here is the end result:
 
 This is it! If you managed to read this far, then you deserve a :star:  
 I hope you enjoyed the write-up and learned something new in the process. If you have any question or would like to share your iDSL stories, then I'd love to read them in the comments section below.
-
-If you'd like to stay in touch, you can subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

@@ -180,7 +180,3 @@ This concludes our tour of Ruby 3.0 Ractors. You can find the full case study so
 Thanks for reading, I hope you found this useful. You can share your experiences with Ractors and parallelism in Ruby in the comments section below.
 
 Also, please let me know if you'd like to read more about Ractors on this blog: we've only scratched the surface on the topic, and I'd love to spend more time investigating event-driven architectures.
-
-If you’d like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}

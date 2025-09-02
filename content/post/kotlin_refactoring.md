@@ -158,7 +158,3 @@ object HandshakeCalculator {
 This concludes our tour of the refactoring tips I extracted from [exercism's](https://exercism.org/tracks/kotlin/exercises) brilliant community solution pages. Thanks for reading through, I hope you found this useful.
 
 What did I miss? Are there more you'd like to share? Let me know in the comments section below :point_down:
-
-If you’d like to stay in touch, then subscribe or follow me on [Twitter](https://twitter.com/lbarasti).
-
-{{< subscribe >}}
