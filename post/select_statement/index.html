@@ -2,24 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-<meta name="pinterest" content="nopin">
+    <title>5 use cases for Crystal&#39;s select statement - lbarasti&#39;s blog</title>
+    <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com"  crossorigin>
+<link rel="dns-prefetch preconnect" href="https://use.fontawesome.com"  crossorigin>
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.149.0">
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
 
 
 
-    <link rel="canonical" href="https://lbarasti.com/post/select_statement/">
-    
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-    
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>5 use cases for Crystal&#39;s select statement - lbarasti&#39;s blog</title>
     
 <meta name="description" content="Usage of the select statement">
 
@@ -75,379 +71,318 @@
 </script>
 
 
+
+    <link rel="canonical" href="https://lbarasti.com/post/select_statement/">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <style>
+
+  
 html {
   font-size: 18px;
-  background-color: rgba(236,239,241,.5);
-}
+  background-color: rgba(236, 239, 241, 0.5); }
 
 @media (max-width: 768px) {
   html {
-    font-size: 15px;
-  }
-}
+    font-size: 15px; } }
 
 body {
   color: #333;
   font-family: 'Roboto Slab','ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif;
-  font-feature-settings : "palt";
+  font-feature-settings: "palt";
   font-size: inherit;
   line-height: 1rem;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
-h1, h2, h3, h4, h5 ,h6 {
+h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1rem;
-  margin: 0;
-}
+  margin: 0; }
 
 hr {
   border: 0;
   border-top: 1px dashed #cfd8dc;
-  margin: 1rem 0;
-}
+  margin: 1rem 0; }
 
 p {
   margin: 0;
-  line-height: 1rem;
-}
+  line-height: 1rem; }
 
 a {
   color: #2196f3;
   text-decoration: none;
-  transition-duration: .3s;
-}
+  transition-duration: .3s; }
 
 ul, ol {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 table {
   border-collapse: collapse;
-}
+  display: block;
+  overflow-x: auto; }
 
 th, td {
   font-size: .8rem;
-  padding: .5rem;
-}
+  padding: .5rem; }
 
 tr {
-  border-bottom: 1px dashed #ddd;
-}
+  border-bottom: 1px dashed #ddd; }
 
 /* Layouts */
-main,
-aside {
-  display: block;
-}
+main, aside {
+  display: block; }
 
-main { padding: 1rem 0 3rem 0; }
-aside.h { padding: 3rem 0; }
-
-main.f,
-aside.f {
-  background-color: #333;
-  border-top: 2px dashed #fff;
-  border-bottom: 2px dashed #fff;
-}
+main {
+  padding: 1rem 0 3rem 0; }
 
 .l-container {
   position: relative;
   max-width: 68rem;
   margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.l-container.thin {
-  max-width: 44rem;
-}
+  padding: 0 1rem; }
+  .l-container.thin {
+    max-width: 44rem; }
 
 .l-header {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   padding: 1rem 0;
-  text-align: center;
-}
-
-.l-header .description {
-  margin-top: .5rem;
-  font-size: .8rem;
-}
+  text-align: center; }
+  .l-header .description {
+    margin-top: .5rem;
+    font-size: .8rem; }
 
 .l-footer {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   font-size: .6rem;
   font-weight: 700;
-  padding: 1rem 0;
-}
+  padding: 1rem 0; }
+
+.l-sidebar {
+  margin: -1rem 0; }
 
 @media (max-width: 768px) {
   .l-sidebar {
-    margin-top: 4rem;
-  }
-}
+    margin-top: 4rem; } }
 
 .mrow {
   margin: 0 -1rem;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 .mcol {
   box-sizing: border-box;
   float: left;
-  padding: 0 1rem;
-}
+  padding: 0 1rem; }
 
-.c6 { width: 50%; }
-.c4 { width: 33.26323833%; }
-.c8 { width: 66.66666%; }
+.c6 {
+  width: 50%; }
+
+.c4 {
+  width: 33.26323833%; }
+
+.c8 {
+  width: 66.66666%; }
 
 @media (max-width: 768px) {
   .mcol {
     width: 100%;
-    float: none;
-  }
-}
+    float: none; } }
 
 .logo a {
   font-size: 1.4rem;
   line-height: 1.5rem;
   font-weight: 700;
-  color: #333;
-}
+  color: #333; }
 
 .articles {
   margin: -1rem 0;
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 .articles.sm {
   margin: -.5rem 0;
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
 
 article {
   border-radius: 4px;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 article.li {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   height: 20rem;
   overflow: hidden;
-  margin: 1rem 0;
-}
+  margin: 1rem 0; }
 
 article.li > a {
   display: block;
-  color: #333;
-}
+  color: #333; }
 
 article.li .inner {
-  padding: 1rem;
-}
+  padding: 1rem; }
 
 article.li .thumb {
-  height: 8rem;
-}
+  height: 8rem; }
 
 article.li .title {
   color: #333;
   font-size: 1.2rem;
   line-height: 1.5rem;
-  margin-bottom: .5rem;
-}
+  margin-bottom: .5rem; }
 
 article.li .summary {
   font-size: .8rem;
   height: 6rem;
   overflow: hidden;
-  margin-top: 1rem;
-}
+  margin-top: 1rem; }
 
 article.li .summary::after {
-  content: '...';
-}
+  content: '...'; }
 
 article.lism {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  margin: .5rem 0;
-}
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin: .5rem 0; }
 
 article.lism::after {
   content: '';
   display: block;
-  clear: both;
-}
+  clear: both; }
 
 article.lism > a {
   display: block;
-  color: #333;
-}
+  color: #333; }
 
 article.lism .inner {
   display: table-cell;
   vertical-align: middle;
   height: 5rem;
-  padding: 0 .75rem;
-}
+  padding: 0 .75rem; }
 
 article.lism .thumb {
   width: 5rem;
   height: 5rem;
-  float: left;
-}
+  float: left; }
 
 article.lism .title {
   font-weight: 700;
   font-size: .8rem;
-  margin-bottom: .25rem;
-}
+  margin-bottom: .25rem; }
 
 article.sn {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  margin-bottom: 1rem;
-}
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem; }
 
 article.sn .thumb {
-  height: 20rem;
-}
+  height: 20rem; }
 
 @media (max-width: 768px) {
   article.sn .thumb {
-    height: 10rem;
-  }
-}
+    height: 10rem; } }
 
 article.sn > .article-header,
 article.sn > .article-body,
 article.sn .article-footer {
-  padding: 2rem;
-}
+  padding: 2rem; }
 
 article.sn > .article-body {
-  padding: 0 2rem;
-}
+  padding: 0 2rem; }
 
 @media (max-width: 768px) {
   article.sn > .article-header,
   article.sn > .article-body,
   article.sn .article-footer {
-    padding: 1rem;
-  }
-
+    padding: 1rem; }
   article.sn > .article-body {
-    padding: 0 1rem;
-  }
-}
+    padding: 0 1rem; } }
 
 article.sn > .article-header .title {
   font-size: 1.8rem;
   line-height: 2rem;
-  margin-bottom: .5rem;
-}
+  margin-bottom: .5rem; }
 
 @media (max-width: 768px) {
   article.sn > .article-header .title {
     font-size: 1.4rem;
-    line-height: 1.5rem;
-  }
-}
+    line-height: 1.5rem; } }
 
 article.sn > .article-header .facts {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 article.sn > .article-body {
-  margin-bottom: 1.5rem;
-}
+  margin-bottom: 1.5rem; }
 
 article.sn > .article-body h2 {
   border-bottom: .25rem solid #333;
   font-size: 1.2rem;
   line-height: 1.5rem;
   margin: 1.5rem 0;
-  padding: .5rem 0;
-}
+  padding: .5rem 0; }
 
 article.sn > .article-body h3 {
   border-left: .5rem solid #333;
   line-height: 1.5rem;
   margin: 1.5rem 0;
-  padding: .125rem .5rem;
-}
+  padding: .125rem .5rem; }
 
 article.sn > .article-body ul,
 article.sn > .article-body ol {
   margin: 1.5rem 0;
-  padding-left: 1.5rem;
-}
+  padding-left: 1.5rem; }
 
 article.sn > .article-body li {
   padding-bottom: .5rem;
-  line-height: 1.5rem;
-}
+  line-height: 1.5rem; }
 
 article.sn > .article-body li:last-child {
-  padding-bottom: 0;
-}
+  padding-bottom: 0; }
+
 article.sn > .article-body p {
   margin: 1rem 0;
-  line-height: 1.5rem;
-}
+  line-height: 1.5rem; }
 
 article.sn > .article-body strong,
 article.sn > .article-body em {
   font-style: normal;
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 article.sn > .article-body strong {
-  box-shadow: 0 -.5rem 0 0 #ffc107 inset;
-}
+  box-shadow: 0 -.5rem 0 0 #ffc107 inset; }
 
 article.sn > .article-body em {
-  color: #8bc34a;
-}
+  color: #8bc34a; }
 
 article.sn > .article-body code,
 article.sn > .article-body pre {
   font-family: Menlo, Consolas, monospace;
-  font-size: .7rem;
-}
+  font-size: .7rem; }
 
 article.sn > .article-body pre {
   background-color: #333;
   color: #fff;
   line-height: 1rem;
   margin: 1.5rem -2rem;
-  overflow: auto;
-}
+  overflow: auto; }
 
 @media (max-width: 768px) {
   article.sn > .article-body pre {
-    margin: 1.5rem -1rem;
-  }
-}
+    margin: 1.5rem -1rem; } }
 
 article.sn > .article-body pre > code {
   display: block;
-  padding: 1rem 2rem;
-}
+  padding: 1rem 2rem; }
 
 @media (max-width: 768px) {
   article.sn > .article-body pre > code {
-    padding: 1rem;
-  }
-}
+    padding: 1rem; } }
 
 article.sn > .article-body p code {
   background-color: #eceff1;
@@ -455,383 +390,275 @@ article.sn > .article-body p code {
   border-radius: 4px;
   margin: 0 .25rem;
   padding: .375rem;
-  white-space: nowrap;
-}
+  white-space: nowrap; }
 
 article.sn > .article-body blockquote {
   position: relative;
   border-left: .25rem solid #333;
   font-size: .8rem;
   padding: .125rem 1rem;
-  margin: 1.5rem 0;
-}
+  margin: 1.5rem 0; }
 
 @media (max-width: 768px) {
   article.sn > .article-body blockquote {
-    font-size: 1rem;
-  }
-}
+    font-size: 1rem; } }
 
 article.sn > .article-body blockquote p {
   margin: .5rem 0;
-  line-height: 1rem;
-}
+  line-height: 1rem; }
 
 article.sn > .article-body figure {
-  margin: 1.5rem 0;
-}
+  margin: 1.5rem 0; }
 
 article.sn > .article-body img,
 article.sn > .article-body figure img,
 article.sn > .article-body figure amp-img {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  max-width: 100%;
-}
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  max-width: 100%; }
 
 article.sn > .article-body figcaption {
   color: #cfd8dc;
   font-size: .8rem;
   font-weight: 700;
-  margin-top: .5rem;
-}
+  margin-top: .5rem; }
 
 .facts li {
   display: inline;
   font-size: .8rem;
-  margin-right: 1rem;
-}
+  margin-right: 1rem; }
 
 .facts i {
   color: #cfd8dc;
-  margin-right: .5em;
-}
+  margin-right: .5em; }
 
 .facts.sm li {
-  font-size: .7rem;
-}
-
-.sections.sidebar {
-  margin: -1rem 0;
-}
-
-.sections.footer {
-  margin: -1rem 0;
-}
+  font-size: .7rem; }
 
 section.sidebar {
-  margin: 2rem 0;
-}
-
-section.sidebar > header {
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-align: center;
-  margin: 1.5rem 0;
-}
+  margin: 2rem 0; }
+  section.sidebar > header {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    margin: 1.5rem 0; }
 
 section.footer {
-  margin: 1rem 0;
-}
-
-section.footer > header {
-  font-size: .8rem;
-  margin: .5rem 0;
-}
-
-section.footer > header::before {
-  content: "- ";
-}
-
-section.footer > header a {
-  font-weight: 700;
-  color: #333;
-  text-decoration: underline;
-}
+  margin: 1rem 0; }
+  section.footer > header {
+    font-size: .8rem;
+    margin: .5rem 0; }
+    section.footer > header::before {
+      content: "- "; }
+    section.footer > header a {
+      font-weight: 700;
+      color: #333;
+      text-decoration: underline; }
 
 .terms {
-  margin: -.25rem;
-}
-
-.terms li {
-  display: inline-block;
-}
-
-.terms a {
-  display: block;
-  float: left;
-  background-color: #333;
-  border-radius: 4px;
-  color: #fff;
-  font-size: .7rem;
-  margin: .25rem;
-  padding: 0 .75rem;
-  line-height: 1.75rem;
-}
+  margin: -.25rem; }
+  .terms li {
+    display: inline-block; }
+  .terms a {
+    display: block;
+    float: left;
+    background-color: #333;
+    border-radius: 4px;
+    color: #fff;
+    font-size: .7rem;
+    margin: .25rem;
+    padding: 0 .75rem;
+    line-height: 1.75rem; }
 
 .paging {
   text-align: center;
-  padding: 1rem 0;
-}
-
-.paging a {
-  display: inline-block;
-  background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  border-radius: 4px;
-  color: #333;
-  padding: 0 1rem;
-  line-height: 3rem;
-}
+  padding: 1rem 0; }
+  .paging a {
+    display: inline-block;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    color: #333;
+    padding: 0 1rem;
+    line-height: 3rem; }
 
 .page-title {
   text-align: center;
-  margin: 1rem 0;
-}
-
-.page-title::after {
-  content: '';
-  display: block;
-  border-bottom: .25rem solid #333;
-  width: 3rem;
-  margin: 1.5rem auto;
-}
-
-.page-title > .title {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-}
-
-/* Parts:breadcrumb */
-.crumb ol {
-  text-overflow: ellipsis;
-  color: #cfd8dc;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.crumb li {
-  display: inline;
-  font-size: .8rem;
-}
-
-.crumb li::after {
-  content: '›';
-  margin: 0 .25rem 0 .5rem;
-}
-
-.crumb li:last-child::after {
-  content: '';
-}
-
-.crumb a {
-  color: #cfd8dc;
-}
-
-.crumb i {
-  margin-right: .5em;
-}
+  margin: 1rem 0; }
+  .page-title::after {
+    content: '';
+    display: block;
+    border-bottom: .25rem solid #333;
+    width: 3rem;
+    margin: 1.5rem auto; }
+  .page-title > .title {
+    font-size: 1.2rem;
+    line-height: 1.5rem; }
 
 .share {
-  padding: 0;
-}
-
-.share a {
-  display: inline-block;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  min-width: 1rem;
-  height: 2rem;
-  border-radius: 4px;
-  color: #333;
-  font-size: .8rem;
-  font-weight: 700;
-  line-height: 2rem;
-  text-align: center;
-  padding: 0 .5rem;
-}
+  padding: 0; }
+  .share a {
+    display: inline-block;
+    box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+    min-width: 1rem;
+    height: 2rem;
+    border-radius: 4px;
+    color: #333;
+    font-size: .8rem;
+    font-weight: 700;
+    line-height: 2rem;
+    text-align: center;
+    padding: 0 .5rem; }
 
 .adj article.lism {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 .adj header {
   font-weight: 700;
-  font-size: .8rem;
-}
+  font-size: .8rem; }
 
 .toc {
   padding: 0 2rem;
-}
+  margin: 1rem 0; }
+  .toc nav > ul {
+    background-color: #eceff1;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: .8rem;
+    padding: .5rem 1rem;
+    word-break: break-all;
+    list-style: none; }
+  .toc ul {
+    padding: 0; }
+    .toc ul ul {
+      padding-left: 1rem; }
+      .toc ul ul > li {
+        font-weight: 700;
+        margin: .5rem 0;
+        list-style-type: decimal; }
+      .toc ul ul ul {
+        padding-left: 1rem; }
+        .toc ul ul ul > li {
+          list-style-type: disc;
+          font-weight: 500; }
+  .toc li {
+    color: #90a4ae; }
 
 @media (max-width: 768px) {
   .toc {
-    padding: 0 1rem;
-  }
-}
+    padding: 0 1rem; } }
 
-.toc {
-  margin: 1rem 0;
-}
 
-.toc nav>ul {
-  background-color: #eceff1;
-  border-radius: 4px;
-  display: inline-block;
-  font-size: .8rem;
-  padding: .5rem 1rem;
-  word-break: break-all;
-  list-style: none;
-}
 
-.toc ul {
-  padding: 0;
-}
-
-.toc ul ul {
-  padding-left: 1rem;
-}
-
-.toc ul ul ul {
-  padding-left: 1rem;
-}
-
-.toc li {
-  color: #90a4ae;
-}
-
-.toc ul ul>li {
-  font-weight: 700;
-  margin: .5rem 0;
-  list-style-type: decimal;
-}
-
-.toc ul ul ul>li {
-  list-style-type: disc;
-  font-weight: 500;
-}
-
-.author {
+  
+    .author {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   padding: 1rem;
   border-radius: 4px;
-  text-align: center;
-}
+  text-align: center; }
+  .author .author-thumb {
+    margin: 0 auto 1rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background-color: #eceff1;
+    background-size: cover;
+    background-position: center; }
+  .author .author-name {
+    margin-bottom: .5rem;
+    font-weight: 700; }
+  .author .author-facts {
+    margin-bottom: 1rem; }
+    .author .author-facts li {
+      display: inline; }
+      .author .author-facts li a {
+        display: inline-block;
+        background-color: #eceff1;
+        width: 1.75rem;
+        height: 1.75rem;
+        line-height: 1.75rem;
+        text-align: center;
+        color: #333;
+        font-size: .8rem;
+        border-radius: 2px; }
+        .author .author-facts li a:hover {
+          color: #fff;
+          background-color: #333; }
+  .author .author-description {
+    text-align: left;
+    font-size: .8rem; }
+    .author .author-description p {
+      margin: .5rem 0; }
 
-.author .author-thumb {
-  margin: 0 auto 1rem;
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  background-color: #eceff1;
-  background-size: cover;
-  background-position: center;
-}
+  
 
-.author .author-name {
-  margin-bottom: .5rem;
-  font-weight: 700;
-}
-
-.author .author-facts {
-  margin-bottom: 1rem;
-}
-
-.author .author-facts li {
-  display: inline;
-}
-
-.author .author-facts li a {
-  display: inline-block;
-  background-color: #eceff1;
-  width: 1.75rem;
-  height: 1.75rem;
-  line-height: 1.75rem;
-  text-align: center;
-  color: #333;
-  font-size: .8rem;
-  border-radius: 2px;
-}
-
-.author .author-facts li a:hover {
-  color: #fff;
-  background-color: #333;
-}
-
-.author .author-description {
-  text-align: left;
-  font-size: .8rem;
-}
-
-.author .author-description p {
-  margin: .5rem 0;
-}
 
 .thumb {
-  background-image: url(https://lbarasti.com/images/default.jpg);
+  background-image: url("https://lbarasti.com/images/default.jpg");
   background-size: cover;
   background-position: center;
 }
 
-
-
+  
 .thumb-d67d217ed6e72189359885e9e48f179a {
-  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+  background-image: url("https://lbarasti.com/src/kotlin_refactoring/00_header.png");
 }
+  
 
-
-
+  
 .thumb-f53907a89c330f8b996d611ad301fd8a {
-  background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
+  background-image: url("https://lbarasti.com/src/ruby_ractor/00_header.png");
 }
+  
 
-
-
+  
 .thumb-8eaea0461a73c8e51c8ff91c77df7ab0 {
-  background-image: url(https://lbarasti.com/src/json_beyond_basics/header.svg);
+  background-image: url("https://lbarasti.com/src/json_beyond_basics/header.svg");
 }
+  
 
-
-
+  
 .thumb-379cdddbc8bab5ea691bccb3059844eb {
-  background-image: url(https://lbarasti.com/src/byoidsl/00_header.png);
+  background-image: url("https://lbarasti.com/src/byoidsl/00_header.png");
 }
+  
 
-
-
+  
 .thumb-b0e4f6f597dd7100c40a783ccbe3c9f9 {
-  background-image: url(https://lbarasti.com/src/game_of_life/06_ex.png);
+  background-image: url("https://lbarasti.com/src/game_of_life/06_ex.png");
 }
+  
 
-
-
+  
 .thumb-b3e7b513b3545669e5ee97fd0b828bf4 {
-  background-image: url(https://lbarasti.com/src/select_statement/00_header.png);
+  background-image: url("https://lbarasti.com/src/select_statement/00_header.png");
 }
+  
 
-
-
+  
 .thumb-224ddb75e51dd0d04b1e71827aad96f9 {
-  background-image: url(https://lbarasti.com/src/intro_to_statistics/00_header.png);
+  background-image: url("https://lbarasti.com/src/intro_to_statistics/00_header.png");
 }
+  
 
-
-
+  
 .thumb-408d2f8615f913914e565d9a2093a3a4 {
-  background-image: url(https://lbarasti.com/src/url_checker_series/header.jpeg);
+  background-image: url("https://lbarasti.com/src/url_checker_series/header.jpeg");
 }
+  
 
-
-
+  
 .thumb-2f8501660be1b202f0622f4169e68f2a {
-  background-image: url(https://lbarasti.com/src/two_way_communication/00_header_3.png);
+  background-image: url("https://lbarasti.com/src/two_way_communication/00_header_3.png");
 }
+  
 
-
-
+  
 .thumb-a79bcaa63d57a1252d925acc5f4a4d76 {
-  background-image: url(https://lbarasti.com/images/crystal-symbol.png);
+  background-image: url("https://lbarasti.com/images/crystal-symbol.png");
 }
+  
 
 
 
@@ -843,36 +670,22 @@ article.sn > .article-body figcaption {
   margin-top: .5rem;
 }
 
-
-
     </style>
-
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', "UA-97340845-1", 'auto', {'useAmpClientId': true});
-ga('send', 'pageview');
-</script>
-
   </head>
   <body>
     <header class="l-header">
-      <div class="l-container">
-        <div class="logo">
+        <h1 class="logo">
           <a href="https://lbarasti.com/">lbarasti&#39;s blog</a>
-        </div>
+        </h1>
         
-
-      </div>
     </header>
 
     <main>
       <div class="l-container">
-        
-<div class="mrow">
-  <div class="mcol c8">
-
-    <article class="sn">
+        <div class="mrow">
+        <div class="mcol c8">
+          
+<article class="sn">
 
   <div class="thumb thumb-b3e7b513b3545669e5ee97fd0b828bf4"></div>
 
@@ -882,16 +695,19 @@ ga('send', 'pageview');
     <ul class="facts">
       <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2020-04-30T23:03:29JST">Apr 30, 2020</time></li>
       
+      
       <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.com/post/">POST</a></li>
+      
+      
       
     </ul>
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&text=5%20use%20cases%20for%20Crystal%27s%20select%20statement&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&t=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="はてなブックマーク" class="ht" target="_blank" rel="noopener nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&text=5%20use%20cases%20for%20Crystal%27s%20select%20statement&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="noopener nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&t=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Facebookでシェア" class="fb" target="_blank" rel="noopener nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Pocketに保存" class="pk" target="_blank" rel="noopener nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f" title="LINEでシェア" class="ln" target="_blank" rel="noopener nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
   </header>
@@ -906,132 +722,132 @@ ga('send', 'pageview');
 <p>You can use the <code>select</code> statement to process the first value coming from two or more channels. If we wrap the <code>select</code> in a loop, then we can use this to gracefully terminate a fiber consuming values from a channel.</p>
 <h4 id="1-graceful-termination">#1. Graceful termination</h4>
 <p>In the snippet below, the <em>echo</em> fiber loops over values coming from two channels: <code>values</code> and <code>terminate</code>.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
-  loop <span style="color:#66d9ef">do</span>
-    select
-    <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
-      puts v
-    <span style="color:#66d9ef">when</span> terminate<span style="color:#f92672">.</span>receive?
-      <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  loop <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    select
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>      puts v
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> terminate<span style="color:#f92672">.</span>receive?
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 <p>Notice the trailing question mark on <code>terminate.receive?</code> (line 6).
 This will capture the closure of the channel as a <code>nil</code> value.
 Whether the <code>terminate</code> channel is closed or receives a value, the loop will break, and the fiber will terminate.</p>
 <p>A concurrent fiber can politely ask for <em>echo</em> to terminate at any time with</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">terminate<span style="color:#f92672">.</span>close
-</code></pre></div><p><strong>Tip.</strong> <code>Channel#close</code> is non-blocking, meaning that the invoking fiber won&rsquo;t wait for the channel closure to be acknowledged by any receiving fiber. If you need a guarantee that the receiving fiber has completed its work, then you need to define a <a href="https://en.wikipedia.org/wiki/Fork%E2%80%93join_model">join point</a> between the two fibers. In the example below, the <em>echo</em> fiber notifies <em>main</em> of its termination by closing a <code>done</code> channel both fibers have a reference to (see Figure 1).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
-  loop <span style="color:#66d9ef">do</span>
-    select
-    <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
-      puts v
-    <span style="color:#66d9ef">when</span> terminate<span style="color:#f92672">.</span>receive?
-      <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-  done<span style="color:#f92672">.</span>close
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#75715e"># main fiber</span>
-terminate<span style="color:#f92672">.</span>close
-done<span style="color:#f92672">.</span>receive?
-</code></pre></div><p>You can check out the full code <a href="https://gist.github.com/lbarasti/4d36cb8608dc700a3f4a6273ae0d40c4">here</a> and try it for yourself 💻</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>terminate<span style="color:#f92672">.</span>close
+</span></span></code></pre></div><p><strong>Tip.</strong> <code>Channel#close</code> is non-blocking, meaning that the invoking fiber won&rsquo;t wait for the channel closure to be acknowledged by any receiving fiber. If you need a guarantee that the receiving fiber has completed its work, then you need to define a <a href="https://en.wikipedia.org/wiki/Fork%E2%80%93join_model">join point</a> between the two fibers. In the example below, the <em>echo</em> fiber notifies <em>main</em> of its termination by closing a <code>done</code> channel both fibers have a reference to (see Figure 1).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;echo&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  loop <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    select
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>      puts v
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> terminate<span style="color:#f92672">.</span>receive?
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  done<span style="color:#f92672">.</span>close
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># main fiber</span>
+</span></span><span style="display:flex;"><span>terminate<span style="color:#f92672">.</span>close
+</span></span><span style="display:flex;"><span>done<span style="color:#f92672">.</span>receive?
+</span></span></code></pre></div><p>You can check out the full code <a href="https://gist.github.com/lbarasti/4d36cb8608dc700a3f4a6273ae0d40c4">here</a> and try it for yourself &#x1f4bb;</p>
 <figure><img src="/src/select_statement/01_join_point.png"
-         alt="Figure 1. A diagram showing the interaction between a parent fiber (main) and child fiber (echo)."/><figcaption>
-            <p>Figure 1. The diagram shows the interaction between a parent fiber (main) and child fiber (echo), where the parent issues a termination request and then waits for the child termination on a separate channel. The dashed arrows represent the causal relation between non-blocking calls and blocking ones.</p>
-        </figcaption>
+    alt="Figure 1. A diagram showing the interaction between a parent fiber (main) and child fiber (echo)."><figcaption>
+      <p>Figure 1. The diagram shows the interaction between a parent fiber (main) and child fiber (echo), where the parent issues a termination request and then waits for the child termination on a separate channel. The dashed arrows represent the causal relation between non-blocking calls and blocking ones.</p>
+    </figcaption>
 </figure>
 
 <hr>
 <p>We&rsquo;ve seen how we can use <code>select</code> to receive on multiple channels. Now let&rsquo;s make a case for mixing <code>send</code> and <code>receive</code> in a <code>select</code> block.</p>
 <h4 id="2-retrieving-values-from-a-stateful-fiber">#2. Retrieving values from a stateful fiber</h4>
 <p>In the example below - full code <a href="https://gist.github.com/lbarasti/c73927c04002f3b5c475197be01de113">here</a> - we run a stateful fiber that aggregates values coming from a channel. Thanks to the <code>select</code> statement, the fiber supports sending the current cumulative sum to a concurrent fiber over the <code>result</code> channel, on demand.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;sum calculator&#34;</span>) <span style="color:#66d9ef">do</span>
-  sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
-  loop <span style="color:#66d9ef">do</span>
-    select
-    <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
-      sum <span style="color:#f92672">+=</span> v
-    <span style="color:#66d9ef">when</span> result<span style="color:#f92672">.</span>send sum
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>All it takes for another fiber to query the current aggregated value is the following.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">sum <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>receive
-</code></pre></div><p><strong>Challenge.</strong> Can you combine the two approaches shown above to gracefully terminate a stateful fiber?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;sum calculator&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>  loop <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    select
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> values<span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>      sum <span style="color:#f92672">+=</span> v
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> result<span style="color:#f92672">.</span>send sum
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>All it takes for another fiber to query the current aggregated value is the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>sum <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>receive
+</span></span></code></pre></div><p><strong>Challenge.</strong> Can you combine the two approaches shown above to gracefully terminate a stateful fiber?</p>
 <h2 id="receiving-and-sending-with-timeout">Receiving and sending with timeout</h2>
 <p>Since <a href="https://crystal-lang.org/2020/02/14/crystal-0.33.0-released.html">Crystal 0.33</a>, <code>select</code> supports a timeout action. This allows us to run custom logic when a timeout is triggered.</p>
 <p>A recurring use case is the one where you&rsquo;d like to retrieve some fresh data from a third-party API, but you&rsquo;d rather fall back to some cached data if the call takes too long. In other words, you&rsquo;re happy to sacrifice data freshness for user experience.</p>
 <h4 id="3-timeout-on-async-calls">#3. Timeout on async calls</h4>
 <p>Imagine you want to give users the latest available stock market information by calling a third-party API, provided that the API response comes in a timely fashion.</p>
 <p>Here is a function simulating an asynchronous call to an external API.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price_async</span>(sym : Symbol) : Channel(Float64)
-  Channel(Float64)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>ch<span style="color:#f92672">|</span>
-    spawn <span style="color:#66d9ef">do</span>
-      sleep rand
-      ch<span style="color:#f92672">.</span>send(rand)
-    <span style="color:#66d9ef">end</span>
-  }
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>And here is the corresponding synchronous function with timeout.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price</span>(sym : Symbol, max_wait : Time<span style="color:#f92672">::</span>Span)
-  select
-  <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> get_stock_price_async(sym)<span style="color:#f92672">.</span>receive
-    Cache<span style="color:#f92672">[</span>sym<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> v
-  <span style="color:#66d9ef">when</span> timeout max_wait
-    Cache<span style="color:#f92672">[</span>sym<span style="color:#f92672">]?</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Now our users won&rsquo;t ever have to wait longer than the set time span - unless we have a cache-miss, but let&rsquo;s face it, they would have dropped off anyway.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">get_stock_price(<span style="color:#e6db74">:tsla</span>, <span style="color:#ae81ff">0.5</span><span style="color:#f92672">.</span>seconds)
-</code></pre></div><p>You can play with the code above <a href="https://gist.github.com/lbarasti/dab35d474ff55c68fdbb985a1d6147c9">here</a> 📉</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price_async</span>(sym : Symbol) : Channel(Float64)
+</span></span><span style="display:flex;"><span>  Channel(Float64)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>ch<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>    spawn <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      sleep rand
+</span></span><span style="display:flex;"><span>      ch<span style="color:#f92672">.</span>send(rand)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>And here is the corresponding synchronous function with timeout.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stock_price</span>(sym : Symbol, max_wait : Time<span style="color:#f92672">::</span>Span)
+</span></span><span style="display:flex;"><span>  select
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">when</span> v <span style="color:#f92672">=</span> get_stock_price_async(sym)<span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>    Cache<span style="color:#f92672">[</span>sym<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> v
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">when</span> timeout max_wait
+</span></span><span style="display:flex;"><span>    Cache<span style="color:#f92672">[</span>sym<span style="color:#f92672">]?</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now our users won&rsquo;t ever have to wait longer than the set time span - unless we have a cache-miss, but let&rsquo;s face it, they would have dropped off anyway.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>get_stock_price(<span style="color:#e6db74">:tsla</span>, <span style="color:#ae81ff">0.5</span><span style="color:#f92672">.</span>seconds)
+</span></span></code></pre></div><p>You can play with the code above <a href="https://gist.github.com/lbarasti/dab35d474ff55c68fdbb985a1d6147c9">here</a> &#x1f4c9;</p>
 <hr>
 <p>Timeouts are also really useful when dealing with back-pressure in a pipeline, which leads us to&hellip;</p>
 <h4 id="4-easing-back-pressure">#4. Easing back-pressure</h4>
 <p>When sending values downstream in a data pipeline, a stage might block on the <code>send</code> operation for a non-negligible amount of time. This is an unequivocal symptom of the fact that the downstream stages are struggling with the work load. Ignoring this could be fatal: our entire pipeline could grind to a halt, leaving us no other option than a restart. Timeouts give us the opportunity to act upon such - hopefully transient - data congestions.</p>
 <p>In the <code>word_size</code> stage below, we assume that it&rsquo;s OK to drop messages whenever the downstream stage is taking too long to accept the value being sent. This should keep the pipeline responsive at all time and let it self-heal as soon as the work load becomes manageable again.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_size</span>(input : Channel(String), max_wait : Time<span style="color:#f92672">::</span>Span) : Channel(String)
-  Channel(String)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>ch<span style="color:#f92672">|</span> 
-    spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;word_size&#34;</span>) <span style="color:#66d9ef">do</span>
-      loop <span style="color:#66d9ef">do</span>
-        word <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>receive
-        select
-        <span style="color:#66d9ef">when</span> ch<span style="color:#f92672">.</span>send word<span style="color:#f92672">.</span>size
-        <span style="color:#66d9ef">when</span> timeout max_wait
-          log <span style="color:#e6db74">&#34;downstream channel full. Dropping </span><span style="color:#e6db74">#{</span>word<span style="color:#e6db74">}</span><span style="color:#e6db74">.&#34;</span>
-        <span style="color:#66d9ef">end</span>
-      <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">end</span>
-  }
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>To see this code in action, we&rsquo;ll start the pipeline&hellip;</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">random_word <span style="color:#f92672">=</span> <span style="color:#f92672">-&gt;</span> { <span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#f92672">*</span> rand(<span style="color:#ae81ff">10</span>) }
-output <span style="color:#f92672">=</span> word_size(producer(<span style="color:#e6db74">&#34;word_gen&#34;</span>, <span style="color:#f92672">&amp;</span>random_word), <span style="color:#ae81ff">0.7</span><span style="color:#f92672">.</span>seconds)
-</code></pre></div><p>&hellip; And simulate a slow consumer.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">loop <span style="color:#66d9ef">do</span>
-  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> rand
-  size <span style="color:#f92672">=</span> output<span style="color:#f92672">.</span>receive
-  log <span style="color:#e6db74">&#34;received word size </span><span style="color:#e6db74">#{</span>size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>You can find a working version of the code <a href="https://gist.github.com/lbarasti/8508999f4db57c3e9615b0265160162b">here</a>. The output will look similar to the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_size</span>(input : Channel(String), max_wait : Time<span style="color:#f92672">::</span>Span) : Channel(String)
+</span></span><span style="display:flex;"><span>  Channel(String)<span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap { <span style="color:#f92672">|</span>ch<span style="color:#f92672">|</span> 
+</span></span><span style="display:flex;"><span>    spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;word_size&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      loop <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        word <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>        select
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">when</span> ch<span style="color:#f92672">.</span>send word<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">when</span> timeout max_wait
+</span></span><span style="display:flex;"><span>          log <span style="color:#e6db74">&#34;downstream channel full. Dropping </span><span style="color:#e6db74">#{</span>word<span style="color:#e6db74">}</span><span style="color:#e6db74">.&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>To see this code in action, we&rsquo;ll start the pipeline&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>random_word <span style="color:#f92672">=</span> <span style="color:#f92672">-&gt;</span> { <span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#f92672">*</span> rand(<span style="color:#ae81ff">10</span>) }
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">=</span> word_size(producer(<span style="color:#e6db74">&#34;word_gen&#34;</span>, <span style="color:#f92672">&amp;</span>random_word), <span style="color:#ae81ff">0.7</span><span style="color:#f92672">.</span>seconds)
+</span></span></code></pre></div><p>&hellip; And simulate a slow consumer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>loop <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> rand
+</span></span><span style="display:flex;"><span>  size <span style="color:#f92672">=</span> output<span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>  log <span style="color:#e6db74">&#34;received word size </span><span style="color:#e6db74">#{</span>size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>You can find a working version of the code <a href="https://gist.github.com/lbarasti/8508999f4db57c3e9615b0265160162b">here</a>. The output will look similar to the following.</p>
 <pre tabindex="0"><code>word_size: successfully processed aaaaaaa
 main: received word size 7
 word_size: timed out while processing aaa
@@ -1046,16 +862,16 @@ This is often desirable, but there are cases where you are fine with the receive
 <p>Adding an <code>else</code> clause to a <code>select</code> lets us define some behaviour to be triggered whenever every other clause is blocked. This is often seen in loop / select blocks, when it makes sense for the fiber to run some background job - or chunks of it - while waiting for other clauses to unblock.</p>
 <p>Another use case for the <code>else</code> clause has to do with non-essential / optional channel operations.</p>
 <h4 id="5-heartbeats-and-diagnostic-messages">#5. Heartbeats and diagnostic messages</h4>
-<p>A technique to monitor fibers' health status is to have fibers sending <code>heartbeat</code> messages to a monitoring fiber via a dedicated channel. Such messages can give us insight into how our system is functioning, but are not essential for its execution - just like logging and tracing. Let&rsquo;s see how an <code>else</code> clause can express this semantics.</p>
+<p>A technique to monitor fibers&rsquo; health status is to have fibers sending <code>heartbeat</code> messages to a monitoring fiber via a dedicated channel. Such messages can give us insight into how our system is functioning, but are not essential for its execution - just like logging and tracing. Let&rsquo;s see how an <code>else</code> clause can express this semantics.</p>
 <p>Suppose we want a <em>worker</em> fiber to send a heartbeat to a global <code>Diagnostic</code> channel - with capacity zero, for simplicity - when it gets spawned.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-crystal" data-lang="crystal">spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;worker&#34;</span>) <span style="color:#66d9ef">do</span>
-  select
-  <span style="color:#66d9ef">when</span> Diagnostic<span style="color:#f92672">.</span>send Heartbeat<span style="color:#f92672">.</span>new
-  <span style="color:#66d9ef">else</span>
-    log <span style="color:#e6db74">&#34;skipped a heartbeat&#34;</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Thanks to the <code>else</code> clause, we&rsquo;ve achieved the following behaviour.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-crystal" data-lang="crystal"><span style="display:flex;"><span>spawn(<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;worker&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  select
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">when</span> Diagnostic<span style="color:#f92672">.</span>send Heartbeat<span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    log <span style="color:#e6db74">&#34;skipped a heartbeat&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Thanks to the <code>else</code> clause, we&rsquo;ve achieved the following behaviour.</p>
 <ul>
 <li>If the monitoring fiber is enabled and ready to receive, then the heartbeat will be sent.</li>
 <li>If the monitoring fiber is enabled but busy, then the heartbeat will be dropped.</li>
@@ -1073,55 +889,21 @@ This is often desirable, but there are cases where you are fine with the receive
 </ul>
 <hr>
 <p>This concludes our tour of Crystal&rsquo;s <code>select</code> use cases.
-If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample.com/select">these</a> golang examples - courtesy of gobyexample.com - and translate them to Crystal 📚</p>
-<h2 id="heading"></h2>
+If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample.com/select">these</a> golang examples - courtesy of gobyexample.com - and translate them to Crystal &#x1f4da;</p>
+<h2></h2>
 <p>Thanks for reading, I hope you found this useful. You can share your experiences with fibers and channels in the comments section below.</p>
-<p>If you&rsquo;d like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
-
-<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
-	 
-</style>
-<div id="mc_embed_signup">
-<form action="https://lbarasti.us4.list-manage.com/subscribe/post?u=2ae02926c5ced578d57958587&amp;id=e952a286b4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div id="mc_embed_signup_scroll">
-	<label for="mce-EMAIL"></label>
-	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-    
-    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2ae02926c5ced578d57958587_e952a286b4" tabindex="-1" value=""></div>
-    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-    </div>
-</form>
-</div>
-
-
 </div>
 
   <footer class="article-footer">
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&text=5%20use%20cases%20for%20Crystal%27s%20select%20statement&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&t=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="はてなブックマーク" class="ht" target="_blank" rel="noopener nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&text=5%20use%20cases%20for%20Crystal%27s%20select%20statement&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="noopener nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&t=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Facebookでシェア" class="fb" target="_blank" rel="noopener nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f&title=5%20use%20cases%20for%20Crystal%27s%20select%20statement" title="Pocketに保存" class="pk" target="_blank" rel="noopener nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fselect_statement%2f" title="LINEでシェア" class="ln" target="_blank" rel="noopener nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
-
-    <section class="footer">
-      <div>
-        <nav class="crumb">
-          <ol>
-            <li><a href="https://lbarasti.com/"><i class="fas fa-home" aria-hidden="true"></i>TOP</a></li>
-            
-            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.com/post/" itemprop="url"><span itemprop="title">POST</span></a></li>
-            
-            <li class="active">5 use cases for Crystal&#39;s select statement</li>
-          </ol>
-        </nav>
-      </div>
-    </section>
 
     
     
@@ -1132,21 +914,19 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
       <header>
         <a href="https://lbarasti.com/tags/">TAGS</a>
       </header>
-      <div>
-        <ul class="terms">
-          
-          <li><a href="https://lbarasti.com/tags/crystal/">crystal</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/select/">select</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/concurrency/">concurrency</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/fiber/">fiber</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/channel/">channel</a></li>
-          
-        </ul>
-      </div>
+      <ul class="terms">
+        
+        <li><a href="https://lbarasti.com/tags/crystal/">crystal</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/select/">select</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/concurrency/">concurrency</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/fiber/">fiber</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/channel/">channel</a></li>
+        
+      </ul>
     </section>
     
     
@@ -1155,34 +935,11 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 </article>
 
 
-    <div class="adj">
-      <div class="mrow">
-        
-        <div class="mcol c6">
-          <header>Previous Article</header>
-          <article class="lism">
-  <a href="https://lbarasti.com/post/intro_to_statistics/">
-    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
-
-    <div class="inner">
-      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
-
-      <ul class="facts sm">
-        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
-        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
-        
-      </ul>
-
-    </div>
-  </a>
-</article>
-
-        </div>
-        
-        
-        <div class="mcol c6">
-          <header>Next Article</header>
-          <article class="lism">
+<div class="adj mrow">
+  <div class="mcol c6">
+    <header>Next Article</header>
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/game_of_life/">
     <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
 
@@ -1191,7 +948,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="20007-06-20T18:52:41JST">Jun 20, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1199,14 +959,38 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-        </div>
-        
-      </div>
-    </div>
+    
+  </div>
+  <div class="mcol c6">
+    <header>Previous Article</header>
+    
+    <article class="lism">
+  <a href="https://lbarasti.com/post/intro_to_statistics/">
+    <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
 
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
+    <div class="inner">
+      <div class="title">Sampling random variables and plotting histograms in Crystal</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+    
+  </div>
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
     
     
     
@@ -1224,12 +1008,11 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-  </div>
-  <div class="mcol c4">
-    <aside class="l-sidebar">
 
-  <div class="sections sidebar">
-    
+        </div>
+        <div class="mcol c4">
+          <aside class="l-sidebar">
+            
 <section class="sidebar">
   <header>AUTHOR</header>
   <div>
@@ -1251,12 +1034,11 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 </section>
 
 
-    <section class="sidebar">
+            <section class="sidebar">
   <header>LATESTS</header>
-  <div>
-    <div class="articles sm">
-      
-      <article class="lism">
+  <div class="articles sm">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/kotlin_refactoring/">
     <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
 
@@ -1265,7 +1047,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1273,8 +1058,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1283,7 +1068,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-01-25T20:12:48JST">Jan 25, 2021</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1291,8 +1079,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/json_beyond_basics/">
     <div class="thumb thumb-8eaea0461a73c8e51c8ff91c77df7ab0"></div>
 
@@ -1301,7 +1089,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="21007-09-21T00:17:01JST">Sep 21, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1309,8 +1100,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/byoidsl/">
     <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
 
@@ -1319,7 +1110,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="7007-07-07T19:17:57JST">Jul 7, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1327,8 +1121,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/game_of_life/">
     <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
 
@@ -1337,7 +1131,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="20007-06-20T18:52:41JST">Jun 20, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1345,8 +1142,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/select_statement/">
     <div class="thumb thumb-b3e7b513b3545669e5ee97fd0b828bf4"></div>
 
@@ -1355,7 +1152,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="30007-04-30T23:03:29JST">Apr 30, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1363,8 +1163,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/intro_to_statistics/">
     <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
 
@@ -1373,7 +1173,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1381,8 +1184,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/url_checker_series/">
     <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
 
@@ -1391,7 +1194,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-01-12T22:12:33JST">Jan 12, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1399,8 +1205,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/two_way_comm_between_fibers/">
     <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
 
@@ -1409,7 +1215,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-11-25T22:12:33JST">Nov 25, 2019</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1417,8 +1226,8 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/fun_with_crystal/">
     <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
 
@@ -1427,7 +1236,10 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-04-12T10:12:33JST">Apr 12, 2017</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1435,32 +1247,44 @@ If you&rsquo;re hungry for more, you can go through <a href="https://gobyexample
   </a>
 </article>
 
-      
-    </div>
+    
   </div>
 </section>
 
-    
+            
 
-    
+            
 <section class="sidebar">
   <header>TAGS</header>
-  <div>
-    <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
-    </ul>
-  </div>
+  <ul class="terms">
+    
+    <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/game-of-life">game of life <span class="count">(2)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
+    
+  </ul>
 </section>
 
 
 
-  </div>
-
-</aside>
-
-  </div>
-</div>
-
+          </aside>
+        </div>
       </div>
     </main>
 

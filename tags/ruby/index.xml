@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ruby on lbarasti&#39;s blog</title>
+    <title>Ruby on lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/tags/ruby/</link>
-    <description>Recent content in ruby on lbarasti&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Ruby on lbarasti&#39;s blog</description>
+    <generator>Hugo</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 25 Jan 2021 20:12:48 +0000</lastBuildDate><atom:link href="https://lbarasti.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jan 2021 20:12:48 +0000</lastBuildDate>
+    <atom:link href="https://lbarasti.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Parallelism in Ruby with Ractors</title>
       <link>https://lbarasti.com/post/ruby_ractor/</link>
       <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/post/ruby_ractor/</guid>
       <description>Let&amp;rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.</description>
     </item>
-    
     <item>
       <title>Going faster with Crystal</title>
       <link>https://lbarasti.com/post/fun_with_crystal/</link>
       <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/fun_with_crystal/</guid>
       <description>When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?</description>
     </item>
-    
   </channel>
 </rss>

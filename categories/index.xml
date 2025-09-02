@@ -4,7 +4,8 @@
     <title>Categories on lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/categories/</link>
     <description>Recent content in Categories on lbarasti&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language><atom:link href="https://lbarasti.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en-gb</language>
+    <atom:link href="https://lbarasti.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

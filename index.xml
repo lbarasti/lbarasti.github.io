@@ -4,98 +4,79 @@
     <title>lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/</link>
     <description>Recent content on lbarasti&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate><atom:link href="https://lbarasti.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate>
+    <atom:link href="https://lbarasti.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kotlin refactoring: 8 tips from practice</title>
       <link>https://lbarasti.com/post/kotlin_refactoring/</link>
       <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/post/kotlin_refactoring/</guid>
       <description>Learning from the exercism.org community</description>
     </item>
-    
     <item>
       <title>Parallelism in Ruby with Ractors</title>
       <link>https://lbarasti.com/post/ruby_ractor/</link>
       <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/post/ruby_ractor/</guid>
       <description>Let&amp;rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.</description>
     </item>
-    
     <item>
       <title>Crystal JSON beyond the basics</title>
       <link>https://lbarasti.com/post/json_beyond_basics/</link>
       <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
-      
       <guid>https://lbarasti.com/post/json_beyond_basics/</guid>
       <description>In this article, we&amp;rsquo;ll look at how we can encode and decode Algebraic Data Types (ADTs) in Crystal using the json module and its powerful macros.</description>
     </item>
-    
     <item>
       <title>Building an interactive DSL</title>
       <link>https://lbarasti.com/post/byoidsl/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/byoidsl/</guid>
       <description>A companion to the live-coding series Build Your Own interactive DSL</description>
     </item>
-    
     <item>
       <title>Conway&#39;s Game of Life, sparse</title>
       <link>https://lbarasti.com/post/game_of_life/</link>
       <pubDate>Sat, 20 Jun 2020 18:52:41 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/game_of_life/</guid>
       <description>Yet another implementation of Conway&amp;rsquo;s Game of Life</description>
     </item>
-    
     <item>
       <title>5 use cases for Crystal&#39;s select statement</title>
       <link>https://lbarasti.com/post/select_statement/</link>
       <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/select_statement/</guid>
       <description>Usage of the select statement</description>
     </item>
-    
     <item>
       <title>Sampling random variables and plotting histograms in Crystal</title>
       <link>https://lbarasti.com/post/intro_to_statistics/</link>
       <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/intro_to_statistics/</guid>
       <description>In this article, we look into sampling value from well-known distributions.</description>
     </item>
-    
     <item>
       <title>Live coding a URL checker in Crystal</title>
       <link>https://lbarasti.com/post/url_checker_series/</link>
       <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/url_checker_series/</guid>
       <description>A series of live coding sessions exploring Crystal’s concurrency, with emphasis on Channels, Fibers and the CSP model, by means of building a simple terminal-based app.</description>
     </item>
-    
     <item>
       <title>2-way communication between Fibers</title>
       <link>https://lbarasti.com/post/two_way_comm_between_fibers/</link>
       <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/two_way_comm_between_fibers/</guid>
       <description>In this article, we show a simple pattern to achieve two-way communication between fibers, and then iterate over it, to make it more user-friendly.</description>
     </item>
-    
     <item>
       <title>Going faster with Crystal</title>
       <link>https://lbarasti.com/post/fun_with_crystal/</link>
       <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/fun_with_crystal/</guid>
       <description>When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?</description>
     </item>
-    
   </channel>
 </rss>

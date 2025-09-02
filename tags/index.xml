@@ -4,296 +4,233 @@
     <title>Tags on lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/tags/</link>
     <description>Recent content in Tags on lbarasti&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate><atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Jan 2023 15:53:48 +0000</lastBuildDate>
+    <atom:link href="https://lbarasti.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>12in23</title>
       <link>https://lbarasti.com/tags/12in23/</link>
       <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/12in23/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>kotlin</title>
+      <title>Kotlin</title>
       <link>https://lbarasti.com/tags/kotlin/</link>
       <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/kotlin/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>refactoring</title>
+      <title>Refactoring</title>
       <link>https://lbarasti.com/tags/refactoring/</link>
       <pubDate>Mon, 23 Jan 2023 15:53:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/refactoring/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>actors</title>
+      <title>Actors</title>
       <link>https://lbarasti.com/tags/actors/</link>
       <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/actors/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>concurrency</title>
+      <title>Concurrency</title>
       <link>https://lbarasti.com/tags/concurrency/</link>
       <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/concurrency/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>ractors</title>
+      <title>Ractors</title>
       <link>https://lbarasti.com/tags/ractors/</link>
       <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/ractors/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>ruby</title>
+      <title>Ruby</title>
       <link>https://lbarasti.com/tags/ruby/</link>
       <pubDate>Mon, 25 Jan 2021 20:12:48 +0000</pubDate>
-      
       <guid>https://lbarasti.com/tags/ruby/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>ADT</title>
       <link>https://lbarasti.com/tags/adt/</link>
       <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
-      
       <guid>https://lbarasti.com/tags/adt/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>crystal</title>
+      <title>Crystal</title>
       <link>https://lbarasti.com/tags/crystal/</link>
       <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
-      
       <guid>https://lbarasti.com/tags/crystal/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>json</title>
+      <title>Json</title>
       <link>https://lbarasti.com/tags/json/</link>
       <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
-      
       <guid>https://lbarasti.com/tags/json/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>macros</title>
+      <title>Macros</title>
       <link>https://lbarasti.com/tags/macros/</link>
       <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
-      
       <guid>https://lbarasti.com/tags/macros/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>serialization</title>
+      <title>Serialization</title>
       <link>https://lbarasti.com/tags/serialization/</link>
       <pubDate>Mon, 21 Sep 2020 00:17:01 +0200</pubDate>
-      
       <guid>https://lbarasti.com/tags/serialization/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>DSL</title>
       <link>https://lbarasti.com/tags/dsl/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/dsl/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>game of life</title>
+      <title>Game of Life</title>
       <link>https://lbarasti.com/tags/game-of-life/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/game-of-life/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>generics</title>
+      <title>Generics</title>
       <link>https://lbarasti.com/tags/generics/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/generics/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>interpreter</title>
+      <title>Interpreter</title>
       <link>https://lbarasti.com/tags/interpreter/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/interpreter/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>parser</title>
+      <title>Parser</title>
       <link>https://lbarasti.com/tags/parser/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/parser/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>parser-combinators</title>
+      <title>Parser-Combinators</title>
       <link>https://lbarasti.com/tags/parser-combinators/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/parser-combinators/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>REPL</title>
       <link>https://lbarasti.com/tags/repl/</link>
       <pubDate>Tue, 07 Jul 2020 19:17:57 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/repl/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>automata</title>
+      <title>Automata</title>
       <link>https://lbarasti.com/tags/automata/</link>
       <pubDate>Sat, 20 Jun 2020 18:52:41 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/automata/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>channel</title>
+      <title>Channel</title>
       <link>https://lbarasti.com/tags/channel/</link>
       <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/channel/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>fiber</title>
+      <title>Fiber</title>
       <link>https://lbarasti.com/tags/fiber/</link>
       <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/fiber/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>select</title>
+      <title>Select</title>
       <link>https://lbarasti.com/tags/select/</link>
       <pubDate>Thu, 30 Apr 2020 23:03:29 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/select/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>random</title>
+      <title>Random</title>
       <link>https://lbarasti.com/tags/random/</link>
       <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/random/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>statistical distributions</title>
+      <title>Statistical Distributions</title>
       <link>https://lbarasti.com/tags/statistical-distributions/</link>
       <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/statistical-distributions/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>statistics</title>
+      <title>Statistics</title>
       <link>https://lbarasti.com/tags/statistics/</link>
       <pubDate>Fri, 10 Apr 2020 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/statistics/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>live coding</title>
+      <title>Live Coding</title>
       <link>https://lbarasti.com/tags/live-coding/</link>
       <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/live-coding/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>series</title>
+      <title>Series</title>
       <link>https://lbarasti.com/tags/series/</link>
       <pubDate>Sun, 12 Jan 2020 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/series/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Actor</title>
       <link>https://lbarasti.com/tags/actor/</link>
       <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/actor/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>GenServer</title>
       <link>https://lbarasti.com/tags/genserver/</link>
       <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/genserver/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Server</title>
       <link>https://lbarasti.com/tags/server/</link>
       <pubDate>Mon, 25 Nov 2019 22:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/server/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>algorithms</title>
+      <title>Algorithms</title>
       <link>https://lbarasti.com/tags/algorithms/</link>
       <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/tags/algorithms/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

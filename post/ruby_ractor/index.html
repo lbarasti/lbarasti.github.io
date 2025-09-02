@@ -2,24 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-<meta name="pinterest" content="nopin">
+    <title>Parallelism in Ruby with Ractors - lbarasti&#39;s blog</title>
+    <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com"  crossorigin>
+<link rel="dns-prefetch preconnect" href="https://use.fontawesome.com"  crossorigin>
 <meta name="theme-color" content="#263238">
 
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.149.0">
 
 <link rel="apple-touch-icon" href="https://lbarasti.com/images/logo.png">
 
 
 
 
-    <link rel="canonical" href="https://lbarasti.com/post/ruby_ractor/">
-    
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-    
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Parallelism in Ruby with Ractors - lbarasti&#39;s blog</title>
     
 <meta name="description" content="Let&rsquo;s have a look at the new Ractor API introduced by Ruby 3.0.">
 
@@ -75,379 +71,318 @@
 </script>
 
 
+
+    <link rel="canonical" href="https://lbarasti.com/post/ruby_ractor/">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <style>
+
+  
 html {
   font-size: 18px;
-  background-color: rgba(236,239,241,.5);
-}
+  background-color: rgba(236, 239, 241, 0.5); }
 
 @media (max-width: 768px) {
   html {
-    font-size: 15px;
-  }
-}
+    font-size: 15px; } }
 
 body {
   color: #333;
   font-family: 'Roboto Slab','ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif;
-  font-feature-settings : "palt";
+  font-feature-settings: "palt";
   font-size: inherit;
   line-height: 1rem;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
-h1, h2, h3, h4, h5 ,h6 {
+h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1rem;
-  margin: 0;
-}
+  margin: 0; }
 
 hr {
   border: 0;
   border-top: 1px dashed #cfd8dc;
-  margin: 1rem 0;
-}
+  margin: 1rem 0; }
 
 p {
   margin: 0;
-  line-height: 1rem;
-}
+  line-height: 1rem; }
 
 a {
   color: #2196f3;
   text-decoration: none;
-  transition-duration: .3s;
-}
+  transition-duration: .3s; }
 
 ul, ol {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 table {
   border-collapse: collapse;
-}
+  display: block;
+  overflow-x: auto; }
 
 th, td {
   font-size: .8rem;
-  padding: .5rem;
-}
+  padding: .5rem; }
 
 tr {
-  border-bottom: 1px dashed #ddd;
-}
+  border-bottom: 1px dashed #ddd; }
 
 /* Layouts */
-main,
-aside {
-  display: block;
-}
+main, aside {
+  display: block; }
 
-main { padding: 1rem 0 3rem 0; }
-aside.h { padding: 3rem 0; }
-
-main.f,
-aside.f {
-  background-color: #333;
-  border-top: 2px dashed #fff;
-  border-bottom: 2px dashed #fff;
-}
+main {
+  padding: 1rem 0 3rem 0; }
 
 .l-container {
   position: relative;
   max-width: 68rem;
   margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.l-container.thin {
-  max-width: 44rem;
-}
+  padding: 0 1rem; }
+  .l-container.thin {
+    max-width: 44rem; }
 
 .l-header {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   padding: 1rem 0;
-  text-align: center;
-}
-
-.l-header .description {
-  margin-top: .5rem;
-  font-size: .8rem;
-}
+  text-align: center; }
+  .l-header .description {
+    margin-top: .5rem;
+    font-size: .8rem; }
 
 .l-footer {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   font-size: .6rem;
   font-weight: 700;
-  padding: 1rem 0;
-}
+  padding: 1rem 0; }
+
+.l-sidebar {
+  margin: -1rem 0; }
 
 @media (max-width: 768px) {
   .l-sidebar {
-    margin-top: 4rem;
-  }
-}
+    margin-top: 4rem; } }
 
 .mrow {
   margin: 0 -1rem;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 .mcol {
   box-sizing: border-box;
   float: left;
-  padding: 0 1rem;
-}
+  padding: 0 1rem; }
 
-.c6 { width: 50%; }
-.c4 { width: 33.26323833%; }
-.c8 { width: 66.66666%; }
+.c6 {
+  width: 50%; }
+
+.c4 {
+  width: 33.26323833%; }
+
+.c8 {
+  width: 66.66666%; }
 
 @media (max-width: 768px) {
   .mcol {
     width: 100%;
-    float: none;
-  }
-}
+    float: none; } }
 
 .logo a {
   font-size: 1.4rem;
   line-height: 1.5rem;
   font-weight: 700;
-  color: #333;
-}
+  color: #333; }
 
 .articles {
   margin: -1rem 0;
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 .articles.sm {
   margin: -.5rem 0;
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
 
 article {
   border-radius: 4px;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 article.li {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   height: 20rem;
   overflow: hidden;
-  margin: 1rem 0;
-}
+  margin: 1rem 0; }
 
 article.li > a {
   display: block;
-  color: #333;
-}
+  color: #333; }
 
 article.li .inner {
-  padding: 1rem;
-}
+  padding: 1rem; }
 
 article.li .thumb {
-  height: 8rem;
-}
+  height: 8rem; }
 
 article.li .title {
   color: #333;
   font-size: 1.2rem;
   line-height: 1.5rem;
-  margin-bottom: .5rem;
-}
+  margin-bottom: .5rem; }
 
 article.li .summary {
   font-size: .8rem;
   height: 6rem;
   overflow: hidden;
-  margin-top: 1rem;
-}
+  margin-top: 1rem; }
 
 article.li .summary::after {
-  content: '...';
-}
+  content: '...'; }
 
 article.lism {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  margin: .5rem 0;
-}
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin: .5rem 0; }
 
 article.lism::after {
   content: '';
   display: block;
-  clear: both;
-}
+  clear: both; }
 
 article.lism > a {
   display: block;
-  color: #333;
-}
+  color: #333; }
 
 article.lism .inner {
   display: table-cell;
   vertical-align: middle;
   height: 5rem;
-  padding: 0 .75rem;
-}
+  padding: 0 .75rem; }
 
 article.lism .thumb {
   width: 5rem;
   height: 5rem;
-  float: left;
-}
+  float: left; }
 
 article.lism .title {
   font-weight: 700;
   font-size: .8rem;
-  margin-bottom: .25rem;
-}
+  margin-bottom: .25rem; }
 
 article.sn {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  margin-bottom: 1rem;
-}
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem; }
 
 article.sn .thumb {
-  height: 20rem;
-}
+  height: 20rem; }
 
 @media (max-width: 768px) {
   article.sn .thumb {
-    height: 10rem;
-  }
-}
+    height: 10rem; } }
 
 article.sn > .article-header,
 article.sn > .article-body,
 article.sn .article-footer {
-  padding: 2rem;
-}
+  padding: 2rem; }
 
 article.sn > .article-body {
-  padding: 0 2rem;
-}
+  padding: 0 2rem; }
 
 @media (max-width: 768px) {
   article.sn > .article-header,
   article.sn > .article-body,
   article.sn .article-footer {
-    padding: 1rem;
-  }
-
+    padding: 1rem; }
   article.sn > .article-body {
-    padding: 0 1rem;
-  }
-}
+    padding: 0 1rem; } }
 
 article.sn > .article-header .title {
   font-size: 1.8rem;
   line-height: 2rem;
-  margin-bottom: .5rem;
-}
+  margin-bottom: .5rem; }
 
 @media (max-width: 768px) {
   article.sn > .article-header .title {
     font-size: 1.4rem;
-    line-height: 1.5rem;
-  }
-}
+    line-height: 1.5rem; } }
 
 article.sn > .article-header .facts {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 article.sn > .article-body {
-  margin-bottom: 1.5rem;
-}
+  margin-bottom: 1.5rem; }
 
 article.sn > .article-body h2 {
   border-bottom: .25rem solid #333;
   font-size: 1.2rem;
   line-height: 1.5rem;
   margin: 1.5rem 0;
-  padding: .5rem 0;
-}
+  padding: .5rem 0; }
 
 article.sn > .article-body h3 {
   border-left: .5rem solid #333;
   line-height: 1.5rem;
   margin: 1.5rem 0;
-  padding: .125rem .5rem;
-}
+  padding: .125rem .5rem; }
 
 article.sn > .article-body ul,
 article.sn > .article-body ol {
   margin: 1.5rem 0;
-  padding-left: 1.5rem;
-}
+  padding-left: 1.5rem; }
 
 article.sn > .article-body li {
   padding-bottom: .5rem;
-  line-height: 1.5rem;
-}
+  line-height: 1.5rem; }
 
 article.sn > .article-body li:last-child {
-  padding-bottom: 0;
-}
+  padding-bottom: 0; }
+
 article.sn > .article-body p {
   margin: 1rem 0;
-  line-height: 1.5rem;
-}
+  line-height: 1.5rem; }
 
 article.sn > .article-body strong,
 article.sn > .article-body em {
   font-style: normal;
-  font-weight: 700;
-}
+  font-weight: 700; }
 
 article.sn > .article-body strong {
-  box-shadow: 0 -.5rem 0 0 #ffc107 inset;
-}
+  box-shadow: 0 -.5rem 0 0 #ffc107 inset; }
 
 article.sn > .article-body em {
-  color: #8bc34a;
-}
+  color: #8bc34a; }
 
 article.sn > .article-body code,
 article.sn > .article-body pre {
   font-family: Menlo, Consolas, monospace;
-  font-size: .7rem;
-}
+  font-size: .7rem; }
 
 article.sn > .article-body pre {
   background-color: #333;
   color: #fff;
   line-height: 1rem;
   margin: 1.5rem -2rem;
-  overflow: auto;
-}
+  overflow: auto; }
 
 @media (max-width: 768px) {
   article.sn > .article-body pre {
-    margin: 1.5rem -1rem;
-  }
-}
+    margin: 1.5rem -1rem; } }
 
 article.sn > .article-body pre > code {
   display: block;
-  padding: 1rem 2rem;
-}
+  padding: 1rem 2rem; }
 
 @media (max-width: 768px) {
   article.sn > .article-body pre > code {
-    padding: 1rem;
-  }
-}
+    padding: 1rem; } }
 
 article.sn > .article-body p code {
   background-color: #eceff1;
@@ -455,383 +390,275 @@ article.sn > .article-body p code {
   border-radius: 4px;
   margin: 0 .25rem;
   padding: .375rem;
-  white-space: nowrap;
-}
+  white-space: nowrap; }
 
 article.sn > .article-body blockquote {
   position: relative;
   border-left: .25rem solid #333;
   font-size: .8rem;
   padding: .125rem 1rem;
-  margin: 1.5rem 0;
-}
+  margin: 1.5rem 0; }
 
 @media (max-width: 768px) {
   article.sn > .article-body blockquote {
-    font-size: 1rem;
-  }
-}
+    font-size: 1rem; } }
 
 article.sn > .article-body blockquote p {
   margin: .5rem 0;
-  line-height: 1rem;
-}
+  line-height: 1rem; }
 
 article.sn > .article-body figure {
-  margin: 1.5rem 0;
-}
+  margin: 1.5rem 0; }
 
 article.sn > .article-body img,
 article.sn > .article-body figure img,
 article.sn > .article-body figure amp-img {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  max-width: 100%;
-}
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  max-width: 100%; }
 
 article.sn > .article-body figcaption {
   color: #cfd8dc;
   font-size: .8rem;
   font-weight: 700;
-  margin-top: .5rem;
-}
+  margin-top: .5rem; }
 
 .facts li {
   display: inline;
   font-size: .8rem;
-  margin-right: 1rem;
-}
+  margin-right: 1rem; }
 
 .facts i {
   color: #cfd8dc;
-  margin-right: .5em;
-}
+  margin-right: .5em; }
 
 .facts.sm li {
-  font-size: .7rem;
-}
-
-.sections.sidebar {
-  margin: -1rem 0;
-}
-
-.sections.footer {
-  margin: -1rem 0;
-}
+  font-size: .7rem; }
 
 section.sidebar {
-  margin: 2rem 0;
-}
-
-section.sidebar > header {
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-align: center;
-  margin: 1.5rem 0;
-}
+  margin: 2rem 0; }
+  section.sidebar > header {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    margin: 1.5rem 0; }
 
 section.footer {
-  margin: 1rem 0;
-}
-
-section.footer > header {
-  font-size: .8rem;
-  margin: .5rem 0;
-}
-
-section.footer > header::before {
-  content: "- ";
-}
-
-section.footer > header a {
-  font-weight: 700;
-  color: #333;
-  text-decoration: underline;
-}
+  margin: 1rem 0; }
+  section.footer > header {
+    font-size: .8rem;
+    margin: .5rem 0; }
+    section.footer > header::before {
+      content: "- "; }
+    section.footer > header a {
+      font-weight: 700;
+      color: #333;
+      text-decoration: underline; }
 
 .terms {
-  margin: -.25rem;
-}
-
-.terms li {
-  display: inline-block;
-}
-
-.terms a {
-  display: block;
-  float: left;
-  background-color: #333;
-  border-radius: 4px;
-  color: #fff;
-  font-size: .7rem;
-  margin: .25rem;
-  padding: 0 .75rem;
-  line-height: 1.75rem;
-}
+  margin: -.25rem; }
+  .terms li {
+    display: inline-block; }
+  .terms a {
+    display: block;
+    float: left;
+    background-color: #333;
+    border-radius: 4px;
+    color: #fff;
+    font-size: .7rem;
+    margin: .25rem;
+    padding: 0 .75rem;
+    line-height: 1.75rem; }
 
 .paging {
   text-align: center;
-  padding: 1rem 0;
-}
-
-.paging a {
-  display: inline-block;
-  background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  border-radius: 4px;
-  color: #333;
-  padding: 0 1rem;
-  line-height: 3rem;
-}
+  padding: 1rem 0; }
+  .paging a {
+    display: inline-block;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    color: #333;
+    padding: 0 1rem;
+    line-height: 3rem; }
 
 .page-title {
   text-align: center;
-  margin: 1rem 0;
-}
-
-.page-title::after {
-  content: '';
-  display: block;
-  border-bottom: .25rem solid #333;
-  width: 3rem;
-  margin: 1.5rem auto;
-}
-
-.page-title > .title {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-}
-
-/* Parts:breadcrumb */
-.crumb ol {
-  text-overflow: ellipsis;
-  color: #cfd8dc;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.crumb li {
-  display: inline;
-  font-size: .8rem;
-}
-
-.crumb li::after {
-  content: '›';
-  margin: 0 .25rem 0 .5rem;
-}
-
-.crumb li:last-child::after {
-  content: '';
-}
-
-.crumb a {
-  color: #cfd8dc;
-}
-
-.crumb i {
-  margin-right: .5em;
-}
+  margin: 1rem 0; }
+  .page-title::after {
+    content: '';
+    display: block;
+    border-bottom: .25rem solid #333;
+    width: 3rem;
+    margin: 1.5rem auto; }
+  .page-title > .title {
+    font-size: 1.2rem;
+    line-height: 1.5rem; }
 
 .share {
-  padding: 0;
-}
-
-.share a {
-  display: inline-block;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  min-width: 1rem;
-  height: 2rem;
-  border-radius: 4px;
-  color: #333;
-  font-size: .8rem;
-  font-weight: 700;
-  line-height: 2rem;
-  text-align: center;
-  padding: 0 .5rem;
-}
+  padding: 0; }
+  .share a {
+    display: inline-block;
+    box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+    min-width: 1rem;
+    height: 2rem;
+    border-radius: 4px;
+    color: #333;
+    font-size: .8rem;
+    font-weight: 700;
+    line-height: 2rem;
+    text-align: center;
+    padding: 0 .5rem; }
 
 .adj article.lism {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 .adj header {
   font-weight: 700;
-  font-size: .8rem;
-}
+  font-size: .8rem; }
 
 .toc {
   padding: 0 2rem;
-}
+  margin: 1rem 0; }
+  .toc nav > ul {
+    background-color: #eceff1;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: .8rem;
+    padding: .5rem 1rem;
+    word-break: break-all;
+    list-style: none; }
+  .toc ul {
+    padding: 0; }
+    .toc ul ul {
+      padding-left: 1rem; }
+      .toc ul ul > li {
+        font-weight: 700;
+        margin: .5rem 0;
+        list-style-type: decimal; }
+      .toc ul ul ul {
+        padding-left: 1rem; }
+        .toc ul ul ul > li {
+          list-style-type: disc;
+          font-weight: 500; }
+  .toc li {
+    color: #90a4ae; }
 
 @media (max-width: 768px) {
   .toc {
-    padding: 0 1rem;
-  }
-}
+    padding: 0 1rem; } }
 
-.toc {
-  margin: 1rem 0;
-}
 
-.toc nav>ul {
-  background-color: #eceff1;
-  border-radius: 4px;
-  display: inline-block;
-  font-size: .8rem;
-  padding: .5rem 1rem;
-  word-break: break-all;
-  list-style: none;
-}
 
-.toc ul {
-  padding: 0;
-}
-
-.toc ul ul {
-  padding-left: 1rem;
-}
-
-.toc ul ul ul {
-  padding-left: 1rem;
-}
-
-.toc li {
-  color: #90a4ae;
-}
-
-.toc ul ul>li {
-  font-weight: 700;
-  margin: .5rem 0;
-  list-style-type: decimal;
-}
-
-.toc ul ul ul>li {
-  list-style-type: disc;
-  font-weight: 500;
-}
-
-.author {
+  
+    .author {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px rgba(63, 63, 68, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
   padding: 1rem;
   border-radius: 4px;
-  text-align: center;
-}
+  text-align: center; }
+  .author .author-thumb {
+    margin: 0 auto 1rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background-color: #eceff1;
+    background-size: cover;
+    background-position: center; }
+  .author .author-name {
+    margin-bottom: .5rem;
+    font-weight: 700; }
+  .author .author-facts {
+    margin-bottom: 1rem; }
+    .author .author-facts li {
+      display: inline; }
+      .author .author-facts li a {
+        display: inline-block;
+        background-color: #eceff1;
+        width: 1.75rem;
+        height: 1.75rem;
+        line-height: 1.75rem;
+        text-align: center;
+        color: #333;
+        font-size: .8rem;
+        border-radius: 2px; }
+        .author .author-facts li a:hover {
+          color: #fff;
+          background-color: #333; }
+  .author .author-description {
+    text-align: left;
+    font-size: .8rem; }
+    .author .author-description p {
+      margin: .5rem 0; }
 
-.author .author-thumb {
-  margin: 0 auto 1rem;
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  background-color: #eceff1;
-  background-size: cover;
-  background-position: center;
-}
+  
 
-.author .author-name {
-  margin-bottom: .5rem;
-  font-weight: 700;
-}
-
-.author .author-facts {
-  margin-bottom: 1rem;
-}
-
-.author .author-facts li {
-  display: inline;
-}
-
-.author .author-facts li a {
-  display: inline-block;
-  background-color: #eceff1;
-  width: 1.75rem;
-  height: 1.75rem;
-  line-height: 1.75rem;
-  text-align: center;
-  color: #333;
-  font-size: .8rem;
-  border-radius: 2px;
-}
-
-.author .author-facts li a:hover {
-  color: #fff;
-  background-color: #333;
-}
-
-.author .author-description {
-  text-align: left;
-  font-size: .8rem;
-}
-
-.author .author-description p {
-  margin: .5rem 0;
-}
 
 .thumb {
-  background-image: url(https://lbarasti.com/images/default.jpg);
+  background-image: url("https://lbarasti.com/images/default.jpg");
   background-size: cover;
   background-position: center;
 }
 
-
-
+  
 .thumb-d67d217ed6e72189359885e9e48f179a {
-  background-image: url(https://lbarasti.com/src/kotlin_refactoring/00_header.png);
+  background-image: url("https://lbarasti.com/src/kotlin_refactoring/00_header.png");
 }
+  
 
-
-
+  
 .thumb-f53907a89c330f8b996d611ad301fd8a {
-  background-image: url(https://lbarasti.com/src/ruby_ractor/00_header.png);
+  background-image: url("https://lbarasti.com/src/ruby_ractor/00_header.png");
 }
+  
 
-
-
+  
 .thumb-8eaea0461a73c8e51c8ff91c77df7ab0 {
-  background-image: url(https://lbarasti.com/src/json_beyond_basics/header.svg);
+  background-image: url("https://lbarasti.com/src/json_beyond_basics/header.svg");
 }
+  
 
-
-
+  
 .thumb-379cdddbc8bab5ea691bccb3059844eb {
-  background-image: url(https://lbarasti.com/src/byoidsl/00_header.png);
+  background-image: url("https://lbarasti.com/src/byoidsl/00_header.png");
 }
+  
 
-
-
+  
 .thumb-b0e4f6f597dd7100c40a783ccbe3c9f9 {
-  background-image: url(https://lbarasti.com/src/game_of_life/06_ex.png);
+  background-image: url("https://lbarasti.com/src/game_of_life/06_ex.png");
 }
+  
 
-
-
+  
 .thumb-b3e7b513b3545669e5ee97fd0b828bf4 {
-  background-image: url(https://lbarasti.com/src/select_statement/00_header.png);
+  background-image: url("https://lbarasti.com/src/select_statement/00_header.png");
 }
+  
 
-
-
+  
 .thumb-224ddb75e51dd0d04b1e71827aad96f9 {
-  background-image: url(https://lbarasti.com/src/intro_to_statistics/00_header.png);
+  background-image: url("https://lbarasti.com/src/intro_to_statistics/00_header.png");
 }
+  
 
-
-
+  
 .thumb-408d2f8615f913914e565d9a2093a3a4 {
-  background-image: url(https://lbarasti.com/src/url_checker_series/header.jpeg);
+  background-image: url("https://lbarasti.com/src/url_checker_series/header.jpeg");
 }
+  
 
-
-
+  
 .thumb-2f8501660be1b202f0622f4169e68f2a {
-  background-image: url(https://lbarasti.com/src/two_way_communication/00_header_3.png);
+  background-image: url("https://lbarasti.com/src/two_way_communication/00_header_3.png");
 }
+  
 
-
-
+  
 .thumb-a79bcaa63d57a1252d925acc5f4a4d76 {
-  background-image: url(https://lbarasti.com/images/crystal-symbol.png);
+  background-image: url("https://lbarasti.com/images/crystal-symbol.png");
 }
+  
 
 
 
@@ -843,36 +670,22 @@ article.sn > .article-body figcaption {
   margin-top: .5rem;
 }
 
-
-
     </style>
-
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', "UA-97340845-1", 'auto', {'useAmpClientId': true});
-ga('send', 'pageview');
-</script>
-
   </head>
   <body>
     <header class="l-header">
-      <div class="l-container">
-        <div class="logo">
+        <h1 class="logo">
           <a href="https://lbarasti.com/">lbarasti&#39;s blog</a>
-        </div>
+        </h1>
         
-
-      </div>
     </header>
 
     <main>
       <div class="l-container">
-        
-<div class="mrow">
-  <div class="mcol c8">
-
-    <article class="sn">
+        <div class="mrow">
+        <div class="mcol c8">
+          
+<article class="sn">
 
   <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -882,16 +695,19 @@ ga('send', 'pageview');
     <ul class="facts">
       <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="2021-01-25T20:12:48JST">Jan 25, 2021</time></li>
       
+      
       <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="https://lbarasti.com/post/">POST</a></li>
+      
+      
       
     </ul>
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Parallelism%20in%20Ruby%20with%20Ractors&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Parallelism%20in%20Ruby%20with%20Ractors" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="はてなブックマーク" class="ht" target="_blank" rel="noopener nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Parallelism%20in%20Ruby%20with%20Ractors&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="noopener nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Parallelism%20in%20Ruby%20with%20Ractors" title="Facebookでシェア" class="fb" target="_blank" rel="noopener nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="Pocketに保存" class="pk" target="_blank" rel="noopener nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f" title="LINEでシェア" class="ln" target="_blank" rel="noopener nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
   </header>
@@ -901,9 +717,9 @@ ga('send', 'pageview');
   <div class="article-body"><h2 id="introduction">Introduction</h2>
 <p>Christmas 2020 came with quite an exceptional gift: a major Ruby release. Among the most anticipated features of this new version is the experimental support for actor-based concurrency and <em>parallelism</em> in the shape of Ractors: light-weight concurrency primitives that share no state and communicate with each other by passing messages.</p>
 <figure><img src="/src/ruby_ractor/03_patterns.png"
-         alt="Figure 1. Four diagrams, one on each corner. The top left corner shows how to create a Ractor: a = Ractor.new &amp;block. The top right corner shows the send / receive pattern, where actor a sends a message to actor b (b.send(msg)) and actor b receives the message with Ractor.receive. The bottom end of the picture shows two possible interleaving of events that could take place when using the yield / take pattern. In the bottom left corner we have actor a yielding a message with Ractor.yield(msg), and actor b then calling a.take and receiving msg straight away. In the bottom right corner we have actor b taking on actor a while no message is available. This blocks b until actor a yields a message."/><figcaption>
-            <p>Figure 1. A visual overview of the Ractor API. The API supports both pull and push communication patterns between actors.</p>
-        </figcaption>
+    alt="Figure 1. Four diagrams, one on each corner. The top left corner shows how to create a Ractor: a = Ractor.new &amp;block. The top right corner shows the send / receive pattern, where actor a sends a message to actor b (b.send(msg)) and actor b receives the message with Ractor.receive. The bottom end of the picture shows two possible interleaving of events that could take place when using the yield / take pattern. In the bottom left corner we have actor a yielding a message with Ractor.yield(msg), and actor b then calling a.take and receiving msg straight away. In the bottom right corner we have actor b taking on actor a while no message is available. This blocks b until actor a yields a message."><figcaption>
+      <p>Figure 1. A visual overview of the Ractor API. The API supports both pull and push communication patterns between actors.</p>
+    </figcaption>
 </figure>
 
 <p>In classic Ruby style, the Ractor API comes with a set of utilities that make achieving simple things trivial, while also allowing power users to build more complex systems.</p>
@@ -916,43 +732,43 @@ ga('send', 'pageview');
 <p>You can check out the <a href="https://github.com/ruby/ruby/blob/master/doc/ractor.md">official readme</a> for some simple examples and to further explore the API.</p>
 <p>In this article, we&rsquo;ll focus on defining some reusable components to implement the parallel producer(s) / consumer(s) architecture shown in Figure 2.</p>
 <figure><img src="/src/ruby_ractor/02_prod_cons.png"
-         alt="The picture shows a diagram. On the left-hand side, three circles represent sources of data generating data in parallel. We call these producers. In the middle, a circle represents a buffer. All data coming from the sources converges into the buffer. On the right-hand side, four circles represent workers. These take work off of the buffer and process it in parallel."/><figcaption>
-            <p>Figure 2. A diagram representing the parallel data flow between data sources and workers in a producer / consumer architecture.</p>
-        </figcaption>
+    alt="The picture shows a diagram. On the left-hand side, three circles represent sources of data generating data in parallel. We call these producers. In the middle, a circle represents a buffer. All data coming from the sources converges into the buffer. On the right-hand side, four circles represent workers. These take work off of the buffer and process it in parallel."><figcaption>
+      <p>Figure 2. A diagram representing the parallel data flow between data sources and workers in a producer / consumer architecture.</p>
+    </figcaption>
 </figure>
 
 <h2 id="building-blocks">Building blocks</h2>
 <h4 id="source">Source</h4>
 <p>Let&rsquo;s define a function <code>source</code> that returns an actor producing values in a loop and sending them to a target actor.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">source</span>(generator, <span style="color:#e6db74">target</span>:, name: <span style="color:#66d9ef">nil</span>)
-  <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new(generator, target, name: name) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>generator, target<span style="color:#f92672">|</span>
-    <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
-      target<span style="color:#f92672">.</span>send generator<span style="color:#f92672">.</span>next
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Note how we can make a source stateful by encapsulating state in the <code>generator</code> object passed in at initialisation time.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">source</span>(generator, <span style="color:#e6db74">target</span>:, name: <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new(generator, target, name: name) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>generator, target<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      target<span style="color:#f92672">.</span>send generator<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Note how we can make a source stateful by encapsulating state in the <code>generator</code> object passed in at initialisation time.</p>
 <h4 id="buffer">Buffer</h4>
 <p>The <code>buffer</code> function returns an actor that yields each message received in its mailbox for any actor to take.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buffer</span>
-  <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
-    <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
-      <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>yield <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>receive
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p><strong>Closer look.</strong> <code>Ractor.yield</code> is a blocking call, meaning messages will keep on queuing up in the buffer actor&rsquo;s mailbox while it waits for another actor to <code>take</code> the yielded message. That&rsquo;s OK, as the capacity of an actor&rsquo;s mailbox is quite large, but heads up: although the mailbox can grow arbitrarily on paper, its size is still constrained by the host machine&rsquo;s memory. If the rate of incoming messages for an actor consistently exceeds the rate at which the actor consumes them, then your application will eventually run out of memory and crash 😱</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buffer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>yield <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>receive
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Closer look.</strong> <code>Ractor.yield</code> is a blocking call, meaning messages will keep on queuing up in the buffer actor&rsquo;s mailbox while it waits for another actor to <code>take</code> the yielded message. That&rsquo;s OK, as the capacity of an actor&rsquo;s mailbox is quite large, but heads up: although the mailbox can grow arbitrarily on paper, its size is still constrained by the host machine&rsquo;s memory. If the rate of incoming messages for an actor consistently exceeds the rate at which the actor consumes them, then your application will eventually run out of memory and crash &#x1f631;</p>
 <h4 id="worker">Worker</h4>
 <p>Our <code>worker</code> function takes a source actor and a behaviour object as an argument.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">worker</span>(behaviour, <span style="color:#e6db74">source</span>:, name: <span style="color:#66d9ef">nil</span>)
-  <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new(behaviour, source, name: name) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>behaviour, source<span style="color:#f92672">|</span>
-    state <span style="color:#f92672">=</span> behaviour<span style="color:#f92672">.</span>init_state
-    <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
-      state <span style="color:#f92672">=</span> behaviour<span style="color:#f92672">.</span>receive(source<span style="color:#f92672">.</span>take, state)
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p><code>behaviour</code> defines the initial state of the actor and exposes a <code>receive</code> method that will transform a received message and the current state of the actor into its next state.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">worker</span>(behaviour, <span style="color:#e6db74">source</span>:, name: <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Ractor</span><span style="color:#f92672">.</span>new(behaviour, source, name: name) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>behaviour, source<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>    state <span style="color:#f92672">=</span> behaviour<span style="color:#f92672">.</span>init_state
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">loop</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      state <span style="color:#f92672">=</span> behaviour<span style="color:#f92672">.</span>receive(source<span style="color:#f92672">.</span>take, state)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><code>behaviour</code> defines the initial state of the actor and exposes a <code>receive</code> method that will transform a received message and the current state of the actor into its next state.</p>
 <hr>
 <p>With this little code, we have enough infrastructure to implement a parallel producer(s) / consumer(s) architecture.</p>
 <p><strong>Closer look.</strong> Note how the implementation above</p>
@@ -964,64 +780,64 @@ ga('send', 'pageview');
 <h2 id="case-study-parallel-primality-test">Case study: parallel primality test</h2>
 <p>Let&rsquo;s build an application where randomly generated numbers are tested for primality in a parallel fashion. We&rsquo;ll rely on the built in <code>Integer#prime?</code> method to keep the complexity to a minimum (<a href="https://docs.ruby-lang.org/en/3.0.0/Integer.html#method-i-prime-3F">docs</a>).</p>
 <p>First, we define a module to generate random integer values in a given range</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> RandInt
-  <span style="color:#66d9ef">MAX_INT</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">**</span><span style="color:#ae81ff">23</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">next</span>
-    sleep rand <span style="color:#f92672">*</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span>
-    rand(<span style="color:#66d9ef">MAX_INT</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> RandInt
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">MAX_INT</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">**</span><span style="color:#ae81ff">23</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">next</span>
+</span></span><span style="display:flex;"><span>    sleep rand <span style="color:#f92672">*</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    rand(<span style="color:#66d9ef">MAX_INT</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 <p>Note how we&rsquo;ve introduced a random delay on line 4, to avoid flooding the buffer&rsquo;s mailbox.</p>
 <p><strong>Challenge.</strong> Can you guess what happens if you remove the <code>sleep</code> statement?</p>
-<p>Now that we have a generator, we can think about the workers' <code>behaviour</code>. We&rsquo;ll make it so that every worker actor encapsulates its own cache mapping integers to a boolean indicating whether they are prime. This might seem somewhat contrived, as ideally actors would share the same cache to avoid repeating work done by other workers, but in practice you&rsquo;ll find this is a pretty common trade-off that keeps complexity low while providing some caching benefit.<br>
+<p>Now that we have a generator, we can think about the workers&rsquo; <code>behaviour</code>. We&rsquo;ll make it so that every worker actor encapsulates its own cache mapping integers to a boolean indicating whether they are prime. This might seem somewhat contrived, as ideally actors would share the same cache to avoid repeating work done by other workers, but in practice you&rsquo;ll find this is a pretty common trade-off that keeps complexity low while providing some caching benefit.<br>
 This also demonstrates a common approach to actor state management.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PrimeTest
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">init_state</span>
-    <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new <span style="color:#75715e"># cache</span>
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span>(msg, cache)
-    <span style="color:#66d9ef">case</span> <span style="color:#f92672">[</span>msg, cache<span style="color:#f92672">[</span>msg<span style="color:#f92672">]]</span>
-    <span style="color:#66d9ef">in</span> m, <span style="color:#66d9ef">nil</span>
-      cache<span style="color:#f92672">[</span>m<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> m<span style="color:#f92672">.</span>prime?
-    <span style="color:#66d9ef">in</span> m, is_prime
-      puts <span style="color:#e6db74">&#34;cache hit for </span><span style="color:#e6db74">#{</span>m<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-    <span style="color:#66d9ef">end</span>
-    cache
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> PrimeTest
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">init_state</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new <span style="color:#75715e"># cache</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span>(msg, cache)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#f92672">[</span>msg, cache<span style="color:#f92672">[</span>msg<span style="color:#f92672">]]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">in</span> m, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>      cache<span style="color:#f92672">[</span>m<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> m<span style="color:#f92672">.</span>prime?
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">in</span> m, is_prime
+</span></span><span style="display:flex;"><span>      puts <span style="color:#e6db74">&#34;cache hit for </span><span style="color:#e6db74">#{</span>m<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    cache
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 <p>The code on line 7 is a good showcase of Ruby&rsquo;s pattern matching functionality.</p>
@@ -1031,31 +847,31 @@ This also demonstrates a common approach to actor state management.</p>
 </ul>
 <p>Remember that <code>receive</code> must return the up-to-date cache (line 13), so that the worker actor can update its internal state.</p>
 <p>OK, we now have all the modules we need to put a producer / consumer system together. Let&rsquo;s start with a single source and a single worker.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bfr <span style="color:#f92672">=</span> buffer
-
-source(<span style="color:#66d9ef">RandInt</span>, <span style="color:#e6db74">target</span>: bfr)
-
-worker(<span style="color:#66d9ef">PrimeTest</span>, <span style="color:#e6db74">source</span>: bfr)
-</code></pre></div><p>As easy as that. Note how we have to define the <code>buffer</code> first, as that needs to be known to both producers and consumers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bfr <span style="color:#f92672">=</span> buffer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>source(<span style="color:#66d9ef">RandInt</span>, <span style="color:#e6db74">target</span>: bfr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>worker(<span style="color:#66d9ef">PrimeTest</span>, <span style="color:#e6db74">source</span>: bfr)
+</span></span></code></pre></div><p>As easy as that. Note how we have to define the <code>buffer</code> first, as that needs to be known to both producers and consumers.</p>
 <p>If you try running the code now, you&rsquo;ll get an underwhelming result: the application will terminate immediately. This is because a Ruby 3.0 application will terminate as soon as the <em>main</em> Ractor terminates. The main Ractor is the first actor invoked by the interpreter (<a href="https://github.com/ruby/ruby/blob/master/doc/ractor.md">docs</a>) and drives the execution of our code.<br>
 To keep our concurrent application running, we can <em>suspend</em> the main Ractor by calling <code>sleep</code> once the other actors have been spawned.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">sleep <span style="color:#75715e"># the last line of our main file</span>
-</code></pre></div><h4 id="scaling-the-topology">Scaling the topology</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>sleep <span style="color:#75715e"># the last line of our main file</span>
+</span></span></code></pre></div><h4 id="scaling-the-topology">Scaling the topology</h4>
 <p>To scale the actor topology up to a larger number of sources and workers (e.g. 2 and 5), our code could be updated as follows.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bfr <span style="color:#f92672">=</span> buffer
-
-(<span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span> 
-  source(<span style="color:#66d9ef">RandInt</span>, <span style="color:#e6db74">target</span>: bfr, name: <span style="color:#e6db74">&#34;source_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-}
-
-(<span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
-  worker(<span style="color:#66d9ef">PrimeTest</span>, <span style="color:#e6db74">source</span>: bfr, name: <span style="color:#e6db74">&#34;worker_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-}
-</code></pre></div><p>Note how we are passing a <code>name</code> to sources and workers: a Ractor&rsquo;s name gives us a human-readable identifier that we can use for logging and monitoring purposes.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bfr <span style="color:#f92672">=</span> buffer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span> 
+</span></span><span style="display:flex;"><span>  source(<span style="color:#66d9ef">RandInt</span>, <span style="color:#e6db74">target</span>: bfr, name: <span style="color:#e6db74">&#34;source_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">..</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  worker(<span style="color:#66d9ef">PrimeTest</span>, <span style="color:#e6db74">source</span>: bfr, name: <span style="color:#e6db74">&#34;worker_</span><span style="color:#e6db74">#{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note how we are passing a <code>name</code> to sources and workers: a Ractor&rsquo;s name gives us a human-readable identifier that we can use for logging and monitoring purposes.
 No matter where you are in the code, <code>Ractor.current.name</code> will always resolve to the name of the actor running it.</p>
 <p><strong>Challenge.</strong> You might be wondering: what do I do with the work completed by the workers? That&rsquo;s up for you to decide, as their behaviour can be encapsulated in the <code>behaviour</code> object passed at initialisation time. For example, you might turn <code>PrimeTest</code> into a class, initialise it with a target aggregator actor and send <code>{integer, is_prime}</code> tuples to that actor from within the <code>#receive</code> method.</p>
 <hr>
-<p>This concludes our tour of Ruby 3.0 Ractors. You can find the full case study source code on <a href="https://gist.github.com/lbarasti/9eadbd62893b7e74dfa21d5485ea8cd6">github</a>. I hope this inspires you to give Ractors a go 🚀</p>
+<p>This concludes our tour of Ruby 3.0 Ractors. You can find the full case study source code on <a href="https://gist.github.com/lbarasti/9eadbd62893b7e74dfa21d5485ea8cd6">github</a>. I hope this inspires you to give Ractors a go &#x1f680;</p>
 <h2 id="further-reading">Further reading</h2>
 <ul>
 <li>Official documentation for Ruby <a href="https://github.com/ruby/ruby/blob/master/doc/ractor.md">Ractors</a></li>
@@ -1063,55 +879,21 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 <li>If you haven&rsquo;t tried Ruby&rsquo;s pattern matching feature yet, then I recommend you take a look at this <a href="https://www.toptal.com/ruby/ruby-pattern-matching-tutorial">great guide</a> by Noppakun Wongsrinoppakun</li>
 <li>My Struct game needed a refresher. I found <a href="https://www.rubyguides.com/2017/06/ruby-struct-and-openstruct/">this how-to</a> by Jesus Castello illuminating.</li>
 </ul>
-<h2 id="heading"></h2>
+<h2></h2>
 <p>Thanks for reading, I hope you found this useful. You can share your experiences with Ractors and parallelism in Ruby in the comments section below.</p>
 <p>Also, please let me know if you&rsquo;d like to read more about Ractors on this blog: we&rsquo;ve only scratched the surface on the topic, and I&rsquo;d love to spend more time investigating event-driven architectures.</p>
-<p>If you’d like to stay in touch, then subscribe or follow me on <a href="https://twitter.com/lbarasti">Twitter</a>.</p>
-
-<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
-	 
-</style>
-<div id="mc_embed_signup">
-<form action="https://lbarasti.us4.list-manage.com/subscribe/post?u=2ae02926c5ced578d57958587&amp;id=e952a286b4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div id="mc_embed_signup_scroll">
-	<label for="mce-EMAIL"></label>
-	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-    
-    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2ae02926c5ced578d57958587_e952a286b4" tabindex="-1" value=""></div>
-    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-    </div>
-</form>
-</div>
-
-
 </div>
 
   <footer class="article-footer">
 
     <aside class="share">
-  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow">B!</a>
-  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Parallelism%20in%20Ruby%20with%20Ractors&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Parallelism%20in%20Ruby%20with%20Ractors" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="Pocketに保存" class="pk" target="_blank" rel="nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
-  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
+  <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="はてなブックマーク" class="ht" target="_blank" rel="noopener nofollow">B!</a>
+  <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&text=Parallelism%20in%20Ruby%20with%20Ractors&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="noopener nofollow"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&t=Parallelism%20in%20Ruby%20with%20Ractors" title="Facebookでシェア" class="fb" target="_blank" rel="noopener nofollow"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://getpocket.com/edit?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f&title=Parallelism%20in%20Ruby%20with%20Ractors" title="Pocketに保存" class="pk" target="_blank" rel="noopener nofollow"><i class="fab fa-get-pocket" aria-hidden="true"></i></a>
+  <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2flbarasti.com%2fpost%2fruby_ractor%2f" title="LINEでシェア" class="ln" target="_blank" rel="noopener nofollow"><i class="fab fa-line" aria-hidden="true"></i></a>
 </aside>
 
-
-    <section class="footer">
-      <div>
-        <nav class="crumb">
-          <ol>
-            <li><a href="https://lbarasti.com/"><i class="fas fa-home" aria-hidden="true"></i>TOP</a></li>
-            
-            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://lbarasti.com/post/" itemprop="url"><span itemprop="title">POST</span></a></li>
-            
-            <li class="active">Parallelism in Ruby with Ractors</li>
-          </ol>
-        </nav>
-      </div>
-    </section>
 
     
     
@@ -1120,11 +902,9 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
       <header>
         <a href="https://lbarasti.com/categories/">CATEGORIES</a>
       </header>
-      <div>
-        <ul class="terms">
-          
-        </ul>
-      </div>
+      <ul class="terms">
+        
+      </ul>
     </section>
     
     
@@ -1133,19 +913,17 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
       <header>
         <a href="https://lbarasti.com/tags/">TAGS</a>
       </header>
-      <div>
-        <ul class="terms">
-          
-          <li><a href="https://lbarasti.com/tags/ruby/">ruby</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/actors/">actors</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/ractors/">ractors</a></li>
-          
-          <li><a href="https://lbarasti.com/tags/concurrency/">concurrency</a></li>
-          
-        </ul>
-      </div>
+      <ul class="terms">
+        
+        <li><a href="https://lbarasti.com/tags/ruby/">ruby</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/actors/">actors</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/ractors/">ractors</a></li>
+        
+        <li><a href="https://lbarasti.com/tags/concurrency/">concurrency</a></li>
+        
+      </ul>
     </section>
     
     
@@ -1154,34 +932,11 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 </article>
 
 
-    <div class="adj">
-      <div class="mrow">
-        
-        <div class="mcol c6">
-          <header>Previous Article</header>
-          <article class="lism">
-  <a href="https://lbarasti.com/post/json_beyond_basics/">
-    <div class="thumb thumb-8eaea0461a73c8e51c8ff91c77df7ab0"></div>
-
-    <div class="inner">
-      <div class="title">Crystal JSON beyond the basics</div>
-
-      <ul class="facts sm">
-        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="21007-09-21T00:17:01JST">Sep 21, 2020</time></li>
-        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
-        
-      </ul>
-
-    </div>
-  </a>
-</article>
-
-        </div>
-        
-        
-        <div class="mcol c6">
-          <header>Next Article</header>
-          <article class="lism">
+<div class="adj mrow">
+  <div class="mcol c6">
+    <header>Next Article</header>
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/kotlin_refactoring/">
     <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
 
@@ -1190,7 +945,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1198,14 +956,38 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-        </div>
-        
-      </div>
-    </div>
+    
+  </div>
+  <div class="mcol c6">
+    <header>Previous Article</header>
+    
+    <article class="lism">
+  <a href="https://lbarasti.com/post/json_beyond_basics/">
+    <div class="thumb thumb-8eaea0461a73c8e51c8ff91c77df7ab0"></div>
 
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
+    <div class="inner">
+      <div class="title">Crystal JSON beyond the basics</div>
+
+      <ul class="facts sm">
+        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="21007-09-21T00:17:01JST">Sep 21, 2020</time></li>
+        
+        <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
+        
+      </ul>
+
+    </div>
+  </a>
+</article>
+
+    
+  </div>
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
     
     
     
@@ -1223,12 +1005,11 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-  </div>
-  <div class="mcol c4">
-    <aside class="l-sidebar">
 
-  <div class="sections sidebar">
-    
+        </div>
+        <div class="mcol c4">
+          <aside class="l-sidebar">
+            
 <section class="sidebar">
   <header>AUTHOR</header>
   <div>
@@ -1250,12 +1031,11 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 </section>
 
 
-    <section class="sidebar">
+            <section class="sidebar">
   <header>LATESTS</header>
-  <div>
-    <div class="articles sm">
-      
-      <article class="lism">
+  <div class="articles sm">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/kotlin_refactoring/">
     <div class="thumb thumb-d67d217ed6e72189359885e9e48f179a"></div>
 
@@ -1264,7 +1044,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="23007-01-23T15:53:48JST">Jan 23, 2023</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1272,8 +1055,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/ruby_ractor/">
     <div class="thumb thumb-f53907a89c330f8b996d611ad301fd8a"></div>
 
@@ -1282,7 +1065,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-01-25T20:12:48JST">Jan 25, 2021</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1290,8 +1076,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/json_beyond_basics/">
     <div class="thumb thumb-8eaea0461a73c8e51c8ff91c77df7ab0"></div>
 
@@ -1300,7 +1086,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="21007-09-21T00:17:01JST">Sep 21, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1308,8 +1097,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/byoidsl/">
     <div class="thumb thumb-379cdddbc8bab5ea691bccb3059844eb"></div>
 
@@ -1318,7 +1107,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="7007-07-07T19:17:57JST">Jul 7, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1326,8 +1118,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/game_of_life/">
     <div class="thumb thumb-b0e4f6f597dd7100c40a783ccbe3c9f9"></div>
 
@@ -1336,7 +1128,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="20007-06-20T18:52:41JST">Jun 20, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1344,8 +1139,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/select_statement/">
     <div class="thumb thumb-b3e7b513b3545669e5ee97fd0b828bf4"></div>
 
@@ -1354,7 +1149,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="30007-04-30T23:03:29JST">Apr 30, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1362,8 +1160,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/intro_to_statistics/">
     <div class="thumb thumb-224ddb75e51dd0d04b1e71827aad96f9"></div>
 
@@ -1372,7 +1170,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="10007-04-10T10:12:33JST">Apr 10, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1380,8 +1181,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/url_checker_series/">
     <div class="thumb thumb-408d2f8615f913914e565d9a2093a3a4"></div>
 
@@ -1390,7 +1191,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-01-12T22:12:33JST">Jan 12, 2020</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1398,8 +1202,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/two_way_comm_between_fibers/">
     <div class="thumb thumb-2f8501660be1b202f0622f4169e68f2a"></div>
 
@@ -1408,7 +1212,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="25007-11-25T22:12:33JST">Nov 25, 2019</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1416,8 +1223,8 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-      <article class="lism">
+    
+    <article class="lism">
   <a href="https://lbarasti.com/post/fun_with_crystal/">
     <div class="thumb thumb-a79bcaa63d57a1252d925acc5f4a4d76"></div>
 
@@ -1426,7 +1233,10 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
 
       <ul class="facts sm">
         <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="12007-04-12T10:12:33JST">Apr 12, 2017</time></li>
+        
         <li><i class="fas fa-bookmark" aria-hidden="true"></i>POST</li>
+        
+        
         
       </ul>
 
@@ -1434,32 +1244,44 @@ No matter where you are in the code, <code>Ractor.current.name</code> will alway
   </a>
 </article>
 
-      
-    </div>
+    
   </div>
 </section>
 
-    
+            
 
-    
+            
 <section class="sidebar">
   <header>TAGS</header>
-  <div>
-    <ul class="terms">
-      <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li><li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li><li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li><li><a href="https://lbarasti.com/tags/game-of-life">game-of-life <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li><li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li><li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
-    </ul>
-  </div>
+  <ul class="terms">
+    
+    <li><a href="https://lbarasti.com/tags/crystal">crystal <span class="count">(8)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/concurrency">concurrency <span class="count">(4)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/channel">channel <span class="count">(3)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/fiber">fiber <span class="count">(3)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/game-of-life">game of life <span class="count">(2)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/macros">macros <span class="count">(2)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/ruby">ruby <span class="count">(2)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/12in23">12in23 <span class="count">(1)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/actor">actor <span class="count">(1)</span></a></li>
+    
+    <li><a href="https://lbarasti.com/tags/actors">actors <span class="count">(1)</span></a></li>
+    
+  </ul>
 </section>
 
 
 
-  </div>
-
-</aside>
-
-  </div>
-</div>
-
+          </aside>
+        </div>
       </div>
     </main>
 

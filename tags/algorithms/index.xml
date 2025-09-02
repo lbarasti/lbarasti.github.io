@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>algorithms on lbarasti&#39;s blog</title>
+    <title>Algorithms on lbarasti&#39;s blog</title>
     <link>https://lbarasti.com/tags/algorithms/</link>
-    <description>Recent content in algorithms on lbarasti&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Algorithms on lbarasti&#39;s blog</description>
+    <generator>Hugo</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 12 Apr 2017 10:12:33 +0100</lastBuildDate><atom:link href="https://lbarasti.com/tags/algorithms/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Apr 2017 10:12:33 +0100</lastBuildDate>
+    <atom:link href="https://lbarasti.com/tags/algorithms/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Going faster with Crystal</title>
       <link>https://lbarasti.com/post/fun_with_crystal/</link>
       <pubDate>Wed, 12 Apr 2017 10:12:33 +0100</pubDate>
-      
       <guid>https://lbarasti.com/post/fun_with_crystal/</guid>
       <description>When it comes to scripting, can we write code in a modern language, without having to worry about performance overhead?</description>
     </item>
-    
   </channel>
 </rss>
